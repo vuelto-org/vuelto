@@ -1,5 +1,5 @@
-#ifdef FESTI_H
-#include "festi/window.c"
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 #include <GLFW/glfw3.h>
@@ -20,3 +20,9 @@ void FS_Refresh();
 // Draw.c
 void FS_DrawRect(float x, float y, float height, float width, const float color[3]);
 void FS_SetBackgroundColor(const float color[3]);
+
+
+#ifdef __cplusplus
+}
+#endif
+

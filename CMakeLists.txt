@@ -17,11 +17,12 @@ find_package(glfw3 REQUIRED)
 target_link_libraries(festi PUBLIC glfw "-framework OpenGL")
 
 # Set the output directory for the library
-set_target_properties(festi PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
+set_target_properties(festi PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/festi/)
 
 # Optionally, create an executable for testing
-add_executable(test_program test/test.c)
+add_executable(test_program test/test.cpp)
 
 # Link the test executable with the library
 target_link_libraries(test_program PRIVATE festi)
+set_target_properties(test_program PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/test)
 

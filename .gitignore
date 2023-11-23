@@ -1,7 +1,7 @@
 
 CMakeCache.txt
 cmake_install.cmake
-build/
+bin/
 .DS_Store
 Makefile
 CMakeFiles/

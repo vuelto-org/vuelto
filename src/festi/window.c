@@ -33,9 +33,10 @@ int FS_WindowShouldClose() {
 }
 
 void FS_Refresh() {
-	glClear(GL_COLOR_BUFFER_BIT);
 	glfwSwapBuffers(win->window);
 	glfwPollEvents();
+  glClear(GL_COLOR_BUFFER_BIT);
+
 }
 
 

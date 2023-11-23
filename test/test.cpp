@@ -14,7 +14,7 @@ int main() {
 
     	FS_SetBackgroundColor(color_bc);
 
-    	FS_DrawRect(0.3, 0.3, 0.5, 0.5, color);
+    	FS_DrawRect(0, 0, 0.5, 0.5, color);
 
     	FS_Refresh();
     }
