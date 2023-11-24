@@ -3,8 +3,7 @@
 FS_Window *win;
 
 void FS_Init() {
-  if (!glfwInit())
-    printf("GLFW Init failed\n");
+  if (!glfwInit()) printf("GLFW Init failed\n");
 }
 
 FS_Window *FS_CreateWindow(int width, int height, const char *title) {
@@ -27,7 +26,11 @@ FS_Window *FS_CreateWindow(int width, int height, const char *title) {
   return window;
 }
 
-int FS_WindowShouldClose() { return glfwWindowShouldClose(win->window); }
+// clang-format off
+int FS_WindowShouldClose() {
+    return glfwWindowShouldClose(win->window);
+}
+// clang-format on
 
 void FS_Refresh() {
   glfwSwapBuffers(win->window);

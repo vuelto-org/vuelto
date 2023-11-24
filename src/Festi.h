@@ -18,9 +18,8 @@ int FS_WindowShouldClose();
 void FS_Refresh();
 
 // Draw.c
-void FS_DrawRect(float x, float y, float height, float width,
-                 const float color[3]);
-void FS_SetBackgroundColor(const float color[3]);
+void FS_DrawRect(float x, float y, float height, float width, float color1, float color2, float color3);
+void FS_SetBackgroundColor(float color1, float color2, float color3);
 
 #ifdef __cplusplus
 }
