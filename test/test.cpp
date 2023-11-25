@@ -1,17 +1,17 @@
-#include "../src/Festi.h"
+#include "../src/Vuelto.hpp"
 
 int main() {
-  FS_Init();
+  Vuelto::Init();
 
-  FS_Window* window = FS_CreateWindow(800, 600, "Test");
+  Vuelto::Window win = Vuelto::Application::CreateWindow(500, 500, "test");
 
-  while (!FS_WindowShouldClose()) {
-    FS_SetBackgroundColor(0.5, 0.5, 0.5);
-
-    FS_DrawRect(0, 0, 0.5, 0.5, 0.1, 0.1, 0.1);
-    FS_DrawRect(-0.5, -0.5, 0.5, 0.5, 0.1, 0.1, 0.1);
-
-    FS_Refresh();
+  while (!win.WindowShouldClose()) {
+    Vuelto::Renderer::DrawRect(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5);
   }
+
+  // Cleanup
+  Vuelto::Application::DestroyWindow(win);
+  Vuelto::Terminate();
+
   return 0;
 }

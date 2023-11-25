@@ -14,6 +14,3 @@ printf("Running on an unknown platform, opengl may not work\n");
 #endif
 
 #include <GLFW/glfw3.h>
-#include <stdio.h>
-
-#include "../Festi.h"
