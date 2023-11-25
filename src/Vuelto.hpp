@@ -14,7 +14,6 @@
 // // Draw.c
 // void FS_DrawRect(float x, float y, float height, float width, float color1, float color2, float color3);
 // void FS_SetBackgroundColor(float color1, float color2, float color3);
-
 #include "vuelto/core/app.hpp"
 #include "vuelto/core/draw.hpp"
 #include "vuelto/tools/definitions.h"

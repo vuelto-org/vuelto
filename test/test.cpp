@@ -6,10 +6,9 @@ int main() {
   Vuelto::Window win = Vuelto::Application::CreateWindow(500, 500, "test");
 
   while (!win.WindowShouldClose()) {
-    Vuelto::Renderer::DrawRect(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5);
+    Vuelto::Renderer2D::DrawRect(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5);
   }
 
-  // Cleanup
   Vuelto::Application::DestroyWindow(win);
   Vuelto::Terminate();
 

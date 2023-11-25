@@ -25,7 +25,7 @@ Window CreateWindow(int width, int height, const char *title) {
 
   glfwMakeContextCurrent(glfw_window);
 
-  Window window;  // Allocate memory for the window object
+  Window window;
   window.width = width;
   window.height = height;
   window.title = title;
