@@ -9,6 +9,7 @@ int main() {
     FS_SetBackgroundColor(0.5, 0.5, 0.5);
 
     FS_DrawRect(0, 0, 0.5, 0.5, 0.1, 0.1, 0.1);
+    FS_DrawRect(-0.5, -0.5, 0.5, 0.5, 0.1, 0.1, 0.1);
 
     FS_Refresh();
   }
