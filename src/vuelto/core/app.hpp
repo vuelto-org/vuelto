@@ -1,3 +1,4 @@
+#pragma once
 #include <GLFW/glfw3.h>
 
 #include "../tools/definitions.h"
@@ -11,7 +12,7 @@ void Terminate();
 
 namespace Application {
 
-Window CreateWindow(int width, int height, const char *title);
+Window CreateWindow(int width, int height, const char *title, bool resizable);
 void DestroyWindow(Window win);
 
 }  // namespace Application

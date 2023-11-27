@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../tools/definitions.h"
+#include "renderer.hpp"
 
 namespace Vuelto {
 
@@ -16,12 +17,21 @@ void Terminate() { glfwTerminate(); }
 
 namespace Application {
 
-Window CreateWindow(int width, int height, const char *title) {
+void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) {
+  glViewport(0, 0, newWidth, newHeight);
+  Vuelto::SoftwareRenderer::ResizeBuffer(newWidth, newHeight);
+}
+
+Window CreateWindow(int width, int height, const char *title, bool resizable) {
+  glfwWindowHint(GLFW_RESIZABLE, resizable);
+
   GLFWwindow *glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!glfw_window) {
     glfwTerminate();
     std::cout << "GLFW Window creation failed\n";
   }
+
+  glfwSetFramebufferSizeCallback(glfw_window, framebuffer_size_callback);
 
   glfwMakeContextCurrent(glfw_window);
 
@@ -30,6 +40,7 @@ Window CreateWindow(int width, int height, const char *title) {
   window.height = height;
   window.title = title;
   window.window = glfw_window;
+
   return window;
 }
 
@@ -45,6 +56,6 @@ bool Window::WindowShouldClose() {
 void Window::WindowRefresh() {
   glfwSwapBuffers(window);
   glfwPollEvents();
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 }  // namespace Vuelto
