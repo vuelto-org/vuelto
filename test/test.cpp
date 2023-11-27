@@ -1,7 +1,5 @@
 #include "../src/Vuelto.hpp"
 
-#define VUELTO_SOFTWARE_RENDERER_ON
-
 int main() {
   Vuelto::Init();
 
