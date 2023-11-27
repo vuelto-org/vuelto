@@ -6,21 +6,22 @@
 #include "renderer.hpp"
 
 namespace Vuelto {
+namespace Application {
 
-void Init() {
+bool SoftwareRendererEnabled = false;
+
+void Init(const bool softwareRenderer) {
   if (!glfwInit()) {
     std::cout << "GLFW Init failed\n";
   }
+  SoftwareRendererEnabled = softwareRenderer;
 }
-
-// Can lead to memory leaks, please use Vuelto::Application::Terminate()
-void Terminate() { glfwTerminate(); }
-
-namespace Application {
 
 void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) {
   glViewport(0, 0, newWidth, newHeight);
-  Vuelto::SoftwareRenderer::ResizeBuffer(newWidth, newHeight);
+  if (SoftwareRendererEnabled == true) {
+    Vuelto::SoftwareRenderer::ResizeBuffer(newWidth, newHeight);
+  }
 }
 
 Window CreateWindow(int width, int height, const char *title, bool resizable) {
@@ -42,19 +43,29 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   window.title = title;
   window.window = glfw_window;
 
+  if (SoftwareRendererEnabled == true) {
+    Vuelto::SoftwareRenderer::Init(window);
+  }
+
   return window;
 }
 
-void Terminate(Window win) {
-  glfwDestroyWindow(win.window);
-  glfwTerminate();
-}
+void DestroyWindow(Window win) { glfwDestroyWindow(win.window); }
+
+void Terminate() { glfwTerminate(); }
 
 }  // namespace Application
 
 bool Window::WindowShouldClose() {
-  Window::WindowRefresh();
-  return glfwWindowShouldClose(window);
+  while (!glfwWindowShouldClose(window)) {
+    Window::WindowRefresh();
+    if (Application::SoftwareRendererEnabled == true) Vuelto::SoftwareRenderer::Refresh();
+    return false;
+  }
+  if (Application::SoftwareRendererEnabled == true) Vuelto::SoftwareRenderer::Terminate();
+  glfwDestroyWindow(window);
+  glfwTerminate();
+  return true;
 }
 
 void Window::WindowRefresh() {

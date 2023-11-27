@@ -7,13 +7,12 @@ namespace Vuelto {
 
 class Window;
 
-void Init();
-void Terminate();
-
 namespace Application {
 
+void Init(const bool softwareRenderer = false);
 Window CreateWindow(int width, int height, const char *title, bool resizable);
-void Terminate(Window win);
+void DestroyWindow(Window win);
+void Terminate();
 
 }  // namespace Application
 
