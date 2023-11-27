@@ -36,6 +36,7 @@ int width;
 int height;
 
 void Init(Vuelto::Window window) {
+  glfwSetWindowAttrib(window.window, GLFW_RESIZABLE, false);
   width = window.width * 2;
   height = window.height * 2;
   pixels = new unsigned char[width * height * 3];

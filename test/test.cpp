@@ -11,6 +11,7 @@ int main() {
     Vuelto::SoftwareRenderer::SetBackgroundColor(255, 255, 255);
     Vuelto::SoftwareRenderer::DrawRect(550, 550, 200, 200, 155, 155, 155);
     Vuelto::SoftwareRenderer::Refresh();
+
     Vuelto::Renderer2D::DrawRect(-0.1, -0.1, 0.5, 0.5, 0.1, 0.4, 0.7);
   }
 
