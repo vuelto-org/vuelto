@@ -13,6 +13,7 @@ void Init() {
   }
 }
 
+// Can lead to memory leaks, please use Vuelto::Application::Terminate()
 void Terminate() { glfwTerminate(); }
 
 namespace Application {
@@ -44,7 +45,10 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   return window;
 }
 
-void DestroyWindow(Window win) { glfwDestroyWindow(win.window); }
+void Terminate(Window win) {
+  glfwDestroyWindow(win.window);
+  glfwTerminate();
+}
 
 }  // namespace Application
 

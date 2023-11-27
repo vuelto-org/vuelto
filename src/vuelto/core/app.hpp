@@ -13,7 +13,7 @@ void Terminate();
 namespace Application {
 
 Window CreateWindow(int width, int height, const char *title, bool resizable);
-void DestroyWindow(Window win);
+void Terminate(Window win);
 
 }  // namespace Application
 

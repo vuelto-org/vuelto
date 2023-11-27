@@ -15,9 +15,8 @@ int main() {
     Vuelto::Renderer2D::DrawRect(-0.1, -0.1, 0.5, 0.5, 0.1, 0.4, 0.7);
   }
 
-  Vuelto::Application::DestroyWindow(win);
   Vuelto::SoftwareRenderer::Terminate();
-  Vuelto::Terminate();
+  Vuelto::Application::Terminate(win);
 
   return 0;
 }
