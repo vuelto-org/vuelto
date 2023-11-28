@@ -11,5 +11,7 @@ int main() {
     Vuelto::Renderer2D::DrawRect(-0.1, -0.1, 0.5, 0.5, 0.1, 0.4, 0.7);
   }
 
+  Vuelto::Application::Terminate();
+
   return 0;
 }

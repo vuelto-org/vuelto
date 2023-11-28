@@ -64,7 +64,6 @@ bool Window::WindowShouldClose() {
   }
   if (Application::SoftwareRendererEnabled == true) Vuelto::SoftwareRenderer::Terminate();
   glfwDestroyWindow(window);
-  glfwTerminate();
   return true;
 }
 
