@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(vuelto)
 
+# Add the GLFW submodule
+add_subdirectory(libs/glfw)
+
 # Set the source files for the library
 file(GLOB LIBRARY_SOURCES "src/vuelto/core/*.cpp")
 
@@ -9,9 +12,6 @@ add_library(vuelto SHARED ${LIBRARY_SOURCES})
 
 # Set the include directories for the library
 target_include_directories(vuelto PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-# Find GLFW package
-find_package(glfw3 REQUIRED)
 
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)
@@ -22,13 +22,10 @@ if(APPLE)
 # On Linux, link against the OpenGL library
 elseif(UNIX AND NOT APPLE)
     target_link_libraries(vuelto PUBLIC OpenGL)
-# On Windows, link against the OpenGL library
-elseif(WIN32)
-    target_link_libraries(vuelto PUBLIC opengl32)
 endif()
 
 # Set the output directory for the library
-set_target_properties(vuelto PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/festi/)
+set_target_properties(vuelto PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/vuelto/)
 
 # Add -Wdeprecated-declarations for GCC and Clang
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_C_COMPILER_ID MATCHES "Clang")
