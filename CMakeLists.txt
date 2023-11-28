@@ -22,6 +22,8 @@ if(APPLE)
 # On Linux, link against the OpenGL library
 elseif(UNIX AND NOT APPLE)
     target_link_libraries(vuelto PUBLIC OpenGL)
+elseif(WIN32)
+    target_link_libraries(vuelto PUBLIC opengl32)
 endif()
 
 # Set the output directory for the library
