@@ -28,7 +28,7 @@ xcode-select --install
 # Windows
 You have to have CMake and a C compiler installed. You can also use WSL, if so follow the Linux instructions.
 
-## Building Vuelto
+# Building Vuelto
 Clone the repository
 ```bash
 git clone --recurse-submodules https://github.com/dimkauzh/vuelto.git
