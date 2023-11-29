@@ -11,18 +11,20 @@ namespace Application {
 bool SoftwareRendererEnabled = false;
 bool MultipleWindowsEnabled = false;
 
-void Init(const bool softwareRenderer) {
+void Init() {
   if (!glfwInit()) {
     std::cout << "GLFW Init failed\n";
   }
-  SoftwareRendererEnabled = softwareRenderer;
 }
 
 void InitMultipleWindows() {
-  if (!glfwInit()) {
-    std::cout << "GLFW Init failed\n";
-  }
+  Init();
   MultipleWindowsEnabled = true;
+}
+
+void InitSoftwareRenderer() {
+  Init();
+  SoftwareRendererEnabled = true;
 }
 
 void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) {
