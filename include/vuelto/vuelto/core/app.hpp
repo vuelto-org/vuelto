@@ -9,8 +9,9 @@ class Window;
 
 namespace Application {
 
-void Init(const bool softwareRenderer = false);
+void Init();
 void InitMultipleWindows();
+void InitSoftwareRenderer();
 Window CreateWindow(int width, int height, const char *title, bool resizable);
 void DestroyWindow(Window win);
 void Terminate();
@@ -24,7 +25,7 @@ class Window {
   int height;
   const char *title;
   bool WindowShouldClose();
-  void WindowRefresh();
+  void Refresh();
   void MakeContextCurrent();
 };
 
