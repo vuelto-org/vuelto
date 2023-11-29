@@ -5,11 +5,15 @@ project(vuelto)
 add_subdirectory(libs/glfw)
 
 # Set the source files for the library
-file(GLOB LIBRARY_SOURCES "src/vuelto/core/*.cpp")
+file(GLOB LIBRARY_SOURCES
+    "src/vuelto/core/*.cpp"
+    "src/vuelto/event/*.cpp"
+    )
 
 file(GLOB LIBRARY_HEADERS
     "src/Vuelto.hpp"
     "src/vuelto/core/*.hpp"
+    "src/vuelto/event/*.hpp"
     "src/vuelto/tools/*.hpp"
 )
 

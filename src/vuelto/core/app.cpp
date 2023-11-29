@@ -9,6 +9,7 @@ namespace Vuelto {
 namespace Application {
 
 bool SoftwareRendererEnabled = false;
+bool MultipleWindowsEnabled = false;
 
 void Init(const bool softwareRenderer) {
   if (!glfwInit()) {
@@ -17,9 +18,16 @@ void Init(const bool softwareRenderer) {
   SoftwareRendererEnabled = softwareRenderer;
 }
 
+void InitMultipleWindows() {
+  if (!glfwInit()) {
+    std::cout << "GLFW Init failed\n";
+  }
+  MultipleWindowsEnabled = true;
+}
+
 void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) {
   glViewport(0, 0, newWidth, newHeight);
-  if (SoftwareRendererEnabled == true) {
+  if (SoftwareRendererEnabled) {
     Vuelto::SoftwareRenderer::ResizeBuffer(newWidth, newHeight);
   }
 }
@@ -35,7 +43,7 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
 
   glfwSetFramebufferSizeCallback(glfw_window, framebuffer_size_callback);
 
-  glfwMakeContextCurrent(glfw_window);
+  if (!MultipleWindowsEnabled) glfwMakeContextCurrent(glfw_window);
 
   Window window;
   window.width = width;
@@ -43,7 +51,7 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   window.title = title;
   window.window = glfw_window;
 
-  if (SoftwareRendererEnabled == true) {
+  if (SoftwareRendererEnabled) {
     Vuelto::SoftwareRenderer::Init(window);
   }
 
@@ -58,18 +66,19 @@ void Terminate() { glfwTerminate(); }
 
 bool Window::WindowShouldClose() {
   while (!glfwWindowShouldClose(window)) {
-    Window::WindowRefresh();
-    if (Application::SoftwareRendererEnabled == true) Vuelto::SoftwareRenderer::Refresh();
+    if (Application::SoftwareRendererEnabled) Vuelto::SoftwareRenderer::Refresh();
     return false;
   }
-  if (Application::SoftwareRendererEnabled == true) Vuelto::SoftwareRenderer::Terminate();
+  if (Application::SoftwareRendererEnabled) Vuelto::SoftwareRenderer::Terminate();
   glfwDestroyWindow(window);
   return true;
 }
 
-void Window::WindowRefresh() {
+void Window::MakeContextCurrent() { glfwMakeContextCurrent(window); }
+
+void Window::Refresh() {
   glfwSwapBuffers(window);
-  glfwPollEvents();
+  if (!Application::MultipleWindowsEnabled) glfwPollEvents();
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 }  // namespace Vuelto
