@@ -1,6 +1,6 @@
 #include "renderer.hpp"
 
-#include "../tools/definitions.h"
+#include "../tools/definitions.hpp"
 #include "app.hpp"
 
 namespace Vuelto {

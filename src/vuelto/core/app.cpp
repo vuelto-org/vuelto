@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../tools/definitions.h"
+#include "../tools/definitions.hpp"
 #include "renderer.hpp"
 
 namespace Vuelto {
