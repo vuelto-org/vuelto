@@ -20,6 +20,9 @@ file(GLOB LIBRARY_HEADERS
 # Create the shared library
 add_library(vuelto SHARED ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 
+set_property(TARGET vuelto PROPERTY CXX_STANDARD 11)
+
+
 # Set the include directories for the library
 target_include_directories(vuelto PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>

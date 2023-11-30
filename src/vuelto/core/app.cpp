@@ -10,6 +10,7 @@ namespace Application {
 
 bool SoftwareRendererEnabled = false;
 bool MultipleWindowsEnabled = false;
+Vuelto::SoftwareRenderer sr_renderer;
 
 void Init() {
   if (!glfwInit()) {
@@ -22,16 +23,8 @@ void InitMultipleWindows() {
   MultipleWindowsEnabled = true;
 }
 
-void InitSoftwareRenderer() {
-  Init();
-  SoftwareRendererEnabled = true;
-}
-
 void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) {
   glViewport(0, 0, newWidth, newHeight);
-  if (SoftwareRendererEnabled) {
-    Vuelto::SoftwareRenderer::ResizeBuffer(newWidth, newHeight);
-  }
 }
 
 Window CreateWindow(int width, int height, const char *title, bool resizable) {
@@ -53,11 +46,27 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   window.title = title;
   window.window = glfw_window;
 
-  if (SoftwareRendererEnabled) {
-    Vuelto::SoftwareRenderer::Init(window);
-  }
-
   return window;
+}
+
+Vuelto::Renderer2D CreateRenderer2D(Window win) {
+  Vuelto::Renderer2D renderer;
+  return renderer;
+}
+
+Vuelto::SoftwareRenderer CreateSoftwareRenderer(Window win) {
+  Vuelto::SoftwareRenderer renderer;
+  renderer.Init(win.height, win.width);
+
+  SoftwareRendererEnabled = true;
+  sr_renderer = renderer;
+
+  glfwSetFramebufferSizeCallback(win.window, [](GLFWwindow *window, int newWidth, int newHeight) {
+    framebuffer_size_callback(window, newWidth, newHeight);
+    sr_renderer.ResizeBuffer(newWidth, newHeight);
+  });
+
+  return renderer;
 }
 
 void DestroyWindow(Window win) { glfwDestroyWindow(win.window); }
@@ -68,10 +77,10 @@ void Terminate() { glfwTerminate(); }
 
 bool Window::WindowShouldClose() {
   while (!glfwWindowShouldClose(window)) {
-    if (Application::SoftwareRendererEnabled) Vuelto::SoftwareRenderer::Refresh();
+    if (Application::SoftwareRendererEnabled) Application::sr_renderer.Refresh();
     return false;
   }
-  if (Application::SoftwareRendererEnabled) Vuelto::SoftwareRenderer::Terminate();
+  if (Application::SoftwareRendererEnabled) Application::sr_renderer.Terminate();
   glfwDestroyWindow(window);
   return true;
 }
@@ -83,4 +92,5 @@ void Window::Refresh() {
   if (!Application::MultipleWindowsEnabled) glfwPollEvents();
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
 }  // namespace Vuelto
