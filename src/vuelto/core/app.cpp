@@ -56,6 +56,7 @@ Vuelto::Renderer2D CreateRenderer2D(Window win) {
 
 Vuelto::SoftwareRenderer CreateSoftwareRenderer(Window win) {
   Vuelto::SoftwareRenderer renderer;
+  glfwSetWindowAttrib(win.window, GLFW_RESIZABLE, false);
   renderer.Init(win.height, win.width);
 
   SoftwareRendererEnabled = true;
