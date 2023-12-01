@@ -5,10 +5,10 @@ int main() {
 
   Vuelto::Window win = Vuelto::Application::CreateWindow(800, 600, "test", true);
 
-  Vuelto::SoftwareRenderer renderer = Vuelto::Application::CreateSoftwareRenderer(win);
+  Vuelto::Renderer2D renderer = Vuelto::Application::CreateRenderer2D(win);
 
   while (!win.WindowShouldClose()) {
-    renderer.DrawRect(100, 100, 200, 200, 123, 123, 132);
+    renderer.DrawRect(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1);
     win.Refresh();
   }
 
