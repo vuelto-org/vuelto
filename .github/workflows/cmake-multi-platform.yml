@@ -48,7 +48,10 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Git Submodule Update
-      run: git pull --recurse-submodules
+      run: |
+        git submodule update --init --recursive
+        git submodule foreach git pull origin main
+
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
