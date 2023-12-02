@@ -4,7 +4,7 @@
 #include <OpenGL/gl3.h>  // For macOS
 #elif defined _WIN32 || defined _WIN64
 #else
-#include <GL/gl3.h>  // For other platforms
+#include <GL/gl.h>  // For other platforms
 #endif
 
 #include "../vendor/GLFW/glfw3.h"
