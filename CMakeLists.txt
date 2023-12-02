@@ -50,7 +50,10 @@ if(APPLE)
 # On Linux, link against the OpenGL library
 elseif(UNIX AND NOT APPLE)
     find_package(OpenGL REQUIRED)
+    find_package(GLEW REQUIRED)
     target_link_libraries(vuelto PUBLIC OpenGL)
+    target_link_libraries(vuelto PUBLIC GLEW)
+
 elseif(WIN32)
     target_link_libraries(vuelto PUBLIC opengl32)
 endif()
