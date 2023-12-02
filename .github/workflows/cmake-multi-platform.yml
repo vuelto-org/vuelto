@@ -50,7 +50,9 @@ jobs:
     - name: Git Submodule Update
       run: |
         git submodule update --init --recursive
-        git submodule foreach git pull origin main
+        git submodule foreach 'git fetch origin main:main || true'
+        git submodule foreach 'git checkout main || true'
+
 
 
     - name: Build
