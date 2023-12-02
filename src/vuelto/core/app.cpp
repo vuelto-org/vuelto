@@ -11,9 +11,6 @@ namespace Application {
 bool MultipleWindowsEnabled = false;
 
 void Init() {
-  // if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-  //   std::cout << "Failed to initialize GLAD" << std::endl;
-  // }
   if (!glfwInit()) {
     std::cout << "GLFW Init failed\n";
   }

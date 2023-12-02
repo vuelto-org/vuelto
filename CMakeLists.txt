@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 project(vuelto)
 
-
-# Add Glad source files
-set(GLAD_SOURCE_DIR src/vuelto/vendor/glad)
-add_library(glad ${GLAD_SOURCE_DIR}/glad.c)
-target_include_directories(glad PUBLIC ${GLAD_SOURCE_DIR})
-
 # Add the GLFW submodule
 add_subdirectory(libs/glfw)
 
@@ -21,6 +15,7 @@ file(GLOB LIBRARY_HEADERS
     "src/vuelto/core/*.hpp"
     "src/vuelto/event/*.hpp"
     "src/vuelto/tools/*.hpp"
+    "src/vuelto/vendor/GLFW/*.h"
 )
 
 # Create the shared library
@@ -46,7 +41,6 @@ foreach(HEADER ${LIBRARY_HEADERS})
 endforeach()
 
 # Link GLFW to the library
-target_link_libraries(vuelto PRIVATE glad)
 target_link_libraries(vuelto PUBLIC glfw)
 
 
