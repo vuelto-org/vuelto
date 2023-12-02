@@ -40,7 +40,7 @@ jobs:
 
     - name: Install libxrandr (Linux)
       if: startsWith(matrix.os, 'ubuntu')
-      run: sudo apt-get install xorg-dev
+      run: sudo apt-get install xorg-dev libglew-dev
 
     - name: Git Submodule Update
       run: |
