@@ -15,9 +15,8 @@ Vuelto::Renderer2D CreateRenderer2D(Window win);
 
 class Renderer2D {
  public:
-  void DrawRect(float x, float y, float height, float width, float color1, float color2, float color3);
+  void DrawRect(float x, float y, float width, float height, float r, float g, float b);
   void SetBackgroundColor(float color1, float color2, float color3);
-  void DrawLine(int x1, int x2, int y1, int y2, float color1, float color2, float color3);
 };
 
 }  // namespace Vuelto

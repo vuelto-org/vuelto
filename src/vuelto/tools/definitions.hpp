@@ -1,13 +1,10 @@
 #ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#include <OpenGL/gl.h>
-#elif __linux__
-#define GL_SILENCE_DEPRECATION
-#include <GL/gl.h>
-#elif _WIN32
-#elif _WIN64
+#define __gl_h_
+#define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED
+#include <OpenGL/gl3.h>  // For macOS
+#elif defined _WIN32 || defined _WIN64
 #else
-#include <GL/gl.h>
+#include <GL/gl3.h>  // For other platforms
 #endif
 
-#include <GLFW/glfw3.h>
+#include "../vendor/GLFW/glfw3.h"

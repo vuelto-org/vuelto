@@ -8,7 +8,7 @@ int main() {
   Vuelto::Renderer2D renderer = Vuelto::Application::CreateRenderer2D(win);
 
   while (!win.WindowShouldClose()) {
-    renderer.DrawRect(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1);
+    renderer.DrawRect(0.1, 0.1, 0.5, 0.5, 0.6, 0.4, 0.8);
     win.Refresh();
   }
 

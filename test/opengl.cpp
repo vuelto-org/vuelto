@@ -1,17 +1,8 @@
-#include "renderer.hpp"
 
-#include "../tools/definitions.hpp"
-#include "app.hpp"
+#include <GLFW/glfw3.h>
+#include <OpenGL/gl3.h>
 
-namespace Vuelto {
-namespace Application {
-
-Vuelto::Renderer2D CreateRenderer2D(Window win) {
-  Vuelto::Renderer2D renderer;
-  return renderer;
-}
-
-}  // namespace Application
+#include <iostream>
 
 const char* vertexShaderSource =
     "#version 330 core\n"
@@ -30,7 +21,13 @@ const char* fragmentShaderSource =
     "   FragColor = vec4(color, 1.0f);\n"
     "}\n\0";
 
-void Renderer2D::DrawRect(float x, float y, float width, float height, float r, float g, float b) {
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height); }
+
+void processInput(GLFWwindow* window) {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+}
+
+void DrawRect(float x, float y, float width, float height, float r, float g, float b) {
   float vertices[] = {x, y, 0.0f, x + width, y, 0.0f, x + width, y + height, 0.0f, x, y + height, 0.0f};
 
   unsigned int VBO, VAO;
@@ -75,8 +72,44 @@ void Renderer2D::DrawRect(float x, float y, float width, float height, float r, 
   glDeleteProgram(shaderProgram);
 }
 
-void Renderer2D::SetBackgroundColor(float color1, float color2, float color3) {
-  glClearColor(color1, color2, color3, 1);
-}
+int main() {
+  if (!glfwInit()) {
+    std::cerr << "Failed to initialize GLFW" << std::endl;
+    return -1;
+  }
 
-}  // namespace Vuelto
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+  GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL on macOS", NULL, NULL);
+  if (!window) {
+    std::cerr << "Failed to create GLFW window" << std::endl;
+    glfwTerminate();
+    return -1;
+  }
+
+  glfwMakeContextCurrent(window);
+
+  int framebufferWidth, framebufferHeight;
+  glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
+  glViewport(0, 0, framebufferWidth, framebufferHeight);
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+  while (!glfwWindowShouldClose(window)) {
+    processInput(window);
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+    // Draw a rectangle at position (0.2, 0.2) with width 0.4, height 0.3, and color (0.0, 1.0, 0.0)
+    DrawRect(0.2f, 0.2f, 0.4f, 0.3f, 0.0f, 1.0f, 0.0f);
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+    glClear(GL_COLOR_BUFFER_BIT);
+  }
+
+  glfwTerminate();
+  return 0;
+}

@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 project(vuelto)
 
+
+# Add Glad source files
+set(GLAD_SOURCE_DIR src/vuelto/vendor/glad)
+add_library(glad ${GLAD_SOURCE_DIR}/glad.c)
+target_include_directories(glad PUBLIC ${GLAD_SOURCE_DIR})
+
 # Add the GLFW submodule
 add_subdirectory(libs/glfw)
 
@@ -40,7 +46,9 @@ foreach(HEADER ${LIBRARY_HEADERS})
 endforeach()
 
 # Link GLFW to the library
+target_link_libraries(vuelto PRIVATE glad)
 target_link_libraries(vuelto PUBLIC glfw)
+
 
 # On macOS, link against the OpenGL framework
 if(APPLE)
@@ -57,7 +65,7 @@ set_target_properties(vuelto PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT
 
 # Add -Wdeprecated-declarations for GCC and Clang
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_C_COMPILER_ID MATCHES "Clang")
-    add_compile_options(-Wdeprecated-declarations)
+    add_compile_options(-Wdeprecated-declarations "-W#warnings")
 endif()
 
 # Optionally, create an executable for testing
