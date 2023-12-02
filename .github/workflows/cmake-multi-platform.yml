@@ -47,6 +47,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Git Submodule Update
+      run: git pull --recurse-submodules
+
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake .
