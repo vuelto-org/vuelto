@@ -49,7 +49,7 @@ if(APPLE)
     target_link_libraries(vuelto PUBLIC "-framework OpenGL")
 # On Linux, link against the OpenGL library
 elseif(UNIX AND NOT APPLE)
-    target_link_libraries(vuelto PUBLIC OpenGL)
+    target_link_libraries(vuelto PUBLIC OpenGL::GL)
 elseif(WIN32)
     target_link_libraries(vuelto PUBLIC opengl32)
 endif()
