@@ -5,6 +5,7 @@
 
 // event
 #include "vuelto/event/event.hpp"
+#include "vuelto/event/keys.hpp"
 
 // tools
 #include "vuelto/tools/definitions.hpp"

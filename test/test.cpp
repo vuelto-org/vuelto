@@ -1,4 +1,6 @@
 #include "../include/vuelto/Vuelto.hpp"
+#include <iostream>
+
 
 int main() {
   Vuelto::Application::Init();
@@ -9,6 +11,10 @@ int main() {
 
   while (!win.WindowShouldClose()) {
     renderer.DrawRect(0.1, 0.1, 0.5, 0.5, 0.6, 0.4, 0.8);
+
+    if (Vuelto::Input::IsKeyPressed(win, Vuelto::Keys::Space)) std::cout << "Space key pressed!" << std::endl;
+
+
     win.Refresh();
   }
 
