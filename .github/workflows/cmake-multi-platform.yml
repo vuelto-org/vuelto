@@ -2,9 +2,9 @@ name: CMake on multiple platforms
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ["dev"]
   pull_request:
-    branches: [ "dev" ]
+    branches: ["dev"]
 
 jobs:
   build:
@@ -36,21 +36,20 @@ jobs:
             c_compiler: cl
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install libxrandr (Linux)
-      if: startsWith(matrix.os, 'ubuntu')
-      run: sudo apt-get install xorg-dev libglew-dev
+      - name: Install libxrandr (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: sudo apt-get install xorg-dev
 
-    - name: Git Submodule Update
-      run: |
-        git submodule update --init --recursive
-        git submodule foreach 'git fetch origin main:main || true'
-        git submodule foreach 'git checkout main || true'
+      - name: Git Submodule Update
+        run: |
+          git submodule update --init --recursive
+          git submodule foreach 'git fetch origin main:main || true'
+          git submodule foreach 'git checkout main || true'
 
-    - name: Build
-      run: cmake .
+      - name: Build
+        run: cmake .
 
-    - name: Test
-      run: make
-
+      - name: Test
+        run: make
