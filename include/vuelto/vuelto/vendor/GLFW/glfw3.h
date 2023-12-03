@@ -141,6 +141,7 @@ extern "C" {
 
 /* Include the chosen OpenGL or OpenGL ES headers.
  */
+#if !defined(GLFW_NO_OPENGL_INIT)
 #if defined(GLFW_INCLUDE_ES1)
 
 #include <GLES/gl.h>
@@ -234,6 +235,7 @@ extern "C" {
 #endif /*__APPLE__*/
 
 #endif /* OpenGL and OpenGL ES headers */
+#endif /* GLFW_NO_OPENGL_INIT */
 
 #if defined(GLFW_DLL) && defined(_GLFW_BUILD_DLL)
 /* GLFW_DLL must be defined by applications that are linking against the DLL

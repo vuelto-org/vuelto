@@ -8,7 +8,8 @@ add_subdirectory(libs/glfw)
 file(GLOB LIBRARY_SOURCES
     "src/vuelto/core/*.cpp"
     "src/vuelto/event/*.cpp"
-    )
+    "src/vuelto/vendor/GLAD/src/*.c"
+)
 
 file(GLOB LIBRARY_HEADERS
     "src/Vuelto.hpp"
@@ -16,6 +17,7 @@ file(GLOB LIBRARY_HEADERS
     "src/vuelto/event/*.hpp"
     "src/vuelto/tools/*.hpp"
     "src/vuelto/vendor/GLFW/*.h"
+    "src/vuelto/vendor/GLAD/include/glad/*.h"
 )
 
 # Create the shared library
@@ -23,26 +25,18 @@ add_library(vuelto SHARED ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 
 set_property(TARGET vuelto PROPERTY CXX_STANDARD 11)
 
-
 # Set the include directories for the library
 target_include_directories(vuelto PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/vuelto/vendor/GLAD/include>
     $<INSTALL_INTERFACE:include>
 )
-
-# Copy header files with folder structure under src
-foreach(HEADER ${LIBRARY_HEADERS})
-    file(RELATIVE_PATH HEADER_RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/src ${HEADER})
-    get_filename_component(HEADER_NAME ${HEADER} NAME)
-    get_filename_component(HEADER_PATH ${HEADER_RELATIVE} DIRECTORY)
-
-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
-    file(COPY ${HEADER} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
-endforeach()
 
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)
 
+# Add GLAD as a dependency
+# target_link_libraries(vuelto PUBLIC glad)
 
 # On macOS, link against the OpenGL framework
 if(APPLE)
@@ -50,10 +44,7 @@ if(APPLE)
 # On Linux, link against the OpenGL library
 elseif(UNIX AND NOT APPLE)
     find_package(OpenGL REQUIRED)
-    find_package(GLEW REQUIRED)
     target_link_libraries(vuelto PUBLIC OpenGL)
-    target_link_libraries(vuelto PUBLIC GLEW)
-
 elseif(WIN32)
     target_link_libraries(vuelto PUBLIC opengl32)
 endif()

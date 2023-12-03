@@ -1,9 +1,12 @@
-
 #include "app.hpp"
 
 #include <iostream>
 
-#include "../tools/definitions.hpp"
+// clang-format off
+#include "../vendor/GLAD/include/glad/glad.h"
+#define GLFW_NO_OPENGL_INIT
+#include "../vendor/GLFW/glfw3.h"
+// clang-format on
 
 namespace Vuelto {
 namespace Application {
@@ -30,9 +33,9 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef __APPLE__
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+  // #ifdef __APPLE__
+  //   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  // #endif
 
   GLFWwindow *glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!glfw_window) {
@@ -43,6 +46,10 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   glfwSetFramebufferSizeCallback(glfw_window, framebuffer_size_callback);
 
   if (!MultipleWindowsEnabled) glfwMakeContextCurrent(glfw_window);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    std::cout << "Failed to initialize GLAD" << std::endl;
+  }
 
   Window window;
   window.width = width;

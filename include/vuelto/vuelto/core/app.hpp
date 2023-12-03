@@ -1,8 +1,11 @@
 #pragma once
 
+// clang-format off
+#include "../vendor/GLAD/include/glad/glad.h"
 #include <GLFW/glfw3.h>
+// clang-format on
 
-#include "../tools/definitions.hpp"
+// #include "../tools/definitions.hpp"
 
 namespace Vuelto {
 
