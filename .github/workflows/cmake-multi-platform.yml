@@ -48,6 +48,10 @@ jobs:
           git submodule foreach 'git fetch origin main:main || true'
           git submodule foreach 'git checkout main || true'
 
+      - name: Build (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: cmake -G "Unix Makefiles" .
+
       - name: Build
         run: cmake .
 
