@@ -1,7 +1,7 @@
 #include "shader.hpp"
 
+#include <cstring>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 namespace Vuelto {

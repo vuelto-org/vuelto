@@ -1,5 +1,3 @@
-#include <iostream>
-
 namespace Vuelto {
 namespace Shader {
 

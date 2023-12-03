@@ -4,9 +4,9 @@
 #include <iostream>
 #include <sstream>
 
+#include "../shaders/shader.hpp"
 #include "../tools/definitions.hpp"
 #include "app.hpp"
-#include "shader.hpp"
 
 namespace Vuelto {
 namespace Application {
