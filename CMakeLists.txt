@@ -19,6 +19,7 @@ file(GLOB LIBRARY_HEADERS
     "src/vuelto/tools/*.hpp"
     "src/vuelto/shaders/*.hpp"
     "src/vuelto/vendor/GLFW/*.h"
+    "src/vuelto/vendor/stb_image/*.h"
     "src/vuelto/vendor/GLAD/include/glad/*.h"
 )
 
@@ -46,6 +47,7 @@ endforeach()
 
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)
+target_sources(vuelto PRIVATE src/vuelto/vendor/stb_image/stb_image.h)
 
 # Add GLAD as a dependency
 # target_link_libraries(vuelto PUBLIC glad)
