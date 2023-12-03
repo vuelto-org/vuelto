@@ -2,7 +2,13 @@
 <p align="center">
 <img width="1400" alt="banner" src="https://github.com/dimkauzh/vuelto/assets/106883655/2363d776-2669-41f2-b31f-a235de8bea82">
 
-A Game Engine build with GLFW and OpenGL using C++
+<h1 align="center">A Game Engine build with GLFW and OpenGL using C++.</h1>
+
+<p align="center">
+  <a href="https://github.com/dimkauzh/vuelto"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/dimkauzh/vuelto"></a>
+  <a href="https://github.com/dimkauzh/vuelto"><img alt="GitHub license" src="https://img.shields.io/github/license/dimkauzh/vuelto"></a>
+  <a href="https://github.com/dimkauzh/vuelto"><img alt="Lines of code" src="https://tokei.rs/b1/github/dimkauzh/vuelto?category=lines"></a>
+</p>
  
 </h1>
 
