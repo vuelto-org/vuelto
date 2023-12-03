@@ -8,6 +8,7 @@ add_subdirectory(libs/glfw)
 file(GLOB LIBRARY_SOURCES
     "src/vuelto/core/*.cpp"
     "src/vuelto/event/*.cpp"
+    "src/vuelto/shaders/*.cpp"
     "src/vuelto/vendor/GLAD/src/*.c"
 )
 
@@ -16,6 +17,7 @@ file(GLOB LIBRARY_HEADERS
     "src/vuelto/core/*.hpp"
     "src/vuelto/event/*.hpp"
     "src/vuelto/tools/*.hpp"
+    "src/vuelto/shaders/*.hpp"
     "src/vuelto/vendor/GLFW/*.h"
     "src/vuelto/vendor/GLAD/include/glad/*.h"
 )
@@ -31,6 +33,16 @@ target_include_directories(vuelto PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/vuelto/vendor/GLAD/include>
     $<INSTALL_INTERFACE:include>
 )
+
+# Copy header files with folder structure under src
+foreach(HEADER ${LIBRARY_HEADERS})
+    file(RELATIVE_PATH HEADER_RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/src ${HEADER})
+    get_filename_component(HEADER_NAME ${HEADER} NAME)
+    get_filename_component(HEADER_PATH ${HEADER_RELATIVE} DIRECTORY)
+
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
+    file(COPY ${HEADER} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
+endforeach()
 
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)
@@ -54,7 +66,7 @@ set_target_properties(vuelto PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT
 
 # Add -Wdeprecated-declarations for GCC and Clang
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_C_COMPILER_ID MATCHES "Clang")
-    add_compile_options(-Wdeprecated-declarations "-W#warnings")
+    add_compile_options(-Wdeprecated-declarations)
 endif()
 
 # Optionally, create an executable for testing
