@@ -1,5 +1,11 @@
+<h1 align="center">
 <p align="center">
 <img width="1400" alt="banner" src="https://github.com/dimkauzh/vuelto/assets/106883655/2363d776-2669-41f2-b31f-a235de8bea82">
+
+A Game Engine build with GLFW and OpenGL using C++
+ 
+</h1>
+
 
 ## Table of Contents
  - [Installation](INSTALLATION.md)
