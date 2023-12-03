@@ -1,19 +1,19 @@
 # Linux
-You have to have X11, OpenGL, GLEW, CMake and a C compiler installed.
+You have to have X11, OpenGL, CMake and a C compiler installed.
 ## X11
 On Debian and derivates like Ubuntu and Linux Mint the xorg-dev meta-package pulls in the development packages for all of X11.
 ```bash
-sudo apt install xorg-dev libglew-dev
+sudo apt install xorg-dev
 ```
 
 On Fedora and derivatives like Red Hat the X11 extension packages libXcursor-devel, libXi-devel, libXinerama-devel and libXrandr-devel required by GLFW pull in all its other dependencies.
 ```bash
-sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel libglew-dev
+sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
 ```
 
 On FreeBSD the X11 headers are installed along the end-user X11 packages, so if you have an X server running you should have the headers as well. If not, install the xorgproto package.
 ```bash
-pkg install xorgproto libglew-dev
+pkg install xorgproto
 ```
 
 On Cygwin the libXcursor-devel, libXi-devel, libXinerama-devel, libXrandr-devel and libXrender-devel packages in the Libs section of the GUI installer will install all the headers and other development related files GLFW requires for X11.
