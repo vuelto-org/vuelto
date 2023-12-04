@@ -27,22 +27,12 @@ set_property(TARGET vuelto PROPERTY CXX_STANDARD 11)
 # Set the include directories for the library
 target_include_directories(vuelto PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/vuelto/vendor/stb_image>
     $<INSTALL_INTERFACE:include>
 )
 
-# Copy header files with folder structure under src
-foreach(HEADER ${LIBRARY_HEADERS})
-    file(RELATIVE_PATH HEADER_RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/src ${HEADER})
-    get_filename_component(HEADER_NAME ${HEADER} NAME)
-    get_filename_component(HEADER_PATH ${HEADER_RELATIVE} DIRECTORY)
-
-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
-    file(COPY ${HEADER} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
-endforeach()
-
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)
-target_sources(vuelto PRIVATE src/vuelto/vendor/stb_image/stb_image.h)
 
 # On macOS, link against the OpenGL framework
 if(APPLE)

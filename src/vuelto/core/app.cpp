@@ -37,6 +37,11 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
 
   if (!MultipleWindowsEnabled) glfwMakeContextCurrent(glfw_window);
 
+  glEnable(GL_BLEND);
+  glEnable(GL_TEXTURE_2D);
+
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   Window window;
   window.width = width;
   window.height = height;
@@ -65,7 +70,7 @@ void Window::MakeContextCurrent() { glfwMakeContextCurrent(window); }
 void Window::Refresh() {
   glfwSwapBuffers(window);
   if (!Application::MultipleWindowsEnabled) glfwPollEvents();
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
 }
 
 }  // namespace Vuelto

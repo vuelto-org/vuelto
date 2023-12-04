@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../tools/definitions.hpp"
+#define STB_IMAGE_IMPLEMENTATION
 #include "../vendor/stb_image/stb_image.h"
 #include "app.hpp"
 
@@ -46,8 +47,8 @@ Renderer2D::Image Renderer2D::LoadImage(const char* imagePath, float x, float y,
   Image image;
 
   // Load the image using stb_image
-  int imgWidth, imgHeight, numChannels;
-  unsigned char* imageData = stbi_load(imagePath, &imgWidth, &imgHeight, &numChannels, 0);
+  int imgWidth, imgHeight, channels;
+  unsigned char* imageData = stbi_load(imagePath, &imgWidth, &imgHeight, &channels, 4);  // Force 4 channels (RGBA)
 
   if (!imageData) {
     std::cerr << "Failed to load image: " << imagePath << std::endl;
@@ -77,10 +78,8 @@ Renderer2D::Image Renderer2D::LoadImage(const char* imagePath, float x, float y,
 }
 
 void Renderer2D::Image::DrawImage() {
-  // Bind the texture
   glBindTexture(GL_TEXTURE_2D, texture);
 
-  // Draw a quad with the specified dimensions
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f, 0.0f);
   glVertex2f(x, y);
@@ -92,7 +91,6 @@ void Renderer2D::Image::DrawImage() {
   glVertex2f(x, y + height);
   glEnd();
 
-  // Unbind the texture
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 

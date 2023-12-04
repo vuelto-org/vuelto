@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "../tools/definitions.hpp"
 
 namespace Vuelto {
