@@ -1,6 +1,4 @@
-#include "../include/vuelto/Vuelto.hpp"
-#include <iostream>
-
+#include "../src/Vuelto.hpp"
 
 int main() {
   Vuelto::Application::Init();
@@ -9,18 +7,11 @@ int main() {
 
   Vuelto::Renderer2D renderer = Vuelto::Application::CreateRenderer2D(win);
 
-  int width, height;
-
-  Vuelto::Renderer2D::Image image = renderer.LoadImage("test/image.png", 0, 0, width, height);
+  Vuelto::Renderer2D::Image img = renderer.LoadImage("test/image.png", 100.0f, 100.0f, 200.0f, 150.0f);
 
   while (!win.WindowShouldClose()) {
-    renderer.DrawRect(0.1, 0.1, 0.5, 0.5, 0.6, 0.4, 0.8);
-
-    image.DrawImage();
-
-    if (Vuelto::Input::IsKeyPressed(win, Vuelto::Keys::Space)) std::cout << "Space key pressed!" << std::endl;
-
-
+    renderer.DrawRect(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1);
+    img.DrawImage();
     win.Refresh();
   }
 

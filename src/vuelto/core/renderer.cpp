@@ -1,16 +1,11 @@
 #include "renderer.hpp"
 
-#include <fstream>
 #include <iostream>
-#include <sstream>
+#include <vector>
 
-#include "../shaders/shader.hpp"
 #include "../tools/definitions.hpp"
-#include "app.hpp"
-
-#define STB_IMAGE_IMPLEMENTATION
 #include "../vendor/stb_image/stb_image.h"
-
+#include "app.hpp"
 
 namespace Vuelto {
 namespace Application {
@@ -22,191 +17,89 @@ Vuelto::Renderer2D CreateRenderer2D(Window win) {
 
 }  // namespace Application
 
-const char* vertexShaderSourceRect = Vuelto::Shader::ReadShaderFile("src/vuelto/shaders/vertexRect.glsl");
-const char* fragmentShaderSourceRect = Vuelto::Shader::ReadShaderFile("src/vuelto/shaders/fragmentRect.glsl");
+std::vector<Renderer2D::Image> v;
 
-const char* vertexShaderSourceImage = Vuelto::Shader::ReadShaderFile("src/vuelto/shaders/vertexRect.glsl");
-const char* fragmentShaderSourceImage = Vuelto::Shader::ReadShaderFile("src/vuelto/shaders/fragmentRect.glsl");
-
-void Renderer2D::DrawRect(float x, float y, float width, float height, float r, float g, float b) {
-  float vertices[] = {x, y, 0.0f, x + width, y, 0.0f, x + width, y + height, 0.0f, x, y + height, 0.0f};
-
-  unsigned int VBO, VAO;
-  glGenBuffers(1, &VBO);
-  glGenVertexArrays(1, &VAO);
-
-  glBindVertexArray(VAO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  unsigned int vertexShader, fragmentShader, shaderProgram;
-  vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &vertexShaderSourceRect, NULL);
-  glCompileShader(vertexShader);
-
-  fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &fragmentShaderSourceRect, NULL);
-  glCompileShader(fragmentShader);
-
-  shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
-  glUseProgram(shaderProgram);
-
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
-
-  int colorLocation = glGetUniformLocation(shaderProgram, "color");
-  glUniform3f(colorLocation, r, g, b);
-
-  // Draw the rectangle
-  glBindVertexArray(VAO);
-  glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-  // Cleanup
-  glDeleteVertexArrays(1, &VAO);
-  glDeleteBuffers(1, &VBO);
-  glDeleteProgram(shaderProgram);
-}
-
-void Renderer2D::DrawRectWithShader(float x, float y, float width, float height, const char* colorShader) {
-  float vertices[] = {x, y, 0.0f, x + width, y, 0.0f, x + width, y + height, 0.0f, x, y + height, 0.0f};
-
-  unsigned int VBO, VAO;
-  glGenBuffers(1, &VBO);
-  glGenVertexArrays(1, &VAO);
-
-  glBindVertexArray(VAO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  unsigned int vertexShader, fragmentShader, shaderProgram;
-  vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &vertexShaderSourceRect, NULL);
-  glCompileShader(vertexShader);
-
-  fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &colorShader, NULL);
-  glCompileShader(fragmentShader);
-
-  shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
-  glUseProgram(shaderProgram);
-
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
-
-  // Draw the rectangle
-  glBindVertexArray(VAO);
-  glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-  // Cleanup
-  glDeleteVertexArrays(1, &VAO);
-  glDeleteBuffers(1, &VBO);
-  glDeleteProgram(shaderProgram);
+void Renderer2D::DrawRect(float x, float y, float height, float width, float color1, float color2, float color3) {
+  glBegin(GL_QUADS);
+  glColor3f(color1, color2, color3);
+  glVertex2f(x, y);
+  glVertex2f(x + width, y);
+  glVertex2f(x + width, y + height);
+  glVertex2f(x, y + height);
+  glEnd();
 }
 
 void Renderer2D::SetBackgroundColor(float color1, float color2, float color3) {
   glClearColor(color1, color2, color3, 1);
 }
 
-Renderer2D::Image Renderer2D::LoadImage(const char* imagePath, int x, int y, int& width, int& height) {
-      // Load image using stb_image
-    int channels;
-    unsigned char* image = stbi_load(imagePath, &width, &height, &channels, STBI_rgb_alpha);
+void Renderer2D::DrawLine(int x1, int x2, int y1, int y2, float color1, float color2, float color3) {
+  glLineWidth(1);
+  glBegin(GL_LINES);
+  glColor3f(color1, color2, color3);
+  glVertex2f(x1, y1);
+  glVertex2f(x2, y2);
+  glEnd();
+}
 
-    if (!image)
-    {
-        std::cerr << "Failed to load image: " << imagePath << std::endl;
-    }
+Renderer2D::Image Renderer2D::LoadImage(const char* imagePath, float x, float y, float width, float height) {
+  Image image;
 
-    // Generate texture
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-    glGenerateMipmap(GL_TEXTURE_2D);
+  // Load the image using stb_image
+  int imgWidth, imgHeight, numChannels;
+  unsigned char* imageData = stbi_load(imagePath, &imgWidth, &imgHeight, &numChannels, 0);
 
-    // Free image data
-    stbi_image_free(image);
-    Renderer2D::Image img;
-    img.texture = texture;
-    img.x = x;
-    img.y = y;
-    img.width = width;
-    img.height = height;
+  if (!imageData) {
+    std::cerr << "Failed to load image: " << imagePath << std::endl;
+    return image;  // Return an empty image on failure
+  }
 
-    return img;
+  glGenTextures(1, &image.texture);
+  glBindTexture(GL_TEXTURE_2D, image.texture);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+
+  // Set texture parameters
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  stbi_image_free(imageData);  // Free the image data after loading
+
+  image.x = x;
+  image.y = y;
+  image.width = width;
+  image.height = height;
+
+  v.push_back(image);
+
+  return image;
 }
 
 void Renderer2D::Image::DrawImage() {
-    // Set up vertex data, buffers, etc.
-    float vertices[] = {
-        // Positions      // Texture Coords
-        x, y, 0.0f, 0.0f, 0.0f,
-        x + width, y, 0.0f, 1.0f, 0.0f,
-        x + width, y + height, 0.0f, 1.0f, 1.0f,
-        x, y + height, 0.0f, 0.0f, 1.0f
-    };
+  // Bind the texture
+  glBindTexture(GL_TEXTURE_2D, texture);
 
-    unsigned int VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+  // Draw a quad with the specified dimensions
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f, 0.0f);
+  glVertex2f(x, y);
+  glTexCoord2f(1.0f, 0.0f);
+  glVertex2f(x + width, y);
+  glTexCoord2f(1.0f, 1.0f);
+  glVertex2f(x + width, y + height);
+  glTexCoord2f(0.0f, 1.0f);
+  glVertex2f(x, y + height);
+  glEnd();
 
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  // Unbind the texture
+  glBindTexture(GL_TEXTURE_2D, 0);
+}
 
-    // Position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-
-    // Texture coordinate attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // Compile Shaders
-    unsigned int vertexShader, fragmentShader, shaderProgram;
-
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSourceImage, NULL);
-    glCompileShader(vertexShader);
-
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSourceImage, NULL);
-    glCompileShader(fragmentShader);
-
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    // Check for shader compilation and linking errors here
-
-    // Use shader program
-    glUseProgram(shaderProgram);
-
-    // Bind texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
-
-    // Draw quad
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 4);
-
-    // Cleanup
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+void Renderer2D::CleanUp() {
+  for (auto& image : v) {
+    glDeleteTextures(1, &image.texture);
+  }
 }
 
 }  // namespace Vuelto

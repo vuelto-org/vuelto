@@ -8,8 +8,6 @@ add_subdirectory(libs/glfw)
 file(GLOB LIBRARY_SOURCES
     "src/vuelto/core/*.cpp"
     "src/vuelto/event/*.cpp"
-    "src/vuelto/shaders/*.cpp"
-    "src/vuelto/vendor/GLAD/src/*.c"
 )
 
 file(GLOB LIBRARY_HEADERS
@@ -17,10 +15,8 @@ file(GLOB LIBRARY_HEADERS
     "src/vuelto/core/*.hpp"
     "src/vuelto/event/*.hpp"
     "src/vuelto/tools/*.hpp"
-    "src/vuelto/shaders/*.hpp"
     "src/vuelto/vendor/GLFW/*.h"
     "src/vuelto/vendor/stb_image/*.h"
-    "src/vuelto/vendor/GLAD/include/glad/*.h"
 )
 
 # Create the shared library
@@ -31,7 +27,6 @@ set_property(TARGET vuelto PROPERTY CXX_STANDARD 11)
 # Set the include directories for the library
 target_include_directories(vuelto PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/vuelto/vendor/GLAD/include>
     $<INSTALL_INTERFACE:include>
 )
 
@@ -48,9 +43,6 @@ endforeach()
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)
 target_sources(vuelto PRIVATE src/vuelto/vendor/stb_image/stb_image.h)
-
-# Add GLAD as a dependency
-# target_link_libraries(vuelto PUBLIC glad)
 
 # On macOS, link against the OpenGL framework
 if(APPLE)

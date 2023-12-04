@@ -1,5 +1,13 @@
-// clang-format off
-#include "../vendor/GLAD/include/glad/glad.h"
-#define GLFW_NO_OPENGL_INIT
-#include "../vendor/GLFW/glfw3.h"
-// clang-format on
+#ifdef __APPLE__
+// #define GL_SILENCE_DEPRECATION
+#include <OpenGL/gl.h>
+#elif __linux__
+#define GL_SILENCE_DEPRECATION
+#include <GL/gl.h>
+#elif _WIN32
+#elif _WIN64
+#else
+#include <GL/gl.h>
+#endif
+
+#include <GLFW/glfw3.h>

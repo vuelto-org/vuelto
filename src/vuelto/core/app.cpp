@@ -26,12 +26,6 @@ void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) 
 
 Window CreateWindow(int width, int height, const char *title, bool resizable) {
   glfwWindowHint(GLFW_RESIZABLE, resizable);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  // #ifdef __APPLE__
-  //   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  // #endif
 
   GLFWwindow *glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!glfw_window) {
@@ -42,10 +36,6 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   glfwSetFramebufferSizeCallback(glfw_window, framebuffer_size_callback);
 
   if (!MultipleWindowsEnabled) glfwMakeContextCurrent(glfw_window);
-
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    std::cout << "Failed to initialize GLAD" << std::endl;
-  }
 
   Window window;
   window.width = width;
