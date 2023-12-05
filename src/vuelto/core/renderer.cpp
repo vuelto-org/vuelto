@@ -1,7 +1,6 @@
 #include "renderer.hpp"
 
 #include <iostream>
-#include <vector>
 
 #include "../tools/definitions.hpp"
 #define STB_IMAGE_IMPLEMENTATION
@@ -18,7 +17,8 @@ Vuelto::Renderer2D CreateRenderer2D(Window win) {
 
 }  // namespace Application
 
-std::vector<Renderer2D::Image> v;
+Renderer2D::Image image_array[5];
+int size = 0;
 
 void Renderer2D::DrawRect(float x, float y, float height, float width, float color1, float color2, float color3) {
   glBegin(GL_QUADS);
@@ -28,6 +28,8 @@ void Renderer2D::DrawRect(float x, float y, float height, float width, float col
   glVertex2f(x + width, y + height);
   glVertex2f(x, y + height);
   glEnd();
+
+  glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 void Renderer2D::SetBackgroundColor(float color1, float color2, float color3) {
@@ -46,33 +48,31 @@ void Renderer2D::DrawLine(int x1, int x2, int y1, int y2, float color1, float co
 Renderer2D::Image Renderer2D::LoadImage(const char* imagePath, float x, float y, float width, float height) {
   Image image;
 
-  // Load the image using stb_image
   int imgWidth, imgHeight, channels;
   unsigned char* imageData = stbi_load(imagePath, &imgWidth, &imgHeight, &channels, 4);  // Force 4 channels (RGBA)
 
   if (!imageData) {
     std::cerr << "Failed to load image: " << imagePath << std::endl;
-    return image;  // Return an empty image on failure
+    return image;
   }
 
   glGenTextures(1, &image.texture);
   glBindTexture(GL_TEXTURE_2D, image.texture);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 
-  // Set texture parameters
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-  stbi_image_free(imageData);  // Free the image data after loading
+  stbi_image_free(imageData);
 
   image.x = x;
   image.y = y;
   image.width = width;
   image.height = height;
 
-  v.push_back(image);
+  image_array[size++] = image;
 
   return image;
 }
@@ -95,7 +95,7 @@ void Renderer2D::Image::DrawImage() {
 }
 
 void Renderer2D::CleanUp() {
-  for (auto& image : v) {
+  for (auto& image : image_array) {
     glDeleteTextures(1, &image.texture);
   }
 }
