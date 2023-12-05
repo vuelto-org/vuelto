@@ -1,7 +1,6 @@
 #include "renderer.hpp"
 
 #include <iostream>
-#include <vector>
 
 #include "../tools/definitions.hpp"
 #define STB_IMAGE_IMPLEMENTATION
