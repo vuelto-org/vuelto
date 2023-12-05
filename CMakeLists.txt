@@ -6,15 +6,15 @@ add_subdirectory(libs/glfw)
 
 # Set the source files for the library
 file(GLOB LIBRARY_SOURCES
-    "src/vuelto/core/*.cpp"
-    "src/vuelto/event/*.cpp"
+    "src/vuelto/core/*.c"
+    "src/vuelto/event/*.c"
 )
 
 file(GLOB LIBRARY_HEADERS
-    "src/Vuelto.hpp"
-    "src/vuelto/core/*.hpp"
-    "src/vuelto/event/*.hpp"
-    "src/vuelto/tools/*.hpp"
+    "src/Vuelto.h"
+    "src/vuelto/core/*.h"
+    "src/vuelto/event/*.h"
+    "src/vuelto/tools/*.h"
     "src/vuelto/vendor/GLFW/*.h"
     "src/vuelto/vendor/stb_image/*.h"
 )
@@ -22,7 +22,7 @@ file(GLOB LIBRARY_HEADERS
 # Create the shared library
 add_library(vuelto SHARED ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 
-set_property(TARGET vuelto PROPERTY CXX_STANDARD 11)
+set_property(TARGET vuelto PROPERTY C_STANDARD 99)
 
 # Set the include directories for the library
 target_include_directories(vuelto PUBLIC
@@ -30,6 +30,17 @@ target_include_directories(vuelto PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/vuelto/vendor/stb_image>
     $<INSTALL_INTERFACE:include>
 )
+
+# Copy header files with folder structure under src
+foreach(HEADER ${LIBRARY_HEADERS})
+    file(RELATIVE_PATH HEADER_RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/src ${HEADER})
+    get_filename_component(HEADER_NAME ${HEADER} NAME)
+    get_filename_component(HEADER_PATH ${HEADER_RELATIVE} DIRECTORY)
+
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
+    file(COPY ${HEADER} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/include/vuelto/${HEADER_PATH})
+endforeach()
+
 
 # Link GLFW to the library
 target_link_libraries(vuelto PUBLIC glfw)

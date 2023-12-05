@@ -1,22 +1,19 @@
-#include "../src/Vuelto.hpp"
+#include "../src/Vuelto.h"
 
 int main() {
-  Vuelto::Application::Init();
+  vueltoInit();
 
-  Vuelto::Window win = Vuelto::Application::CreateWindow(800, 600, "test", false);
+  Vuelto_Window win = vueltoCreateWindow(800, 600, "test", true);
 
-  Vuelto::Renderer2D renderer = Vuelto::Application::CreateRenderer2D(win);
+  Vuelto_Image img = vueltoLoadImage("test/coin.png", -0.2, -0.2, 0.7, 0.7);
 
-  Vuelto::Renderer2D::Image img = renderer.LoadImage("test/image.png", -0.2, -0.2, 0.7, 0.7);
+  while (!vueltoWindowShouldClose(win)) {
+    // vueltoDrawRect(-1, -1, 0.5, 0.5, 0.5, 0.1, 0.8);
+    vueltoDrawImage(img);
 
-  while (!win.WindowShouldClose()) {
-    renderer.DrawRect(-1, -1, 0.5, 0.5, 0.5, 0.1, 0.8);
-    img.DrawImage();
-    win.Refresh();
+    vueltoRefresh(win);
   }
 
-  renderer.CleanUp();
-
-  Vuelto::Application::Terminate();
+  vueltoTerminate();
   return 0;
 }
