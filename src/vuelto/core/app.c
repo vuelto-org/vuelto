@@ -1,22 +1,18 @@
-#include "app.hpp"
+#include "app.h"
 
-#include <iostream>
-
-#include "../tools/definitions.hpp"
-
-namespace Vuelto {
-namespace Application {
+#include "../tools/definitions.h"
+#include "renderer.h"
 
 bool MultipleWindowsEnabled = false;
 
-void Init() {
+void vueltoInit() {
   if (!glfwInit()) {
-    std::cout << "GLFW Init failed\n";
+    printf("GLFW Init failed\n");
   }
 }
 
-void InitMultipleWindows() {
-  Init();
+void vueltoInitMultipleWindows() {
+  vueltoInit();
   MultipleWindowsEnabled = true;
 }
 
@@ -24,13 +20,13 @@ void framebuffer_size_callback(GLFWwindow *window, int newWidth, int newHeight) 
   glViewport(0, 0, newWidth, newHeight);
 }
 
-Window CreateWindow(int width, int height, const char *title, bool resizable) {
+Vuelto_Window vueltoCreateWindow(int width, int height, const char *title, bool resizable) {
   glfwWindowHint(GLFW_RESIZABLE, resizable);
 
   GLFWwindow *glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!glfw_window) {
     glfwTerminate();
-    std::cout << "GLFW Window creation failed\n";
+    printf("GLFW Window creation failed\n");
   }
 
   glfwSetFramebufferSizeCallback(glfw_window, framebuffer_size_callback);
@@ -42,7 +38,7 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  Window window;
+  Vuelto_Window window;
   window.width = width;
   window.height = height;
   window.title = title;
@@ -51,26 +47,23 @@ Window CreateWindow(int width, int height, const char *title, bool resizable) {
   return window;
 }
 
-void DestroyWindow(Window win) { glfwDestroyWindow(win.window); }
+void vueltoDestroyWindow(Vuelto_Window win) { glfwDestroyWindow(win.window); }
 
-void Terminate() { glfwTerminate(); }
+void vueltoTerminate() { glfwTerminate(); }
 
-}  // namespace Application
-
-bool Window::WindowShouldClose() {
-  while (!glfwWindowShouldClose(window)) {
+bool vueltoWindowShouldClose(Vuelto_Window win) {
+  while (!glfwWindowShouldClose(win.window)) {
     return false;
   }
-  glfwDestroyWindow(window);
+  vueltoCleanUp();
+  glfwDestroyWindow(win.window);
   return true;
 }
 
-void Window::MakeContextCurrent() { glfwMakeContextCurrent(window); }
+void vueltoMakeContextCurrent(Vuelto_Window win) { glfwMakeContextCurrent(win.window); }
 
-void Window::Refresh() {
-  glfwSwapBuffers(window);
-  if (!Application::MultipleWindowsEnabled) glfwPollEvents();
+void vueltoRefresh(Vuelto_Window win) {
+  glfwSwapBuffers(win.window);
+  if (!MultipleWindowsEnabled) glfwPollEvents();
   glClear(GL_COLOR_BUFFER_BIT);
 }
-
-}  // namespace Vuelto
