@@ -11,3 +11,7 @@ CMakeFiles/
 **.dll
 **.so
 **.exe
+
+.idea
+.cmake
+Testing
