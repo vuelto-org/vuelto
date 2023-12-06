@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/app.h"
+#include "../core/structs.h"
 #include "../tools/definitions.h"
 
 void vueltoPollEvents();

@@ -1,6 +1,14 @@
-# Linux
-You have to have X11, OpenGL, CMake and a C compiler installed.
-## X11
+---
+hide:
+  - navigation
+---
+
+# Installation
+
+## Linux
+You have to have X11-dev-packages, CMake and a C compiler installed.
+
+### X11
 On Debian and derivates like Ubuntu and Linux Mint the xorg-dev meta-package pulls in the development packages for all of X11.
 ```bash
 sudo apt install xorg-dev
@@ -18,17 +26,17 @@ pkg install xorgproto
 
 On Cygwin the libXcursor-devel, libXi-devel, libXinerama-devel, libXrandr-devel and libXrender-devel packages in the Libs section of the GUI installer will install all the headers and other development related files GLFW requires for X11.
 
-# Mac
+## Mac
 You have to have Xcode command line tools and CMake inatalled.
 ## Xcode
 ```bash
 xcode-select --install
 ```
 
-# Windows
+## Windows
 You have to have CMake and a C compiler installed. You can also use WSL, if so follow the Linux instructions.
 
-# Building Vuelto
+## Building Vuelto
 Clone the repository
 ```bash
 git clone --recurse-submodules https://github.com/dimkauzh/vuelto.git
