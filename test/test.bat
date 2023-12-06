@@ -1,5 +1,5 @@
 @echo off
-cmake .
+cmake . -G "Unix Makefiles"
 make
 .\bin\test\test_program.exe
 del .\bin\test\test_program.exe
