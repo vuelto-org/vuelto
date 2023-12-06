@@ -59,6 +59,10 @@ bool vueltoWindowShouldClose(Vuelto_Window win) {
   return true;
 }
 
+void vueltoWindowSetRezisable(Vuelto_Window win, bool resizable) {
+  glfwSetWindowAttrib(win.window, GLFW_RESIZABLE, resizable);
+}
+
 void vueltoMakeContextCurrent(Vuelto_Window win) { glfwMakeContextCurrent(win.window); }
 
 void vueltoRefresh(Vuelto_Window win) {

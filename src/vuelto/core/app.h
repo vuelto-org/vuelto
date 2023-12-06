@@ -10,3 +10,4 @@ void vueltoTerminate();
 bool vueltoWindowShouldClose(Vuelto_Window win);
 void vueltoRefresh(Vuelto_Window win);
 void vueltoMakeContextCurrent(Vuelto_Window win);
+void vueltoWindowSetRezisable(Vuelto_Window win, bool resizable);

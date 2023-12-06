@@ -1,0 +1,37 @@
+site_name: Vuelto
+site_description: A Game Engine build with GLFW and OpenGL with support for C/C++!
+
+repo_name: dimkauzh/vuelto
+repo_url: https://github.com/dimkauzh/vuelto
+
+nav:
+  - Home: "index.md"
+  # - Wiki: "wiki/index.md"
+  # - Tutorial: "tutorials/index.md"
+
+theme:
+  name: material
+
+  logo: logo/icon-no-bg.png
+  favicon: logo/icon-no-bg.png
+
+  features:
+    - navigation.path
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - toc.follow
+    - navigation.expand
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
