@@ -1,4 +1,5 @@
 #include "../tools/definitions.h"
+#include "structs.h"
 
 void vueltoDrawRect(float x, float y, float width, float height, float r, float g, float b);
 void vueltoSetBackgroundColor(float color1, float color2, float color3);

@@ -1,7 +1,5 @@
 #include "event.h"
 
-#include "../tools/definitions.h"
-
 void vueltoPollEvents() { glfwPollEvents(); }
 
 bool vueltoKeyPressed(Vuelto_Window window, int keyCode) { return (glfwGetKey(window.window, keyCode) == GLFW_PRESS); }

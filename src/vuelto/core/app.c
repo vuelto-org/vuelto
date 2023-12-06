@@ -1,6 +1,5 @@
 #include "app.h"
 
-#include "../tools/definitions.h"
 #include "renderer.h"
 
 bool MultipleWindowsEnabled = false;

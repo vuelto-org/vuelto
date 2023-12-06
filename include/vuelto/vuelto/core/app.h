@@ -1,4 +1,5 @@
 #include "../tools/definitions.h"
+#include "structs.h"
 
 void vueltoInit();
 void vueltoInitMultipleWindows();
