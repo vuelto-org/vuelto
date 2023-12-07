@@ -6,6 +6,7 @@ repo_url: https://github.com/dimkauzh/vuelto
 
 nav:
   - Home: "index.md"
+  - Todo: "todo/index.md"
   # - Wiki: "wiki/index.md"
   # - Tutorial: "tutorials/index.md"
 
