@@ -1,5 +1,5 @@
 site_name: Vuelto
-site_description: A Game Engine build with GLFW and OpenGL with support for C/C++!
+site_description: A Go Game Engine build with GLFW and OpenGL.
 
 repo_name: dimkauzh/vuelto
 repo_url: https://github.com/dimkauzh/vuelto
