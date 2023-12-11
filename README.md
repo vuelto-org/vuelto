@@ -23,11 +23,7 @@
 <p/>
 
 ## Usage
-There are a couple ways to use vuelto with your project, but I recommend using it as a submodule.
-Use the following things to achieve good usage with vuelto
- - [CMake](https://cmake.org/)
- - [Git](https://git-scm.com/)
- - [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+Currently were not supporting any way of using this project. After a little work on this project, we will add it to pkg.go.dev so you can use it for your own project, for now, you can only clone this repo and use it.
 
 ## Contributing
 We are fully open to contributions, but I will check and test your code before merging it into the dev branch. All your code thats accepted will only be merged into the dev branch, and will be later released with the next release.
@@ -36,4 +32,4 @@ We are fully open to contributions, but I will check and test your code before m
 Vuelto is licensed under the [GPLv3 Licence](LICENSE).
 
 ## About
-Vuelto is a game engine built with GLFW and OpenGL using C. My goal is to achieve a good and easy to use game engine for everyone. I am currently working on the engine, and I am not planning to releasing Vuelto (its not ready). I am planning to release a website for the engine that contains a documentation for the engine and a roadmap/changelog. I am also planning to release a couple of tutorials on how to use vuelto. I hope you will enjoy using vuelto. Have fun!
+Vuelto is a game engine built with GLFW and OpenGL using Go. My goal is to achieve a good and easy to use game engine for everyone. I am currently working on the engine, and I am not planning to releasing Vuelto (its not ready). I am planning to release a website for the engine that contains a documentation for the engine and a roadmap/changelog. I am also planning to release a couple of tutorials on how to use vuelto. I hope you will enjoy using vuelto. Have fun!
