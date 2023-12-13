@@ -1,4 +1,4 @@
-module github.com/dimkauzh/vuelto
+module github.com/dimkauzh/festi
 
 go 1.18
 
