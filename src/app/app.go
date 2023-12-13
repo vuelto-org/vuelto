@@ -6,4 +6,9 @@ type Application struct {
   MultipleWindow bool
 }
 
+func NewApp() Application {
+  return Application{nil, false}
+}
+
+
 
