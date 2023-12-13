@@ -2,9 +2,13 @@ name: CMake on multiple platforms
 
 on:
   push:
-    branches: ["dev"]
+    branches:
+      - dev
+      - master
   pull_request:
-    branches: ["dev"]
+    branches:
+      - dev
+      - master
 
 jobs:
   build:
@@ -38,22 +42,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
       - name: Install libxrandr (Linux)
         if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get install xorg-dev
 
-      - name: Git Submodule Update
-        run: |
-          git submodule update --init --recursive
-          git submodule foreach 'git fetch origin main:main || true'
-          git submodule foreach 'git checkout main || true'
-
-      - name: Build (Windows)
-        if: startsWith(matrix.os, 'windows')
-        run: cmake -G "Unix Makefiles" .
-
-      - name: Build
-        run: cmake .
+      - name: Go tidy
+        run: go mod tidy
 
       - name: Test
-        run: make
+        run: go build -o bin/test/test test/test1/test.go 
