@@ -55,5 +55,5 @@ jobs:
       - name: Go tidy
         run: go mod tidy
 
-      - name: Test
-        run: go build -o bin/test/test test/test1/test.go 
+      - name: Make Ci_Check
+        run: make ci_check

@@ -42,9 +42,7 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
   
   window.SetFramebufferSizeCallback(framebuffersizecallback)
 
-	if !a.MultipleWindow {
-    window.MakeContextCurrent()
-  }
+  window.MakeContextCurrent()
 
 	if err := gl.Init(); err != nil {
 		log.Fatalln("Error init gl:", err)
