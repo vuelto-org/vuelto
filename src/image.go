@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"image"
 	"image/draw"
+	_ "image/jpeg"
 	_ "image/png" // Assuming you're using PNG images
-  _ "image/jpeg"
 
 	"os"
 
@@ -13,8 +13,8 @@ import (
 )
 
 type Image struct {
-	texture uint32
-	x, y    float32
+	texture       uint32
+	x, y          float32
 	width, height float32
 }
 
@@ -62,13 +62,12 @@ func (img Image) Draw() {
 	gl.TexCoord2f(0.0, 0.0)
 	gl.Vertex2f(img.x, img.y)
 	gl.TexCoord2f(1.0, 0.0)
-	gl.Vertex2f(img.x + img.width, img.y)
+	gl.Vertex2f(img.x+img.width, img.y)
 	gl.TexCoord2f(1.0, 1.0)
-	gl.Vertex2f(img.x + img.width, img.y + img.height)
+	gl.Vertex2f(img.x+img.width, img.y+img.height)
 	gl.TexCoord2f(0.0, 1.0)
-	gl.Vertex2f(img.x, img.y + img.height)
+	gl.Vertex2f(img.x, img.y+img.height)
 	gl.End()
 
 	gl.BindTexture(gl.TEXTURE_2D, 0)
 }
-

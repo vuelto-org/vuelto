@@ -9,14 +9,14 @@ import (
 )
 
 type Window struct {
-  Application Application
-  Window *glfw.Window
-  Title string
-  Width, Height int
+	Application   Application
+	Window        *glfw.Window
+	Title         string
+	Width, Height int
 }
 
 func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
-  gl.Viewport(0, 0, int32(newWidth), int32(newHeight))
+	gl.Viewport(0, 0, int32(newWidth), int32(newHeight))
 }
 
 func (a Application) NewWindow(title string, width, height int, resizable bool) Window {
@@ -39,10 +39,10 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 	if err != nil {
 		log.Fatalln("Error create window:", err)
 	}
-  
-  window.SetFramebufferSizeCallback(framebuffersizecallback)
 
-  window.MakeContextCurrent()
+	window.SetFramebufferSizeCallback(framebuffersizecallback)
+
+	window.MakeContextCurrent()
 
 	if err := gl.Init(); err != nil {
 		log.Fatalln("Error init gl:", err)
@@ -51,47 +51,46 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 
 	gl.Ortho(0, float64(width), float64(height), 0, -1, 1)
 
-  gl.Enable(gl.BLEND);
-  gl.Enable(gl.TEXTURE_2D);
+	gl.Enable(gl.BLEND)
+	gl.Enable(gl.TEXTURE_2D)
 
-  gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
 	return Window{a, window, title, width, height}
 }
 
-func (w* Window) SetResizable(resizable bool) {
-  if resizable {
-    w.Window.SetAttrib(glfw.Resizable, glfw.True)
-  } else {
-    w.Window.SetAttrib(glfw.Resizable, glfw.False)
-  }
-}
-
-func (w* Window) Close() bool {
-  for !w.Window.ShouldClose() {
-		glfw.PollEvents()
-    return false
+func (w *Window) SetResizable(resizable bool) {
+	if resizable {
+		w.Window.SetAttrib(glfw.Resizable, glfw.True)
+	} else {
+		w.Window.SetAttrib(glfw.Resizable, glfw.False)
 	}
-  clean()
-  return true
 }
 
-func (w* Window) Refresh() {
-  w.Window.SwapBuffers()
-  gl.Clear(gl.COLOR_BUFFER_BIT)
+func (w *Window) Close() bool {
+	for !w.Window.ShouldClose() {
+		glfw.PollEvents()
+		return false
+	}
+	clean()
+	return true
 }
 
-func (w* Window) SetContextCurrent() {
-  w.Window.MakeContextCurrent()
+func (w *Window) Refresh() {
+	w.Window.SwapBuffers()
+	gl.Clear(gl.COLOR_BUFFER_BIT)
+}
+
+func (w *Window) SetContextCurrent() {
+	w.Window.MakeContextCurrent()
 }
 
 func (w *Window) Destroy() {
-  w.Window.Destroy()
+	w.Window.Destroy()
 }
 
 func clean() {
-  for _, i := range ImageArray {
-    gl.DeleteTextures(1, &i.texture)
-  } 
+	for _, i := range ImageArray {
+		gl.DeleteTextures(1, &i.texture)
+	}
 }
-

@@ -1,13 +1,9 @@
 package src
 
-
 type Application struct {
-  Window *Window
+	Window *Window
 }
 
 func NewApp() Application {
-  return Application{nil}
+	return Application{nil}
 }
-
-
-
