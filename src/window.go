@@ -1,4 +1,4 @@
-package app
+package src
 
 import (
 	"log"
@@ -6,7 +6,6 @@ import (
 
 	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
-  ren2d "github.com/dimkauzh/vuelto/src/renderer2d"
 )
 
 type Window struct {
@@ -14,6 +13,10 @@ type Window struct {
   Window *glfw.Window
   Title string
   Width, Height int
+}
+
+func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
+  gl.Viewport(0, 0, int32(newWidth), int32(newHeight))
 }
 
 func (a Application) NewWindow(title string, width, height int, resizable bool) Window {
@@ -33,18 +36,26 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 	glfw.WindowHint(glfw.ContextVersionMinor, 1)
 
 	window, err := glfw.CreateWindow(width, height, title, nil, nil)
-
 	if err != nil {
 		log.Fatalln("Error create window:", err)
 	}
+  
+  window.SetFramebufferSizeCallback(framebuffersizecallback)
 
-	window.MakeContextCurrent()
+	if !a.MultipleWindow {
+    window.MakeContextCurrent()
+  }
 
 	if err := gl.Init(); err != nil {
 		log.Fatalln("Error init gl:", err)
 
 	}
 	gl.Ortho(0, float64(width), float64(height), 0, -1, 1)
+
+  gl.Enable(gl.BLEND);
+  gl.Enable(gl.TEXTURE_2D);
+
+  gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 	return Window{a, window, title, width, height}
 }
@@ -57,18 +68,22 @@ func (w* Window) SetResizable(resizable bool) {
   }
 }
 
-func (w* Window) ShouldClose() bool {
+func (w* Window) Close() bool {
   for !w.Window.ShouldClose() {
 		w.Window.SwapBuffers()
 		glfw.PollEvents()
     gl.Clear(gl.COLOR_BUFFER_BIT)
 
-    return true
+    return false
 	}
-  return false
+  return true
 }
 
-
-func (w Window) NewRenderer2D() ren2d.Renderer2D {
-  return ren2d.Renderer2D{}
+func (w* Window) SetContextCurrent() {
+  w.Window.MakeContextCurrent()
 }
+
+func (w *Window) Destroy() {
+  w.Window.Destroy()
+}
+
