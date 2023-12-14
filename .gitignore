@@ -4,7 +4,6 @@ cmake_install.cmake
 bin/
 build/
 .DS_Store
-Makefile
 CMakeFiles/
 .vscode/
 **.a
