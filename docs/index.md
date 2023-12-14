@@ -1,3 +1,9 @@
+---
+hide:
+  - navigation
+---
+
+
 <h1 align="center">
 <p align="center">
 <img width="1400" alt="banner" src="https://github.com/dimkauzh/vuelto/assets/106883655/2363d776-2669-41f2-b31f-a235de8bea82">
@@ -14,7 +20,7 @@
 
 
 ## Table of Contents
- - [Installation](INSTALLATION.md)
+ - [Installation](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
  - [Usage](#usage)
  - [Contributing](#contributing)
  - [License](#license)
@@ -23,7 +29,18 @@
 <p/>
 
 ## Usage
-Currently were not supporting any way of using this project. After a little work on this project, we will add it to pkg.go.dev so you can use it for your own project, for now, you can only clone this repo and use it.
+### Needed things
+There are some extra things you will need to use Vuelto, [see them here](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
+
+### Go package
+We have a Go package published, so run this command to add it to your go.mod:
+```bash
+go get github.com/dimkauzh/vuelto
+
+```
+
+### Examples
+All of our examples are inside the examples directory, so take a look there is you want a example.
 
 ## Contributing
 We are fully open to contributions, but I will check and test your code before merging it into the dev branch. All your code thats accepted will only be merged into the dev branch, and will be later released with the next release.

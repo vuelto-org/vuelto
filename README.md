@@ -14,7 +14,7 @@
 
 
 ## Table of Contents
- - [Installation](INSTALLATION.md)
+ - [Installation](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
  - [Usage](#usage)
  - [Contributing](#contributing)
  - [License](#license)
@@ -23,6 +23,9 @@
 <p/>
 
 ## Usage
+### Needed things
+There are some extra things you will need to use Vuelto, [see them here](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
+
 ### Go package
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash

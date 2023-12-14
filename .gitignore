@@ -1,6 +1,4 @@
 
-CMakeCache.txt
-cmake_install.cmake
 bin/
 build/
 .DS_Store
@@ -14,3 +12,4 @@ CMakeFiles/
 .idea
 .cmake
 Testing
+site
