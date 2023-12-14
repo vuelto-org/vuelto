@@ -5,13 +5,11 @@ on:
     branches:
       - dev
       - master
-      - go-rewrite
 
   pull_request:
     branches:
       - dev
       - master
-      - go-rewrite
 
 jobs:
   build:
@@ -50,11 +48,11 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: Update Packages
+      - name: Update Packages (Linux
         if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get update
 
-      - name: Install libxrandr (Linux)
+      - name: Install Xorg Packages (Linux)
         if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get install xorg-dev
 
