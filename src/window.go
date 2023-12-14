@@ -70,13 +70,16 @@ func (w* Window) SetResizable(resizable bool) {
 
 func (w* Window) Close() bool {
   for !w.Window.ShouldClose() {
-		w.Window.SwapBuffers()
 		glfw.PollEvents()
-    gl.Clear(gl.COLOR_BUFFER_BIT)
-
     return false
 	}
+  clean()
   return true
+}
+
+func (w* Window) Refresh() {
+  w.Window.SwapBuffers()
+  gl.Clear(gl.COLOR_BUFFER_BIT)
 }
 
 func (w* Window) SetContextCurrent() {
@@ -85,5 +88,11 @@ func (w* Window) SetContextCurrent() {
 
 func (w *Window) Destroy() {
   w.Window.Destroy()
+}
+
+func clean() {
+  for _, i := range ImageArray {
+    gl.DeleteTextures(1, &i.texture)
+  } 
 }
 
