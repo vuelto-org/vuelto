@@ -36,15 +36,9 @@ xcode-select --install
 ## Windows
 You have to have a C compiler installed. You can also use WSL, if so follow the Linux instructions.
 
-## Building Vuelto
-Clone the repository
+### Go package
+We have a Go package published, so run this command to add it to your go.mod:
 ```bash
-git clone --recurse-submodules https://github.com/dimkauzh/vuelto.git
-```
-Build the repo with cmake (choose toolchain yourself)
-```bash
-cd vuelto
-mkdir build
-cd build
-cmake ..
+go get github.com/dimkauzh/vuelto
+
 ```
