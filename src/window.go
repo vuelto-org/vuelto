@@ -50,6 +50,7 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 		log.Fatalln("Error init gl:", err)
 
 	}
+
 	gl.Ortho(0, float64(width), float64(height), 0, -1, 1)
 
   gl.Enable(gl.BLEND);
