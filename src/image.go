@@ -1,11 +1,11 @@
 package src
 
 import (
-	"fmt"
 	"image"
 	"image/draw"
 	_ "image/jpeg"
-	_ "image/png" // Assuming you're using PNG images
+	_ "image/png"
+	"log"
 
 	"os"
 
@@ -23,13 +23,13 @@ var ImageArray []Image
 func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Image {
 	file, err := os.Open(imagePath)
 	if err != nil {
-		fmt.Errorf("Failed to open image: %v", err)
+		log.Fatalln("Failed to open image: ", err)
 	}
 	defer file.Close()
 
 	img, _, err := image.Decode(file)
 	if err != nil {
-		fmt.Errorf("Failed to decode image: %v", err)
+		log.Fatalln("Failed to decode image: ", err)
 	}
 
 	rgba := image.NewRGBA(img.Bounds())

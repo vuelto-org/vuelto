@@ -1,4 +1,4 @@
-module github.com/dimkauzh/vuelto
+module github.com/dimkauzh/vuelto-engine
 
 go 1.18
 
@@ -17,6 +17,3 @@ require (
 	golang.org/x/mobile v0.0.0-20190415191353-3e0bab5405d6 // indirect
 	golang.org/x/sys v0.0.0-20190626150813-e07cf5db2756 // indirect
 )
-
-// To remove the old versions of vuelto
-retract [v0.1.0, v0.6.2]
