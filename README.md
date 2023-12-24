@@ -25,7 +25,7 @@
 <p/>
 
 ## Usage
-### Needed things
+### Requirements
 There are some extra things you will need to use Vuelto, [see them here](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
 
 ### Go package

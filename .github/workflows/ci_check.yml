@@ -44,13 +44,13 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: Update Packages (Linux
+      - name: Update Packages (Linux)
         if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get update
 
-      - name: Install Xorg Packages (Linux)
+      - name: Install Packages (Linux)
         if: startsWith(matrix.os, 'ubuntu')
-        run: sudo apt-get install xorg-dev
+        run: sudo apt-get install xorg-dev libasound2-dev
 
       - name: Go tidy
         run: go mod tidy
