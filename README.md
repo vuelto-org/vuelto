@@ -9,7 +9,7 @@
   <a href="https://github.com/dimkauzh/vuelto"><img alt="GitHub license" src="https://img.shields.io/github/license/dimkauzh/vuelto"></a>
   <a href="https://github.com/dimkauzh/vuelto"><img alt="CI Check" src="https://github.com/dimkauzh/vuelto/actions/workflows/ci_check.yml/badge.svg"></a>
   <a href="https://github.com/dimkauzh/vuelto"><img alt="Lines of code" src="https://tokei.rs/b1/github/dimkauzh/vuelto?category=lines"></a>
-  <a href="https://goreportcard.com/report/github.com/dimkauzh/vuelto"><img alt="Report card" src="https://goreportcard.com/badge/github.com/dimkauzh/vuelto"></a>
+  <a href="https://goreportcard.com/report/github.com/dimkauzh/vuelto-engine"><img alt="Report card" src="https://goreportcard.com/badge/github.com/dimkauzh/vuelto-engine"></a>
 </p>
 
 </h1>
