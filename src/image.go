@@ -57,8 +57,11 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 
 func (img Image) Draw() {
 	gl.BindTexture(gl.TEXTURE_2D, img.texture)
+	defer gl.BindTexture(gl.TEXTURE_2D, 0)
 
 	gl.Begin(gl.QUADS)
+	defer gl.End()
+
 	gl.TexCoord2f(0.0, 0.0)
 	gl.Vertex2f(img.x, img.y)
 	gl.TexCoord2f(1.0, 0.0)
@@ -67,7 +70,4 @@ func (img Image) Draw() {
 	gl.Vertex2f(img.x+img.width, img.y+img.height)
 	gl.TexCoord2f(0.0, 1.0)
 	gl.Vertex2f(img.x, img.y+img.height)
-	gl.End()
-
-	gl.BindTexture(gl.TEXTURE_2D, 0)
 }

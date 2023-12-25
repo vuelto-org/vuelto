@@ -14,6 +14,7 @@
 
 </h1>
 
+Vuelto is a Game engine that handles windowing, input, rendering and audio. It build to be lightweight but still powerfull enough to handles hard tasks.
 
 ## Table of Contents
  - [Installation](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
@@ -22,8 +23,6 @@
  - [License](#license)
  - [About](#about)
 
-<p/>
-
 ## Usage
 ### Requirements
 There are some extra things you will need to use Vuelto, [see them here](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
@@ -31,11 +30,31 @@ There are some extra things you will need to use Vuelto, [see them here](https:/
 ### Go package
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash
-go get github.com/dimkauzh/vuelto-engine
+go get github.com/dimkauzh/vuelto-engine@latest
 ```
 
 ### Examples
-All of our examples are inside the examples directory, so take a look there is you want a example.
+All of our examples are inside the examples directory, so take a look there is you want a example. Here one small example of how easy Vuelto is:
+```go
+package main
+
+import (
+	"github.com/dimkauzh/vuelto-engine"
+)
+
+func main() {
+	a := vuelto.NewApp()
+	w := a.NewWindow("hi", 800, 600, false)
+	ren := a.NewRenderer2D()
+
+	image := ren.LoadImage("test/image.png", 300, 300, 250, 250)
+
+	for !w.Close() {
+		image.Draw()
+		w.Refresh()
+	}
+}
+```
 
 ## Contributing
 We are fully open to contributions, but I will check and test your code before merging it into the dev branch. All your code thats accepted will only be merged into the dev branch, and will be later released with the next release.

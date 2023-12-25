@@ -13,7 +13,7 @@ func main() {
 	ren := a.NewRenderer2D()
 
 	image := ren.LoadImage("test/image.png", 300, 300, 250, 250)
-	image1 := ren.LoadImage("test/image.png", 100, 100, 150, 150)
+	image1 := ren.LoadImage("test/tree.png", 100, 100, 150, 150)
 
 	for !w1.Close() && !w2.Close() {
 		w1.SetContextCurrent()

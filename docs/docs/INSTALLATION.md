@@ -8,7 +8,6 @@ hide:
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash
 go get github.com/dimkauzh/vuelto-engine
-
 ```
 
 # Installation
