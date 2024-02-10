@@ -27,7 +27,7 @@ sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel 
 ```
 
 ## Mac
-You have to have Xcode command line tools and CMake inatalled.
+You have to have Xcode command line tools installed.
 #### Xcode
 ```bash
 xcode-select --install
