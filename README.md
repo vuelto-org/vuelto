@@ -1,15 +1,15 @@
 <h1 align="center">
 <p align="center">
-<img width="1400" alt="banner" src="https://github.com/dimkauzh/vuelto/assets/106883655/2363d776-2669-41f2-b31f-a235de8bea82">
+<img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/assets/106883655/2363d776-2669-41f2-b31f-a235de8bea82">
 
 <h1 align="center">A Go Game Engine build with GLFW and OpenGL.</h1>
 
 <p align="center">
-  <a href="https://github.com/dimkauzh/vuelto"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/dimkauzh/vuelto"></a>
-  <a href="https://github.com/dimkauzh/vuelto"><img alt="GitHub license" src="https://img.shields.io/github/license/dimkauzh/vuelto"></a>
-  <a href="https://github.com/dimkauzh/vuelto"><img alt="CI Check" src="https://github.com/dimkauzh/vuelto/actions/workflows/ci_check.yml/badge.svg"></a>
-  <a href="https://github.com/dimkauzh/vuelto"><img alt="Lines of code" src="https://tokei.rs/b1/github/dimkauzh/vuelto?category=lines"></a>
-  <a href="https://goreportcard.com/report/github.com/dimkauzh/vuelto-engine"><img alt="Report card" src="https://goreportcard.com/badge/github.com/dimkauzh/vuelto-engine"></a>
+  <a href="https://github.com/vuelto-org/vuelto"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vuelto-org/vuelto"></a>
+  <a href="https://github.com/vuelto-org/vuelto"><img alt="GitHub license" src="https://img.shields.io/github/license/vuelto-org/vuelto"></a>
+  <a href="https://github.com/vuelto-org/vuelto"><img alt="CI Check" src="https://github.com/vuelto-org/vuelto/actions/workflows/ci_check.yml/badge.svg"></a>
+  <a href="https://github.com/vuelto-org/vuelto"><img alt="Lines of code" src="https://tokei.rs/b1/github/vuelto-org/vuelto?category=lines"></a>
+  <a href="https://goreportcard.com/report/github.com/vuelto-org/vuelto"><img alt="Report card" src="https://goreportcard.com/badge/github.com/vuelto-org/vuelto"></a>
 </p>
 
 </h1>
@@ -17,7 +17,7 @@
 Vuelto is a Game engine that handles windowing, input, rendering and audio. It build to be lightweight but still powerfull enough to handles hard tasks.
 
 ## Table of Contents
- - [Installation](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
+ - [Installation](https://vuelto-org.github.io/vuelto/docs/INSTALLATION/)
  - [Usage](#usage)
  - [Contributing](#contributing)
  - [License](#license)
@@ -25,12 +25,12 @@ Vuelto is a Game engine that handles windowing, input, rendering and audio. It b
 
 ## Usage
 ### Requirements
-There are some extra things you will need to use Vuelto, [see them here](https://dimkauzh.github.io/vuelto/docs/INSTALLATION/)
+There are some extra things you will need to use Vuelto, [see them here](https://vuelto-org.github.io/vuelto/docs/INSTALLATION/)
 
 ### Go package
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash
-go get github.com/dimkauzh/vuelto-engine@latest
+go get github.com/vuelto-org/vuelto@latest
 ```
 
 ### Examples
@@ -39,7 +39,7 @@ All of our examples are inside the examples directory, so take a look there is y
 package main
 
 import (
-	"github.com/dimkauzh/vuelto-engine"
+	"github.com/vuelto-org/vuelto"
 )
 
 func main() {

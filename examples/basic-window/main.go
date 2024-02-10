@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/dimkauzh/vuelto-engine"
+	"github.com/vuelto-org/vuelto"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package vuelto
 
 import (
-	"github.com/dimkauzh/vuelto-engine/src"
+	"github.com/vuelto-org/vuelto/src"
 )
 
 type Application = src.Application
