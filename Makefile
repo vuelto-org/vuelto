@@ -10,7 +10,7 @@ publish:
 	git push origin $(VERSION)
 	make proxy-release
 
-proxy-release:
+proxy-publish:
 	GOPROXY=proxy.golang.org go list -m github.com/vuelto-org/vuelto@$(VERSION)
 
 ci_check:
