@@ -8,7 +8,7 @@ publish:
 	git commit -m "$(MESSAGE)"
 	git tag $(VERSION)
 	git push origin $(VERSION)
-	make proxy-release
+	make proxy-publish
 
 proxy-publish:
 	GOPROXY=proxy.golang.org go list -m github.com/vuelto-org/vuelto@$(VERSION)

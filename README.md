@@ -8,7 +8,7 @@
   <a href="https://github.com/vuelto-org/vuelto"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vuelto-org/vuelto"></a>
   <a href="https://github.com/vuelto-org/vuelto"><img alt="GitHub license" src="https://img.shields.io/github/license/vuelto-org/vuelto"></a>
   <a href="https://github.com/vuelto-org/vuelto"><img alt="CI Check" src="https://github.com/vuelto-org/vuelto/actions/workflows/ci_check.yml/badge.svg"></a>
-  <a href="https://github.com/vuelto-org/vuelto"><img alt="Lines of code" src="https://tokei.rs/b1/github/vuelto-org/vuelto?category=lines"></a>
+  <a href="https://github.com/vuelto-org/vuelto"><img alt="Lines of code" src="https://www.aschey.tech/tokei/github/vuelto-org/vuelto"></a>
   <a href="https://goreportcard.com/report/github.com/vuelto-org/vuelto"><img alt="Report card" src="https://goreportcard.com/badge/github.com/vuelto-org/vuelto"></a>
 </p>
 
