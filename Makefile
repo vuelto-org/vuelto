@@ -1,7 +1,7 @@
 VERSION = none
 MESSAGE = Release version $(VERSION)
 
-.PHONY: release proxy-release
+.PHONY: release proxy-release ci_check
 
 release:
 	git add .
