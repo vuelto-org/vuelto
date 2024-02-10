@@ -1,9 +1,9 @@
 VERSION = none
 MESSAGE = Release version $(VERSION)
 
-.PHONY: release proxy-release ci_check
+.PHONY: publish proxy-release ci_check
 
-release:
+publish:
 	git add .
 	git commit -m "$(MESSAGE)"
 	git tag $(VERSION)
