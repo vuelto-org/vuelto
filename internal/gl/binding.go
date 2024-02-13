@@ -96,3 +96,7 @@ func Ortho(left, right, bottom, top, near, far float64) {
 func Viewport(x, y, width, height int) {
   C.glViewport(C.int(x), C.int(y), C.int(width), C.int(height))
 }
+
+func LineWidth(width float32) {
+  C.glLineWidth(C.float(width))
+}

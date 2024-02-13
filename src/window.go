@@ -2,8 +2,7 @@ package src
 
 import (
 	"log"
-	"runtime"
-
+	
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/vuelto-org/vuelto/internal/gl"
 )
@@ -20,8 +19,6 @@ func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
 }
 
 func (a Application) NewWindow(title string, width, height int, resizable bool) Window {
-	runtime.LockOSThread()
-
 	if err := glfw.Init(); err != nil {
 		log.Fatalln("failed to initialize glfw:", err)
 	}

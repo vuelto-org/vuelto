@@ -1,6 +1,6 @@
 package src
 
-import "github.com/go-gl/gl/v2.1/gl"
+import "github.com/vuelto-org/vuelto/internal/gl"
 
 func (r *Renderer2D) DrawRect(x, y, width, height float32, color [3]float32) {
 	gl.Begin(gl.QUADS)

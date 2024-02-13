@@ -17,16 +17,17 @@
 Vuelto is a Game engine that handles windowing, input, rendering and audio. It build to be lightweight but still powerfull enough to handles hard tasks.
 
 ## Table of Contents
- - [Installation](https://vuelto-org.github.io/vuelto/docs/INSTALLATION/)
+ - [Installation](INSTALLATION.MD)
  - [Usage](#usage)
  - [Contributing](#contributing)
  - [Discord Server](https//discord.gg/gZqdRXbbqg)
+ - [Roadmap](ROADMAP.md)
  - [License](#license)
  - [About](#about)
 
 ## Usage
 ### Requirements
-There are some extra things you will need to use Vuelto, [see them here](https://vuelto-org.github.io/vuelto/docs/INSTALLATION/)
+There are some extra things you will need to use Vuelto, [see them here](INSTALLATION.MD)
 
 ### Go package
 We have a Go package published, so run this command to add it to your go.mod:
