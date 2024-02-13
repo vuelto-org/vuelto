@@ -1,5 +1,9 @@
 package vuelto
 
+/*
+#cgo linux LDFLAGS: -lGL
+*/
+
 import (
 	"github.com/vuelto-org/vuelto/src"
 )

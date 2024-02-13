@@ -20,6 +20,7 @@ Vuelto is a Game engine that handles windowing, input, rendering and audio. It b
  - [Installation](https://vuelto-org.github.io/vuelto/docs/INSTALLATION/)
  - [Usage](#usage)
  - [Contributing](#contributing)
+ - [Discord Server](https//discord.gg/gZqdRXbbqg)
  - [License](#license)
  - [About](#about)
 
@@ -55,6 +56,9 @@ func main() {
 	}
 }
 ```
+
+## Discord server
+We have a [discord server at this link](https://discord.gg/gZqdRXbbqg)
 
 ## Contributing
 We are fully open to contributions, but I will check and test your code before merging it into the dev branch. All your code thats accepted will only be merged into the dev branch, and will be later released with the next release.

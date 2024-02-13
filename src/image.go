@@ -10,10 +10,11 @@ import (
 	"os"
 
 	"github.com/go-gl/gl/v2.1/gl"
+	cgl "github.com/vuelto-org/vuelto/internal/gl"
 )
 
 type Image struct {
-	texture       uint32
+	texture       uint
 	x, y          float32
 	width, height float32
 }
@@ -36,8 +37,8 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{}, draw.Over)
 
 	var vueltoImage Image
-	gl.GenTextures(1, &vueltoImage.texture)
-	gl.BindTexture(gl.TEXTURE_2D, vueltoImage.texture)
+	cgl.GenTextures(1, vueltoImage.texture)
+	cgl.BindTexture(gl.TEXTURE_2D, vueltoImage.texture)
 	gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, int32(rgba.Rect.Size().X), int32(rgba.Rect.Size().Y), 0, gl.RGBA, gl.UNSIGNED_BYTE, gl.Ptr(rgba.Pix))
 
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -56,7 +57,7 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 }
 
 func (img Image) Draw() {
-	gl.BindTexture(gl.TEXTURE_2D, img.texture)
+	cgl.BindTexture(gl.TEXTURE_2D, img.texture)
 	defer gl.BindTexture(gl.TEXTURE_2D, 0)
 
 	gl.Begin(gl.QUADS)

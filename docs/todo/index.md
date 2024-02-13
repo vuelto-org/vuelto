@@ -5,33 +5,35 @@ hide:
 ---
 
 ## V1
-  - [x] Application
+- [x] Application
     - [x] Window
     - [x] Input
-  - [ ] Renderer
+
+- [ ] Renderer
     - [x] OpenGL
     - [x] Rects
     - [x] Images
     - [ ] Animations
-  - [ ] Physics Engine
-    - [ ] Collision
-    - [ ] Gravity
-    - [ ] Forces
-  - [ ] Audio
-    - [ ] Sound
-    - [ ] Music
-  - [ ] Math
+
+- [x] Audio
+    - [x] Sound
+    - [x] Music
+
+- [ ] Math
     - [ ] Vectors
-  - [ ] Docs
+
+- [ ] Docs
     - [x] Website
     - [ ] Tutorials
     - [ ] Docs
+
+- [ ] Custom OpenGL
 
 ## V2
  - [ ] GUI
   - [ ] Buttons
   - [ ] Text
-  - [ ] Images
+
  - [ ] Networking
   - [ ] TCP
   - [ ] UDP
