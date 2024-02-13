@@ -9,8 +9,7 @@ import (
 
 	"os"
 
-	"github.com/go-gl/gl/v2.1/gl"
-	cgl "github.com/vuelto-org/vuelto/internal/gl"
+	"github.com/vuelto-org/vuelto/internal/gl"
 )
 
 type Image struct {
@@ -37,14 +36,14 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{}, draw.Over)
 
 	var vueltoImage Image
-	cgl.GenTextures(1, vueltoImage.texture)
-	cgl.BindTexture(gl.TEXTURE_2D, vueltoImage.texture)
-	cgl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, rgba.Rect.Size().X, rgba.Rect.Size().Y, 0, gl.RGBA, gl.UNSIGNED_BYTE, rgba.Pix)
+	gl.GenTextures(1, vueltoImage.texture)
+	gl.BindTexture(gl.TEXTURE_2D, vueltoImage.texture)
+	gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, rgba.Rect.Size().X, rgba.Rect.Size().Y, 0, gl.RGBA, gl.UNSIGNED_BYTE, rgba.Pix)
 
-	cgl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-	cgl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-	cgl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-	cgl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
 
 	vueltoImage.x = x
 	vueltoImage.y = y
@@ -57,7 +56,7 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 }
 
 func (img Image) Draw() {
-	cgl.BindTexture(gl.TEXTURE_2D, img.texture)
+	gl.BindTexture(gl.TEXTURE_2D, img.texture)
 	defer gl.BindTexture(gl.TEXTURE_2D, 0)
 
 	gl.Begin(gl.QUADS)

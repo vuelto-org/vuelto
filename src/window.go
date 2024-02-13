@@ -4,9 +4,8 @@ import (
 	"log"
 	"runtime"
 
-	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
-	cgl "github.com/vuelto-org/vuelto/internal/gl"
+	"github.com/vuelto-org/vuelto/internal/gl"
 )
 
 type Window struct {
@@ -17,7 +16,7 @@ type Window struct {
 }
 
 func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
-	gl.Viewport(0, 0, int32(newWidth), int32(newHeight))
+	gl.Viewport(0, 0, newWidth, newHeight)
 }
 
 func (a Application) NewWindow(title string, width, height int, resizable bool) Window {
@@ -44,11 +43,6 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 	window.SetFramebufferSizeCallback(framebuffersizecallback)
 
 	window.MakeContextCurrent()
-
-	if err := gl.Init(); err != nil {
-		log.Fatalln("Error init gl:", err)
-
-	}
 
 	gl.Ortho(0, float64(width), float64(height), 0, -1, 1)
 
@@ -92,6 +86,6 @@ func (w *Window) Destroy() {
 
 func clean() {
 	for _, i := range ImageArray {
-		cgl.DeleteTextures(1, i.texture)
+		gl.DeleteTextures(1, i.texture)
 	}
 }

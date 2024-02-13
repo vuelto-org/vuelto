@@ -23,6 +23,12 @@ const (
 
   RGBA               = uint(C.GL_RGBA)
   UNSIGNED_BYTE      = uint(C.GL_UNSIGNED_BYTE)
+
+  SRC_ALPHA          = uint(C.GL_SRC_ALPHA)
+  ONE_MINUS_SRC_ALPHA= uint(C.GL_ONE_MINUS_SRC_ALPHA)
+  BLEND              = uint(C.GL_BLEND)
+  DEPTH_BUFFER_BIT   = uint(C.GL_DEPTH_BUFFER_BIT)
+  COLOR_BUFFER_BIT   = uint(C.GL_COLOR_BUFFER_BIT)
 )
 
 func Begin(state uint) {
@@ -69,4 +75,24 @@ func TexCoord2f(s, t float32) {
 
 func TexImage2D(target, level, internalFormat uint, width, height int, border, format, typ uint, pixels []byte) {
   C.glTexImage2D(C.uint(target), C.int(level), C.int(internalFormat), C.int(width), C.int(height), C.int(border), C.uint(format), C.uint(typ), C.CBytes(pixels))
+}
+
+func Clear(mask uint) {
+  C.glClear(C.uint(mask))
+}
+
+func Enable(cap uint) {
+  C.glEnable(C.uint(cap))
+}
+
+func BlendFunc(sfactor, dfactor uint) {
+  C.glBlendFunc(C.uint(sfactor), C.uint(dfactor))
+}
+
+func Ortho(left, right, bottom, top, near, far float64) {
+  C.glOrtho(C.double(left), C.double(right), C.double(bottom), C.double(top), C.double(near), C.double(far))
+}
+
+func Viewport(x, y, width, height int) {
+  C.glViewport(C.int(x), C.int(y), C.int(width), C.int(height))
 }
