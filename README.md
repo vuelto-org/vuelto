@@ -58,7 +58,7 @@ func main() {
 ```
 
 ## Discord server
-We have a [discord server at this link](https://discord.gg/gZqdRXbbqg)
+We have a [discord server at this link](https://discord.gg/gZqdRXbbqg). It's a fun server mainly created for vuelto, but you can talk about whatever you want.
 
 ## Contributing
 We are fully open to contributions, but I will check and test your code before merging it into the dev branch. All your code thats accepted will only be merged into the dev branch, and will be later released with the next release.
