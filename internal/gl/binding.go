@@ -46,6 +46,11 @@ func GenTextures(n int32, textures uint) {
   C.glGenTextures(C.int(n), (*C.uint)(&texture))
 }
 
+func DeleteTextures(n int, textures uint) {
+  texture := uint32(textures)
+  C.glDeleteTextures(C.int(n), (*C.uint)(&texture))
+}
+
 func BindTexture(target, texture uint) {
   C.glBindTexture(C.uint(target), C.uint(texture))
 }

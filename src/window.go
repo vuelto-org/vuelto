@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
+	cgl "github.com/vuelto-org/vuelto/internal/gl"
 )
 
 type Window struct {
@@ -91,6 +92,6 @@ func (w *Window) Destroy() {
 
 func clean() {
 	for _, i := range ImageArray {
-		gl.DeleteTextures(1, &i.texture)
+		cgl.DeleteTextures(1, i.texture)
 	}
 }
