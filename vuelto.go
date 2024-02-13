@@ -2,6 +2,8 @@ package vuelto
 
 /*
 #cgo linux LDFLAGS: -lGL
+#cgo darwin LDFLAGS: -framework OpenGL
+#cgo windows LDFLAGS: -lopengl32
 */
 
 import (

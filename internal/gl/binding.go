@@ -58,3 +58,11 @@ func BindTexture(target, texture uint) {
 func TexParameteri(target, pname, param uint) {
   C.glTexParameteri(C.uint(target), C.uint(pname), C.int(param))
 }
+
+func TexCoord2f(s, t float32) {
+  C.glTexCoord2f(C.float(s), C.float(t))
+}
+
+func TexImage2D(target, level, internalFormat uint, width, height int, border, format, typ uint, pixels []byte) {
+  C.glTexImage2D(C.uint(target), C.int(level), C.int(internalFormat), C.int(width), C.int(height), C.int(border), C.uint(format), C.uint(typ), C.CBytes(pixels))
+}
