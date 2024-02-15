@@ -46,7 +46,7 @@ import (
 
 func main() {
 	a := vuelto.NewApp()
-	w := a.NewWindow("hi", 800, 600, false)
+	w := a.NewWindow("Example Window - Vuelto", 800, 600, false)
 	ren := a.NewRenderer2D()
 
 	image := ren.LoadImage("test/image.png", 300, 300, 250, 250)
