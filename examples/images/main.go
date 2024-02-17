@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/vuelto-org/vuelto"
+	vuelto "github.com/vuelto-org/vuelto"
 )
 
 func main() {

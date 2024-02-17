@@ -1,4 +1,4 @@
-package src
+package vuelto
 
 type Renderer2D struct{}
 

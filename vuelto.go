@@ -1,11 +1,11 @@
 package vuelto
 
-
 import (
-	"github.com/vuelto-org/vuelto/src"
+	src "github.com/vuelto-org/vuelto/src"
+	vuelto "github.com/vuelto-org/vuelto/src"
 )
 
-type Application = src.Application
+type Application = vuelto.Application
 type Window = src.Window
 type Image = src.Image
 type Renderer2D = src.Renderer2D

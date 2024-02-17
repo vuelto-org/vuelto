@@ -9,24 +9,31 @@
     - [x] Images
     - [ ] Animations
 
-- [ ] Custom window system
-    - [ ] Linux
-        - [ ] X11
-        - [ ] Wayland
+- [ ] Shapes
+    - [ ] Rects
+    - [ ] Lines
 
 - [x] Audio
     - [x] Sound
     - [x] Music
 
-- [ ] Math
-    - [ ] Vectors
+- [x] Math
+    - [x] Vector2D
+    - [x] Vector3D
 
-- [x] Docs
-    - [x] Website
+    - [x] Add Together
+    - [x] Subtract
+
+- [ ] Docs
+    - [ ] Docs (Github)
+    - [ ] GoDoc
 
 
 ## V2
 - [ ] Custom window system
+    - [ ] Linux
+        - [ ] X11
+        - [ ] Wayland
     - [ ] Windows
         - [ ] Win32
     - [ ] Mac
