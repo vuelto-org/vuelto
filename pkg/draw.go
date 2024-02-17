@@ -1,4 +1,4 @@
-package vuelto
+package pkg
 
 import "github.com/vuelto-org/vuelto/internal/gl"
 

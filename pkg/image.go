@@ -1,4 +1,4 @@
-package vuelto
+package pkg
 
 import (
 	"image"

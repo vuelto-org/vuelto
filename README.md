@@ -20,10 +20,18 @@ Vuelto is a Game engine that handles windowing, input, rendering and audio. It b
  - [Installation](INSTALLATION.MD)
  - [Usage](#usage)
  - [Contributing](#contributing)
+ - [Docs](docs/test.md)
  - [Discord Server](https//discord.gg/gZqdRXbbqg)
  - [Roadmap](ROADMAP.md)
  - [License](#license)
  - [About](#about)
+
+<br>
+
+[![Button Click]][Link] 
+[![Button Hover]][Link] 
+
+<br>
 
 ## Usage
 ### Requirements
@@ -41,21 +49,25 @@ All of our examples are inside the examples directory, so take a look there is y
 package main
 
 import (
-	"github.com/vuelto-org/vuelto"
+	vuelto "github.com/vuelto-org/vuelto/pkg"
 )
 
 func main() {
-	a := vuelto.NewApp()
-	w := a.NewWindow("Example Window - Vuelto", 800, 600, false)
-	ren := a.NewRenderer2D()
+	vuelto.Init()
+	w := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
+	ren := w.NewRenderer2D()
 
 	image := ren.LoadImage("test/image.png", 300, 300, 250, 250)
+	image1 := ren.LoadImage("test/image.png", 100, 100, 150, 150)
 
 	for !w.Close() {
 		image.Draw()
+		image1.Draw()
 		w.Refresh()
+
 	}
 }
+
 ```
 
 ## Discord server

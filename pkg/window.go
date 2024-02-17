@@ -1,4 +1,4 @@
-package vuelto
+package pkg
 
 import (
 	"log"
@@ -8,7 +8,6 @@ import (
 )
 
 type Window struct {
-	Application   Application
 	Window        *glfw.Window
 	Title         string
 	Width, Height int
@@ -18,7 +17,7 @@ func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
 	gl.Viewport(0, 0, newWidth, newHeight)
 }
 
-func (a Application) NewWindow(title string, width, height int, resizable bool) Window {
+func NewWindow(title string, width, height int, resizable bool) Window {
 	if err := glfw.Init(); err != nil {
 		log.Fatalln("failed to initialize glfw:", err)
 	}
@@ -48,7 +47,7 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 
 	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
-	return Window{a, window, title, width, height}
+	return Window{window, title, width, height}
 }
 
 func (w *Window) SetResizable(resizable bool) {

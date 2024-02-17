@@ -1,12 +1,9 @@
 package main
 
-import (
-	"github.com/vuelto-org/vuelto"
-)
+import vuelto "github.com/vuelto-org/vuelto/pkg"
 
 func main() {
-	a := vuelto.NewApp()
-	w := a.NewWindow("hi", 800, 600, false)
+	w := vuelto.NewWindow("hi", 800, 600, false)
 
 	for !w.Close() {
 		w.Refresh()

@@ -1,14 +1,13 @@
 package main
 
 import (
-	"github.com/vuelto-org/vuelto"
+	vuelto "github.com/vuelto-org/vuelto/pkg"
 )
 
 func main() {
-	a := vuelto.NewApp()
-	w := a.NewWindow("hi", 800, 600, false)
+	w := vuelto.NewWindow("hi", 800, 600, false)
 
-	ren := a.NewRenderer2D()
+	ren := w.NewRenderer2D()
 
 	for !w.Close() {
 		ren.ClearColor([3]float32{0.3, 0.4, 0.3})

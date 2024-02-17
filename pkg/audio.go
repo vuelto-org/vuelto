@@ -1,4 +1,4 @@
-package vuelto
+package pkg
 
 import (
 	"log"
@@ -21,7 +21,7 @@ type AudioPlayer struct {
 }
 
 // Opens a audio file. It supports two file formats: WAV and MP3. Plays the audio file using Start function. Stop the audio file using Stop function. Close the audio file using Close function.
-func (w *Application) OpenAudioFile(filePath string) AudioPlayer {
+func OpenAudioFile(filePath string) AudioPlayer {
 	f, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal("Error opening audio file: ", filePath)
