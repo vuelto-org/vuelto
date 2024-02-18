@@ -1,5 +1,5 @@
 module github.com/vuelto-org/vuelto
-	
+
 go 1.18
 
 require (

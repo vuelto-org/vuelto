@@ -20,9 +20,16 @@
 - [x] Math
     - [x] Vector2D
     - [x] Vector3D
-
     - [x] Add Together
     - [x] Subtract
+
+- [x] Readme Improvements
+    - [x] Improve the about tab
+    - [x] Improve the text under the banner
+
+- [x] Installation.md
+    - [x] Update the requirements
+    - [x] Clean up old stuffm
 
 - [ ] Docs
     - [ ] Docs (Github)
