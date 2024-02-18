@@ -16,9 +16,9 @@ func main() {
 
 	for !w1.Close() && !w2.Close() {
 		w1.SetContextCurrent()
-		ren1.ClearColor([3]float32{0.3, 0.4, 0.3})
+		ren1.ClearColor([4]int{100, 100, 100, 255})
 
-		ren1.DrawRect(0, 0, 500, 500, [3]float32{0.1, 0.5, 0.7})
+		ren1.DrawRect(0, 0, 500, 500, [4]int{10, 145, 245, 255})
 
 		w1.Refresh()
 		w2.SetContextCurrent()

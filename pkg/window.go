@@ -18,6 +18,7 @@ func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
 	gl.Viewport(0, 0, newWidth, newHeight)
 }
 
+// Creates a new window and returns a Window struct.
 func NewWindow(title string, width, height int, resizable bool) Window {
 	runtime.LockOSThread()
 
@@ -53,6 +54,7 @@ func NewWindow(title string, width, height int, resizable bool) Window {
 	return Window{window, title, width, height}
 }
 
+// Sets the resizable attribute of the window.
 func (w *Window) SetResizable(resizable bool) {
 	if resizable {
 		w.Window.SetAttrib(glfw.Resizable, glfw.True)
@@ -61,6 +63,7 @@ func (w *Window) SetResizable(resizable bool) {
 	}
 }
 
+// Function created for a loop. Returns true when being closed, and returns false when being active.
 func (w *Window) Close() bool {
 	for !w.Window.ShouldClose() {
 		glfw.PollEvents()
@@ -70,17 +73,21 @@ func (w *Window) Close() bool {
 	return true
 }
 
+// Refreshes te window. Run this at the end of your loop (except if you're having multiple windows)
 func (w *Window) Refresh() {
 	w.Window.SwapBuffers()
 	gl.Clear(gl.COLOR_BUFFER_BIT)
 }
 
+// Sets the context of the window to the current context. (Only use when having multiple windows)
 func (w *Window) SetContextCurrent() {
 	w.Window.MakeContextCurrent()
 }
 
+// Destroys the window and cleans up the memory.
 func (w *Window) Destroy() {
 	w.Window.Destroy()
+	clean()
 }
 
 func clean() {

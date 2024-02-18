@@ -20,6 +20,7 @@ type Image struct {
 
 var ImageArray []Image
 
+// Loads a new image and returns a Image struct. Can be later drawn using the Draw() method
 func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Image {
 	file, err := os.Open(imagePath)
 	if err != nil {
@@ -55,6 +56,7 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 	return vueltoImage
 }
 
+// Draws the image thats loaded before.
 func (img Image) Draw() {
 	gl.BindTexture(gl.TEXTURE_2D, img.texture)
 	defer gl.BindTexture(gl.TEXTURE_2D, 0)

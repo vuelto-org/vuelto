@@ -18,17 +18,17 @@ const (
   CLAMP_TO_EDGE      = uint(C.GL_CLAMP_TO_EDGE)
   LINEAR             = uint(C.GL_LINEAR)
 
-  LINES              = uint(C.GL_LINES)
-  QUADS              = uint(C.GL_QUADS)
+  LINES = uint(C.GL_LINES)
+  QUADS = uint(C.GL_QUADS)
 
-  RGBA               = uint(C.GL_RGBA)
-  UNSIGNED_BYTE      = uint(C.GL_UNSIGNED_BYTE)
+  RGBA          = uint(C.GL_RGBA)
+  UNSIGNED_BYTE = uint(C.GL_UNSIGNED_BYTE)
 
-  SRC_ALPHA          = uint(C.GL_SRC_ALPHA)
-  ONE_MINUS_SRC_ALPHA= uint(C.GL_ONE_MINUS_SRC_ALPHA)
-  BLEND              = uint(C.GL_BLEND)
-  DEPTH_BUFFER_BIT   = uint(C.GL_DEPTH_BUFFER_BIT)
-  COLOR_BUFFER_BIT   = uint(C.GL_COLOR_BUFFER_BIT)
+  SRC_ALPHA           = uint(C.GL_SRC_ALPHA)
+  ONE_MINUS_SRC_ALPHA = uint(C.GL_ONE_MINUS_SRC_ALPHA)
+  BLEND               = uint(C.GL_BLEND)
+  DEPTH_BUFFER_BIT    = uint(C.GL_DEPTH_BUFFER_BIT)
+  COLOR_BUFFER_BIT    = uint(C.GL_COLOR_BUFFER_BIT)
 )
 
 func Begin(state uint) {
@@ -41,6 +41,10 @@ func End() {
 
 func Color3f(r, g, b float32) {
   C.glColor3f(C.float(r), C.float(g), C.float(b))
+}
+
+func Color4f(r, g, b, a float32) {
+  C.glColor4f(C.float(r), C.float(g), C.float(b), C.float(a))
 }
 
 func Vertex2f(x, y float32) {
