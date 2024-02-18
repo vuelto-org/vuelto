@@ -5,7 +5,6 @@ import (
 )
 
 func main() {
-	vuelto.Init()
 	w := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
 	ren := w.NewRenderer2D()
 
