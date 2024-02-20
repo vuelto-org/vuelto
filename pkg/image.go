@@ -37,7 +37,7 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{}, draw.Over)
 
 	var textureID uint32
-	gl.GenTextures(1, textureID)
+	gl.GenTextures(1, &textureID)
 
 	gl.BindTexture(gl.TEXTURE_2D, textureID)
 

@@ -56,12 +56,12 @@ func ClearColor(r, g, b, a float32) {
   C.glClearColor(C.float(r), C.float(g), C.float(b), C.float(a))
 }
 
-func GenTextures(n int32, textures uint32) {
-  C.glGenTextures(C.int(n), (*C.uint)(unsafe.Pointer(&textures)))
+func GenTextures(n int32, textures *uint32) {
+  C.glGenTextures(C.int(n), (*C.uint)(unsafe.Pointer(textures)))
 }
 
-func DeleteTextures(n int, textures uint32) {
-  C.glDeleteTextures(C.int(n), (*C.uint)(unsafe.Pointer(&textures)))
+func DeleteTextures(n int, textures *uint32) {
+  C.glDeleteTextures(C.int(n), (*C.uint)(unsafe.Pointer(textures)))
 }
 
 func BindTexture(target, texture uint32) {
