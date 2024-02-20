@@ -69,7 +69,7 @@ func (w *Window) Close() bool {
 		glfw.PollEvents()
 		return false
 	}
-	clean()
+	cleanTex()
 	return true
 }
 
@@ -87,11 +87,5 @@ func (w *Window) SetContextCurrent() {
 // Destroys the window and cleans up the memory.
 func (w *Window) Destroy() {
 	w.Window.Destroy()
-	clean()
-}
-
-func clean() {
-	for _, i := range ImageArray {
-		gl.DeleteTextures(1, i.texture)
-	}
+	cleanTex()
 }

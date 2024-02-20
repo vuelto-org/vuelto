@@ -13,12 +13,12 @@ import (
 )
 
 type Image struct {
-	texture       uint
+	texture       uint32
 	x, y          float32
 	width, height float32
 }
 
-var ImageArray []Image
+var ImageArray []uint32
 
 // Loads a new image and returns a Image struct. Can be later drawn using the Draw() method
 func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Image {
@@ -36,9 +36,11 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 	rgba := image.NewRGBA(img.Bounds())
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{}, draw.Over)
 
-	var vueltoImage Image
-	gl.GenTextures(1, vueltoImage.texture)
-	gl.BindTexture(gl.TEXTURE_2D, vueltoImage.texture)
+	var textureID uint32
+	gl.GenTextures(1, textureID)
+
+	gl.BindTexture(gl.TEXTURE_2D, textureID)
+
 	gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, rgba.Rect.Size().X, rgba.Rect.Size().Y, 0, gl.RGBA, gl.UNSIGNED_BYTE, rgba.Pix)
 
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -46,17 +48,18 @@ func (r *Renderer2D) LoadImage(imagePath string, x, y, width, height float32) Im
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
 
-	vueltoImage.x = x
-	vueltoImage.y = y
-	vueltoImage.width = width
-	vueltoImage.height = height
+	ImageArray = append(ImageArray, textureID)
 
-	ImageArray = append(ImageArray, vueltoImage)
-
-	return vueltoImage
+	return Image{
+		texture: textureID,
+		x:       x,
+		y:       y,
+		width:   width,
+		height:  height,
+	}
 }
 
-// Draws the image thats loaded before.
+// Draws the image that's loaded before.
 func (img Image) Draw() {
 	gl.BindTexture(gl.TEXTURE_2D, img.texture)
 	defer gl.BindTexture(gl.TEXTURE_2D, 0)
@@ -72,4 +75,10 @@ func (img Image) Draw() {
 	gl.Vertex2f(img.x+img.width, img.y+img.height)
 	gl.TexCoord2f(0.0, 1.0)
 	gl.Vertex2f(img.x, img.y+img.height)
+}
+
+func cleanTex() {
+	for _, i := range ImageArray {
+		gl.DeleteTextures(1, &i)
+	}
 }
