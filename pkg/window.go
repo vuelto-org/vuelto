@@ -1,25 +1,25 @@
-package src
+package pkg
 
 import (
 	"log"
 	"runtime"
 
-	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/vuelto-org/vuelto/internal/gl"
 )
 
 type Window struct {
-	Application   Application
 	Window        *glfw.Window
 	Title         string
 	Width, Height int
 }
 
 func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
-	gl.Viewport(0, 0, int32(newWidth), int32(newHeight))
+	gl.Viewport(0, 0, newWidth, newHeight)
 }
 
-func (a Application) NewWindow(title string, width, height int, resizable bool) Window {
+// Creates a new window and returns a Window struct.
+func NewWindow(title string, width, height int, resizable bool) Window {
 	runtime.LockOSThread()
 
 	if err := glfw.Init(); err != nil {
@@ -44,11 +44,6 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 
 	window.MakeContextCurrent()
 
-	if err := gl.Init(); err != nil {
-		log.Fatalln("Error init gl:", err)
-
-	}
-
 	gl.Ortho(0, float64(width), float64(height), 0, -1, 1)
 
 	gl.Enable(gl.BLEND)
@@ -56,9 +51,10 @@ func (a Application) NewWindow(title string, width, height int, resizable bool) 
 
 	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
-	return Window{a, window, title, width, height}
+	return Window{window, title, width, height}
 }
 
+// Sets the resizable attribute of the window.
 func (w *Window) SetResizable(resizable bool) {
 	if resizable {
 		w.Window.SetAttrib(glfw.Resizable, glfw.True)
@@ -67,6 +63,7 @@ func (w *Window) SetResizable(resizable bool) {
 	}
 }
 
+// Function created for a loop. Returns true when being closed, and returns false when being active.
 func (w *Window) Close() bool {
 	for !w.Window.ShouldClose() {
 		glfw.PollEvents()
@@ -76,21 +73,25 @@ func (w *Window) Close() bool {
 	return true
 }
 
+// Refreshes te window. Run this at the end of your loop (except if you're having multiple windows)
 func (w *Window) Refresh() {
 	w.Window.SwapBuffers()
 	gl.Clear(gl.COLOR_BUFFER_BIT)
 }
 
+// Sets the context of the window to the current context. (Only use when having multiple windows)
 func (w *Window) SetContextCurrent() {
 	w.Window.MakeContextCurrent()
 }
 
+// Destroys the window and cleans up the memory.
 func (w *Window) Destroy() {
 	w.Window.Destroy()
+	clean()
 }
 
 func clean() {
 	for _, i := range ImageArray {
-		gl.DeleteTextures(1, &i.texture)
+		gl.DeleteTextures(1, i.texture)
 	}
 }

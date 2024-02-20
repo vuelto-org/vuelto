@@ -1,13 +1,7 @@
----
-hide:
-  - navigation
----
-
-
 # Go package
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash
-go get github.com/dimkauzh/vuelto-engine
+go get github.com/vuelto-org/vuelto@latest
 ```
 
 # Installation
@@ -27,7 +21,7 @@ sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel 
 ```
 
 ## Mac
-You have to have Xcode command line tools and CMake inatalled.
+You have to have Xcode command line tools installed.
 #### Xcode
 ```bash
 xcode-select --install
