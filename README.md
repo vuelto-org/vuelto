@@ -15,7 +15,7 @@
 Vuelto is a fast and lightweight Go game engine which uses CGo and OpenGL to display your graphics. It is really easy to start with, but it can be really powerful to work with. It's cross-platform, meaning that every game you make with Vuelto will work on Windows, Linux and Mac. It's also open-source, meaning that you can see the source code and contribute to the engine. Have fun!
 
 
-## Table of Contents
+## 📑 Table of Contents
  - [Installation](INSTALLATION.MD)
  - [Usage](#usage)
  - [Contributing](#contributing)
@@ -26,8 +26,8 @@ Vuelto is a fast and lightweight Go game engine which uses CGo and OpenGL to dis
  - [About](#about)
 
 
-## Usage
-### Requirements
+## 🚀 Usage
+### 🛠️ Requirements
 There are some extra things you will need to use Vuelto.
 - A C compiler
 - A Go compiler
@@ -35,13 +35,13 @@ There are some extra things you will need to use Vuelto.
 
 For a installation guide, [go here](INSTALLATION.MD).
 
-### Go package
+### 📦 Go package
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash
 go get github.com/vuelto-org/vuelto@latest
 ```
 
-### Examples
+### 🌟 Examples
 All of our examples are inside the examples directory, so take a look there is you want a example. Here one small example of how easy Vuelto is:
 ```go
 package main
@@ -67,18 +67,21 @@ func main() {
 
 ```
 
-## Docs
-Our docs are hosted on Github WIki, see the wiki tab or [this link](https://github.com/vuelto-org/vuelto/wiki).
+## 📚 Docs
+Our docs are hosted on Github Wiki, see the wiki tab or [this link](https://github.com/vuelto-org/vuelto/wiki).
 
-## Discord server
+## 📋 Roadmap
+You can find our [roadmap](ROADMAP.md) in the [ROADMAP.md](ROADMAP.md) file.
+
+## 🎉 Discord server
 We have a [discord server at this link](https://discord.gg/gZqdRXbbqg). It's a fun server mainly created for vuelto, but you can talk about whatever you want.
 
-## Contributing
+## 🤝 Contributing
 We are fully open to contributions, but I will check and test your code before merging it into the dev branch. All your code thats accepted will only be merged into the dev branch, and will be later released with the next release.
 
-## License
+## 🔐 License
 Vuelto is licensed under the [GPLv3 Licence](LICENSE).
 
-## About
+## ℹ️ About
 Vuelto is a game engine powered by CGo and OpenGL. It leverages the power of Go to create a fast and lightweight game engine. It's cross-platform, meaning that every game you make with Vuelto will work on Windows, Linux and Mac. It's also open-source, meaning that you can see the source code and contribute to the engine. We have created this engine so you can create your graphical application fast and easy.
 Made by the Vuelto Team :heart:
