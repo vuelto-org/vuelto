@@ -3,14 +3,14 @@ MESSAGE = Release version $(VERSION)
 
 .PHONY: publish proxy-release ci_check
 
-publish:
+release:
 	git add .
 	git commit -m "$(MESSAGE)"
 	git tag $(VERSION)
 	git push origin $(VERSION)
-	make proxy-publish
+	make proxy-release
 
-proxy-publish:
+proxy-release:
 	GOPROXY=proxy.golang.org go list -m github.com/vuelto-org/vuelto@$(VERSION)
 
 ci_check:

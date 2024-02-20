@@ -3,15 +3,14 @@
     - [x] Window
     - [x] Input
 
-- [ ] Renderer
+- [x] Renderer
     - [x] Custom OpenGL
     - [x] Rects
     - [x] Images
-    - [ ] Animations
 
-- [ ] Shapes
-    - [ ] Rects
-    - [ ] Lines
+- [x] Shapes
+    - [x] Rects
+    - [x] Lines
 
 - [x] Audio
     - [x] Sound
@@ -31,12 +30,36 @@
     - [x] Update the requirements
     - [x] Clean up old stuffm
 
-- [ ] Docs
-    - [ ] Docs (Github)
-    - [ ] GoDoc
+- [x] Docs
+    - [x] GoDoc
 
+## V1.1
+- [ ] Input
+    - [ ] Keyboard
+    - [ ] Mouse
+
+- [ ] Renderer
+    - [ ] Text
+    - [ ] Fonts
+
+- [ ] Animations
+    - [ ] Using images
+    - [ ] Using spritesheets
+
+- [ ] Spritesheets
+    - [ ] Using images
+    - [ ] returning images
+    - [ ] Usable with animations
+
+## V1.2
+- [ ] Node system
 
 ## V2
+- [ ] Custom color system
+    - [ ] Color struct
+    - [ ] NewColor function
+    - [ ] Predefined Color constants
+
 - [ ] Custom window system
     - [ ] Linux
         - [ ] X11
@@ -44,7 +67,7 @@
     - [ ] Windows
         - [ ] Win32
     - [ ] Mac
-        - [ ] Cocoa
+        - [ ] Coco
 
 - [ ] GUI
     - [ ] Buttons
