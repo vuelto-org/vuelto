@@ -9,6 +9,8 @@ release:
 	git tag $(VERSION)
 	git push origin $(VERSION)
 	make proxy-release
+	mkdocs gh-deploy
+
 
 proxy-release:
 	GOPROXY=proxy.golang.org go list -m github.com/vuelto-org/vuelto@$(VERSION)
