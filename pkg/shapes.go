@@ -1,4 +1,4 @@
-package pkg
+package vuelto
 
 type Line struct {
 	Renderer       Renderer2D

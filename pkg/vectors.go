@@ -1,4 +1,4 @@
-package pkg
+package vuelto
 
 type Vector2D struct {
 	X float64

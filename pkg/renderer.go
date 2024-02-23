@@ -1,4 +1,4 @@
-package pkg
+package vuelto
 
 type Renderer2D struct {
 	window Window
