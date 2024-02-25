@@ -12,31 +12,52 @@ type Vector3D struct {
 }
 
 // Creates a new 2D vector with x and y values
-func NewVector2D(x, y float64) Vector2D {
-	return Vector2D{x, y}
+func NewVector2D(x, y float64) *Vector2D {
+	return &Vector2D{
+    X: x, 
+    Y: y,
+  }
 }
 
 // Adds two 2D vectors together
-func AddVector2D(v1, v2 Vector2D) Vector2D {
-	return Vector2D{v1.X + v2.X, v1.Y + v2.Y}
+func AddVector2D(v1, v2 Vector2D) *Vector2D {
+  return &Vector2D{
+    X: v1.X + v2.X,
+    Y: v1.Y + v2.Y,
+  }
 }
 
 // Subtracts two 2D vectors from each other
-func SubtractVector2D(v1, v2 Vector2D) Vector2D {
-	return Vector2D{v1.X - v2.X, v1.Y - v2.Y}
+func SubtractVector2D(v1, v2 Vector2D) *Vector2D {
+	return &Vector2D{
+    X: v1.X - v2.X,
+    Y: v1.Y - v2.Y,
+  }
 }
 
 // Creates a new 3D vector with x, y and z values
-func NewVector3D(x, y, z float64) Vector3D {
-	return Vector3D{x, y, z}
+func NewVector3D(x, y, z float64) *Vector3D {
+	return &Vector3D{
+    X: x, 
+    Y: y, 
+    Z: z,
+  }
 }
 
 // Adds two 3D vectors together
-func AddVector3D(v1, v2 Vector3D) Vector3D {
-	return Vector3D{v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z}
+func AddVector3D(v1, v2 Vector3D) *Vector3D {
+	return &Vector3D{
+    X: v1.X + v2.X,
+    Y: v1.Y + v2.Y,
+    Z: v1.Z + v2.Z,
+  }
 }
 
 // Subtracts two 3D vectors from each other
-func SubtractVector3D(v1, v2 Vector3D) Vector3D {
-	return Vector3D{v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z}
+func SubtractVector3D(v1, v2 Vector3D) *Vector3D {
+	return &Vector3D{
+    X: v1.X - v2.X,
+    Y: v1.Y - v2.Y,
+    Z: v1.Z - v2.Z,
+  }
 }

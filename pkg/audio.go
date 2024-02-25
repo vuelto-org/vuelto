@@ -17,13 +17,13 @@ type AudioPlayer struct {
 	Streamer beep.StreamSeekCloser
 	Format   beep.Format
 	File     *os.File
-	done     chan bool
+	Done     chan bool
 }
 
 // Opens a audio file. It supports two file formats: WAV and MP3.
 // Plays the audio file using Start function. Stop the audio file using Stop function.
 // Close the audio file using Close function.
-func OpenAudioFile(filePath string) AudioPlayer {
+func OpenAudioFile(filePath string) *AudioPlayer {
 	f, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal("Error opening audio file: ", filePath)
@@ -48,14 +48,19 @@ func OpenAudioFile(filePath string) AudioPlayer {
 		f.Close()
 	}
 
-	return AudioPlayer{streamer, format, f, make(chan bool)}
+	return &AudioPlayer{
+    Streamer: streamer,
+    Format: format, 
+    File: f, 
+    Done: make(chan bool),
+  }
 }
 
 // Starts playing the audio file.
 func (a *AudioPlayer) Start() {
 	speaker.Init(a.Format.SampleRate, a.Format.SampleRate.N(time.Second/10))
 	speaker.Play(beep.Seq(a.Streamer, beep.Callback(func() {
-		a.done <- true
+		a.Done <- true
 	})))
 }
 

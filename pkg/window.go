@@ -19,7 +19,7 @@ func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
 }
 
 // Creates a new window and returns a Window struct.
-func NewWindow(title string, width, height int, resizable bool) Window {
+func NewWindow(title string, width, height int, resizable bool) *Window {
 	runtime.LockOSThread()
 
 	if err := glfw.Init(); err != nil {
@@ -51,7 +51,12 @@ func NewWindow(title string, width, height int, resizable bool) Window {
 
 	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
-	return Window{window, title, width, height}
+	return &Window{
+    Window: window,
+    Title: title,
+    Width: width,
+    Height: height,
+  }
 }
 
 // Sets the resizable attribute of the window.

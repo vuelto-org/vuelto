@@ -16,12 +16,11 @@ Vuelto is a fast and lightweight Go game engine which uses CGo and OpenGL to dis
 
 
 ## 📑 Table of Contents
- - [Installation](INSTALLATION.MD)
  - [Usage](#usage)
  - [Contributing](#contributing)
- - [Docs](https://github.com/vuelto-org/vuelto/wiki)
+ - [Website+Docs](https://vuelto-org.github.io/vuelto/)
  - [Discord Server](https://discord.gg/gZqdRXbbqg)
- - [Roadmap](ROADMAP.md)
+ - [Roadmap](#roadmap)
  - [License](#license)
  - [About](#about)
 
@@ -33,7 +32,7 @@ There are some extra things you will need to use Vuelto.
 - A Go compiler
 - Xorg development packages (For Linux only)
 
-For a installation guide, [go here](INSTALLATION.MD).
+For a installation guide, [go here](https://vuelto-org.github.io/vuelto/install/).
 
 ### 📦 Go package
 We have a Go package published, so run this command to add it to your go.mod:
@@ -68,10 +67,12 @@ func main() {
 ```
 
 ## 📚 Docs
-Our docs are hosted on Github Wiki, see the wiki tab or [this link](https://github.com/vuelto-org/vuelto/wiki).
+Our docs are hosted on our website, so go [here](https://vuelto-org.github.io/vuelto/) to see them.
+	
 
 ## 📋 Roadmap
-You can find our [roadmap](ROADMAP.md) in the [ROADMAP.md](ROADMAP.md) file.
+You can find our [roadmap on the website](https://vuelto-org.github.io/vuelto/roadmap/v1).
+
 
 ## 🎉 Discord server
 We have a [discord server at this link](https://discord.gg/gZqdRXbbqg). It's a fun server mainly created for vuelto, but you can talk about whatever you want.
