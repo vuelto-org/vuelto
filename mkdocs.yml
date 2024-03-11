@@ -2,7 +2,7 @@ site_name: Vuelto
 site_description: A fast and lightweight game engine powered by Go and OpenGL. Easy, fast and lightweight!
 
 repo_name: vuelto-org/vuelto
-repo_url: https://github.com/vuelto-org/vuelto
+repo_url: https://vuelto.me
 
 docs_dir: "website"
 
@@ -82,6 +82,7 @@ markdown_extensions:
       repo: mkdocs-material
   - pymdownx.mark
   - pymdownx.smartsymbols
+  - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

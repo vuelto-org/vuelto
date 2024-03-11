@@ -3,6 +3,8 @@ hide:
   - navigation
 ---
 
+--8<-- "repo/index.html"
+
 <h1 align="center">
 <p align="center">
 <img width="1400" alt="banner" src="logo/banner1.png">
