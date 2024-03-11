@@ -3,7 +3,10 @@ hide:
   - navigation
 ---
 
---8<-- "repo/index.html"
+<div>
+<meta name="go-import" content="vuelto.me git https://github.com/vuelto-org/vuelto.git">
+</div>
+
 
 <h1 align="center">
 <p align="center">
