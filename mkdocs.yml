@@ -7,7 +7,7 @@ repo_url: https://vuelto.me
 docs_dir: "website"
 
 nav:
-  - Home: "index.md"
+  - Home: "home.md"
 
   - Getting started:
     - 🚀 Quick start: "get-started.md"

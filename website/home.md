@@ -10,7 +10,7 @@ hide:
 
 <h1 align="center">
 <p align="center">
-<img width="1400" alt="banner" src="logo/banner1.png">
+<img width="1400" alt="banner" src="/logo/banner1.png">
 
 <p align="center">
   <a href="https://github.com/vuelto-org/vuelto"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vuelto-org/vuelto"></a>
