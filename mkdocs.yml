@@ -1,8 +1,9 @@
 site_name: Vuelto
 site_description: A fast and lightweight game engine powered by Go and OpenGL. Easy, fast and lightweight!
+site_url: https://vuelto.me
 
 repo_name: vuelto-org/vuelto
-repo_url: https://vuelto.me
+repo_url: https://github.com/vuelto-org/vuelto
 
 docs_dir: "website"
 
