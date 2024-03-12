@@ -1,0 +1,94 @@
+site_name: Vuelto
+site_description: A fast and lightweight game engine powered by Go and OpenGL. Easy, fast and lightweight!
+site_url: https://vuelto.me
+
+repo_name: vuelto-org/vuelto
+repo_url: https://github.com/vuelto-org/vuelto
+
+docs_dir: "website"
+
+nav:
+  - Home: "home.md"
+
+  - Getting started:
+    - 🚀 Quick start: "get-started.md"
+    - 🛠️ Indepth Installation: "install.md"
+
+  - Roadmap:
+    - 🛣️ V1: "roadmap/v1.md"
+    - 🛣️ V2: "roadmap/v2.md"
+
+theme:
+  name: material
+
+  logo: logo/icon-no-bg.png
+  favicon: logo/icon-no-bg.png
+
+  features:
+    - navigation.path
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - toc.follow
+    - navigation.expand
+
+    - content.code.copy
+
+
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/link
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off
+        name: Switch to system preference
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde

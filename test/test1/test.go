@@ -1,8 +1,6 @@
 package main
 
-import (
-	vuelto "github.com/vuelto-org/vuelto/pkg"
-)
+import "vuelto.me/pkg"
 
 func main() {
 	w1 := vuelto.NewWindow("hi", 800, 600, false)
@@ -11,8 +9,8 @@ func main() {
 	ren1 := w1.NewRenderer2D()
 	ren2 := w2.NewRenderer2D()
 
-	image := ren2.LoadImage("test/image.png", 300, 300, 250, 250)
-	image1 := ren2.LoadImage("test/tree.png", 100, 100, 150, 150)
+	image := ren2.LoadImage("test/test1/tree.png", 300, 300, 250, 250)
+	image1 := ren2.LoadImage("test/test1/image.png", 100, 100, 150, 150)
 
 	for !w1.Close() && !w2.Close() {
 		w1.SetContextCurrent()

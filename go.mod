@@ -1,4 +1,4 @@
-module github.com/vuelto-org/vuelto
+module vuelto.me
 
 go 1.18
 

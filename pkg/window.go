@@ -1,11 +1,11 @@
-package pkg
+package vuelto
 
 import (
 	"log"
 	"runtime"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
-	"github.com/vuelto-org/vuelto/internal/gl"
+	"vuelto.me/internal/gl"
 )
 
 type Window struct {
@@ -19,7 +19,7 @@ func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
 }
 
 // Creates a new window and returns a Window struct.
-func NewWindow(title string, width, height int, resizable bool) Window {
+func NewWindow(title string, width, height int, resizable bool) *Window {
 	runtime.LockOSThread()
 
 	if err := glfw.Init(); err != nil {
@@ -51,7 +51,12 @@ func NewWindow(title string, width, height int, resizable bool) Window {
 
 	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
-	return Window{window, title, width, height}
+	return &Window{
+    Window: window,
+    Title: title,
+    Width: width,
+    Height: height,
+  }
 }
 
 // Sets the resizable attribute of the window.
@@ -69,7 +74,7 @@ func (w *Window) Close() bool {
 		glfw.PollEvents()
 		return false
 	}
-	clean()
+	cleanTex()
 	return true
 }
 
@@ -87,11 +92,5 @@ func (w *Window) SetContextCurrent() {
 // Destroys the window and cleans up the memory.
 func (w *Window) Destroy() {
 	w.Window.Destroy()
-	clean()
-}
-
-func clean() {
-	for _, i := range ImageArray {
-		gl.DeleteTextures(1, i.texture)
-	}
+	cleanTex()
 }

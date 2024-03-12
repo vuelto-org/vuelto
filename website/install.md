@@ -1,15 +1,15 @@
-# Go package
+# 📦 Go package
 We have a Go package published, so run this command to add it to your go.mod:
 ```bash
-go get github.com/vuelto-org/vuelto@latest
+go get vuelto.me@latest
 ```
 
-# Installation
+# 🔧 Installation
 
-## Linux
+## 🐧 Linux
 You have to have X11-dev-packages and C compiler installed.
 
-#### X11
+#### 🖥️ X11
 On Debian and derivates like Ubuntu and Linux Mint the xorg-dev meta-package pulls in the development packages for all of X11.
 ```bash
 sudo apt install xorg-dev libasound2-dev gcc
@@ -20,14 +20,14 @@ On Fedora and derivatives like Red Hat the X11 extension packages libXcursor-dev
 sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel alsa-lib-devel gcc
 ```
 
-## Mac
+## 🍎 Mac
 You have to have Xcode command line tools installed.
-#### Xcode
+### 📝 Xcode
 ```bash
 xcode-select --install
 ```
 
-## Windows
+## 🪟 Windows
 You have to have a C compiler installed. You can also use WSL, if so follow the Linux instructions.
 
 

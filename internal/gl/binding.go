@@ -8,30 +8,31 @@ package gl
 #include "gl.h"
 */
 import "C"
+import "unsafe"
 
 const (
-  TEXTURE_2D         = uint(C.GL_TEXTURE_2D)
-  TEXTURE_WRAP_S     = uint(C.GL_TEXTURE_WRAP_S)
-  TEXTURE_WRAP_T     = uint(C.GL_TEXTURE_WRAP_T)
-  TEXTURE_MIN_FILTER = uint(C.GL_TEXTURE_MIN_FILTER)
-  TEXTURE_MAG_FILTER = uint(C.GL_TEXTURE_MAG_FILTER)
-  CLAMP_TO_EDGE      = uint(C.GL_CLAMP_TO_EDGE)
-  LINEAR             = uint(C.GL_LINEAR)
+  TEXTURE_2D         = uint32(C.GL_TEXTURE_2D)
+  TEXTURE_WRAP_S     = uint32(C.GL_TEXTURE_WRAP_S)
+  TEXTURE_WRAP_T     = uint32(C.GL_TEXTURE_WRAP_T)
+  TEXTURE_MIN_FILTER = uint32(C.GL_TEXTURE_MIN_FILTER)
+  TEXTURE_MAG_FILTER = uint32(C.GL_TEXTURE_MAG_FILTER)
+  CLAMP_TO_EDGE      = uint32(C.GL_CLAMP_TO_EDGE)
+  LINEAR             = uint32(C.GL_LINEAR)
 
-  LINES = uint(C.GL_LINES)
-  QUADS = uint(C.GL_QUADS)
+  LINES = uint32(C.GL_LINES)
+  QUADS = uint32(C.GL_QUADS)
 
-  RGBA          = uint(C.GL_RGBA)
-  UNSIGNED_BYTE = uint(C.GL_UNSIGNED_BYTE)
+  RGBA          = uint32(C.GL_RGBA)
+  UNSIGNED_BYTE = uint32(C.GL_UNSIGNED_BYTE)
 
-  SRC_ALPHA           = uint(C.GL_SRC_ALPHA)
-  ONE_MINUS_SRC_ALPHA = uint(C.GL_ONE_MINUS_SRC_ALPHA)
-  BLEND               = uint(C.GL_BLEND)
-  DEPTH_BUFFER_BIT    = uint(C.GL_DEPTH_BUFFER_BIT)
-  COLOR_BUFFER_BIT    = uint(C.GL_COLOR_BUFFER_BIT)
+  SRC_ALPHA           = uint32(C.GL_SRC_ALPHA)
+  ONE_MINUS_SRC_ALPHA = uint32(C.GL_ONE_MINUS_SRC_ALPHA)
+  BLEND               = uint32(C.GL_BLEND)
+  DEPTH_BUFFER_BIT    = uint32(C.GL_DEPTH_BUFFER_BIT)
+  COLOR_BUFFER_BIT    = uint32(C.GL_COLOR_BUFFER_BIT)
 )
 
-func Begin(state uint) {
+func Begin(state uint32) {
   C.glBegin(C.uint(state))
 }
 
@@ -55,21 +56,19 @@ func ClearColor(r, g, b, a float32) {
   C.glClearColor(C.float(r), C.float(g), C.float(b), C.float(a))
 }
 
-func GenTextures(n int32, textures uint) {
-  texture := uint32(textures)
-  C.glGenTextures(C.int(n), (*C.uint)(&texture))
+func GenTextures(n int32, textures *uint32) {
+  C.glGenTextures(C.int(n), (*C.uint)(unsafe.Pointer(textures)))
 }
 
-func DeleteTextures(n int, textures uint) {
-  texture := uint32(textures)
-  C.glDeleteTextures(C.int(n), (*C.uint)(&texture))
+func DeleteTextures(n int, textures *uint32) {
+  C.glDeleteTextures(C.int(n), (*C.uint)(unsafe.Pointer(textures)))
 }
 
-func BindTexture(target, texture uint) {
+func BindTexture(target, texture uint32) {
   C.glBindTexture(C.uint(target), C.uint(texture))
 }
 
-func TexParameteri(target, pname, param uint) {
+func TexParameteri(target, pname, param uint32) {
   C.glTexParameteri(C.uint(target), C.uint(pname), C.int(param))
 }
 
@@ -77,19 +76,19 @@ func TexCoord2f(s, t float32) {
   C.glTexCoord2f(C.float(s), C.float(t))
 }
 
-func TexImage2D(target, level, internalFormat uint, width, height int, border, format, typ uint, pixels []byte) {
+func TexImage2D(target, level, internalFormat uint32, width, height int, border, format, typ uint32, pixels []byte) {
   C.glTexImage2D(C.uint(target), C.int(level), C.int(internalFormat), C.int(width), C.int(height), C.int(border), C.uint(format), C.uint(typ), C.CBytes(pixels))
 }
 
-func Clear(mask uint) {
+func Clear(mask uint32) {
   C.glClear(C.uint(mask))
 }
 
-func Enable(cap uint) {
+func Enable(cap uint32) {
   C.glEnable(C.uint(cap))
 }
 
-func BlendFunc(sfactor, dfactor uint) {
+func BlendFunc(sfactor, dfactor uint32) {
   C.glBlendFunc(C.uint(sfactor), C.uint(dfactor))
 }
 

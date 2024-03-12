@@ -1,11 +1,11 @@
-name: MkDocs Deploy
+name: MkDocs Deploy 
 on:
   push:
-    branches: "main"
-
+    branches:
+      - master 
+      - main
 permissions:
   contents: write
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -15,11 +15,11 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
           path: .cache
