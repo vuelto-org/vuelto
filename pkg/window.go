@@ -5,7 +5,7 @@ import (
 	"runtime"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
-	"github.com/vuelto-org/vuelto/internal/gl"
+	"vuelto.me/internal/gl"
 )
 
 type Window struct {
