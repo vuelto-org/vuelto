@@ -2,10 +2,14 @@ name: ci_check
 
 on:
   push:
-    branches: "main"
+    branches: |
+      latest
+      stable
 
   pull_request:
-    branches: "main"
+    branches: |
+      latest
+      stable
 
 jobs:
   build:
