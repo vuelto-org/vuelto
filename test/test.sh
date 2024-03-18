@@ -1,1 +1,1 @@
-go run test1/test.go
+go run test/test/test.go

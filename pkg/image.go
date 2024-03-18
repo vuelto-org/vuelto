@@ -9,7 +9,7 @@ import (
 
 	"os"
 
-	"vuelto.me/internal/gl"
+	"vuelto.me/internal/graphics/gl"
 )
 
 type Image struct {

@@ -1,10 +1,12 @@
-package js
+package web
 
 import "syscall/js"
 
-type Document struct {
-	Body            *Body
-	DocumentElement *DocumentElement
+var Document JSDocument
+
+type JSDocument struct {
+	Body            Body
+	DocumentElement DocumentElement
 }
 
 type Body struct {
@@ -23,25 +25,25 @@ type DocumentElement struct {
 type StyleDocument struct{}
 type StyleBody struct{}
 
-func CreateElement(newElement string) *Element {
+func (d *JSDocument) CreateElement(newElement string) Element {
 	docElement := js.Global().Get("document").Call("createElement", newElement)
 	style := docElement.Get("style")
 
-	return &Element{
+	return Element{
 		JSElement: docElement,
 		Style:     style,
 	}
 }
 
-func CreateCanvasElement() *Canvas {
+func (d *JSDocument) CreateCanvasElement() Canvas {
 	newElement := js.Global().Get("document").Call("createElement", "canvas")
 
-	return &Canvas{
+	return Canvas{
 		JSCanvas: newElement,
 	}
 }
 
-func AddEventListener(inputEvent string, inputFunc func(Value, []Value)) {
+func (d *JSDocument) AddEventListener(inputEvent string, inputFunc func(js.Value, []js.Value) any) {
 	js.Global().Get("document").Call("addEventListener", inputEvent, js.FuncOf(inputFunc))
 }
 
@@ -49,22 +51,22 @@ func (e *Element) Set(keyValue string, inputValue any) {
 	e.JSElement.Set(keyValue, inputValue)
 }
 
-func (e *Element) AddEventListener(inputEvent string, inputFunc func(Value, []Value)) {
+func (e *Element) AddEventListener(inputEvent string, inputFunc func(js.Value, []js.Value) any) {
 	e.JSElement.Call("addEventListener", inputEvent, js.FuncOf(inputFunc))
 }
 
-func (b *Body) AppendChild(inputElement *Element) {
+func (b *Body) AppendChild(inputElement Element) {
 	appendChild := inputElement.JSElement
 	js.Global().Get("document").Get("body").Call("appendChild", appendChild)
 }
 
-func (b *Body) AppendCanvasChild(inputCanvas *Canvas) {
+func (b *Body) AppendCanvasChild(inputCanvas Canvas) {
 	appendChild := inputCanvas.JSCanvas
 	js.Global().Get("document").Get("body").Call("appendChild", appendChild)
 }
 
-func GetElementById(inputID string) *Canvas {
-	return &Canvas{
+func (d *JSDocument) GetElementById(inputID string) Canvas {
+	return Canvas{
 		JSCanvas: js.Global().Get("document").Call("getElementById", inputID),
 	}
 }
