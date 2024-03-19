@@ -18,13 +18,13 @@ func main() {
   win.Width = 500
   win.Height = 500
 
-  win.CreateWindow()
+  win.Create()
 
   for {
     win.DrawingTest()
 
     win.HandleEvents()
     win.UpdateBuffers()
-  }
+  } 
   win.Close()
 }

@@ -30,7 +30,7 @@ func InitWindow() (*Window, error) {
 	return &Window{}, nil
 }
 
-func (w *Window) CreateWindow() error {
+func (w *Window) Create() error {
 	if w.Resizable {
 		glfw.WindowHint(glfw.Resizable, glfw.True)
 	} else {

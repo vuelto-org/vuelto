@@ -10,20 +10,13 @@ import (
 	"vuelto.me/internal/windowing/web"
 )
 
-var fpsInterval = time.Millisecond * 16
-
-func SetFps(fps int) {
-	fpsInterval = time.Second / time.Duration(fps)
-}
-
-func GetFps() float64 {
-	return float64(time.Second) / float64(fpsInterval)
-}
-
 type Window struct {
 	Resizable bool
 
 	JSCanvas web.Canvas
+
+  GlfwGLMajor int
+	GlfwGLMinor int
 
 	Title  string
 	Width  int
@@ -67,9 +60,6 @@ func (w *Window) CreateWindow() error {
 	return nil
 }
 
-func (w *Window) Close() {
-}
-
 func (w *Window) ResizingCallback(inputFunc func(*Window, int, int)) {
 	web.Window.AddEventListener("resize", func(this js.Value, p []js.Value) any {
 		inputFunc(w, web.Document.DocumentElement.ClientWidth(), web.Document.DocumentElement.ClientHeight())
@@ -77,23 +67,9 @@ func (w *Window) ResizingCallback(inputFunc func(*Window, int, int)) {
 	})
 }
 
-func (w *Window) DrawingTest() {
-	context := w.JSCanvas.GetContext("2d")
-
-	rgba := web.GetRGBA([4]int{125, 125, 125, 255})
-	context.Set("fillStyle", rgba)
-	context.FillRect(10, 10, 500, 500)
-}
-
-func (w *Window) HandleEvents()
-
 func (w *Window) UpdateBuffers() {
-	time.Sleep(time.Millisecond * 16)
+	time.Sleep(time.Millisecond * 32)
 }
-
-func (w *Window) ContextCurrent()
-
-func (w *Window) Destroy()
 
 func (w *Window) SetResizable(resizable bool) {
 	if resizable {
@@ -111,3 +87,8 @@ func (w *Window) SetResizable(resizable bool) {
 		w.JSCanvas.Set("height", w.Height)
 	}
 }
+
+func (w *Window) ContextCurrent() {}
+func (w *Window) Destroy() {}
+func (w *Window) HandleEvents() {}
+func (w *Window) Close() {}
