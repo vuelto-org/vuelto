@@ -2,47 +2,47 @@ package vuelto
 
 import (
 	"log"
-	"runtime"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
+
 	"vuelto.me/internal/gl"
+  "vuelto.me/internal/windowing"
 )
 
 type Window struct {
-	Window        *glfw.Window
+	Window        *windowing.Window
 	Title         string
 	Width, Height int
 }
 
-func framebuffersizecallback(window *glfw.Window, newWidth, newHeight int) {
+func framebuffersizecallback(window *windowing.Window, newWidth, newHeight int) {
 	gl.Viewport(0, 0, newWidth, newHeight)
 }
 
 // Creates a new window and returns a Window struct.
-func NewWindow(title string, width, height int, resizable bool) *Window {
-	runtime.LockOSThread()
+func NewWindow(title string, width, height int, resizable bool) (*Window, error) {
+  window, err := windowing.InitWindow()
+  if err != nil {
+    return nil, err
+  }
 
-	if err := glfw.Init(); err != nil {
-		log.Fatalln("failed to initialize glfw:", err)
-	}
+  window.Title = title
+  window.Width = width
+  window.Height = height
+  
+  window.GlfwGLMajor = 2
+  window.GlfwGLMinor = 1
 
-	if resizable {
-		glfw.WindowHint(glfw.Resizable, glfw.True)
-	} else {
-		glfw.WindowHint(glfw.Resizable, glfw.False)
-	}
+  window.Resizable = resizable
 
-	glfw.WindowHint(glfw.ContextVersionMajor, 2)
-	glfw.WindowHint(glfw.ContextVersionMinor, 1)
-
-	window, err := glfw.CreateWindow(width, height, title, nil, nil)
+	err = window.Create()
 	if err != nil {
 		log.Fatalln("Error create window:", err)
 	}
 
-	window.SetFramebufferSizeCallback(framebuffersizecallback)
+	window.ResizingCallback(framebuffersizecallback)
 
-	window.MakeContextCurrent()
+	window.ContextCurrent()
 
 	gl.Ortho(0, float64(width), float64(height), 0, -1, 1)
 
@@ -56,21 +56,17 @@ func NewWindow(title string, width, height int, resizable bool) *Window {
     Title: title,
     Width: width,
     Height: height,
-  }
+  }, nil
 }
 
 // Sets the resizable attribute of the window.
 func (w *Window) SetResizable(resizable bool) {
-	if resizable {
-		w.Window.SetAttrib(glfw.Resizable, glfw.True)
-	} else {
-		w.Window.SetAttrib(glfw.Resizable, glfw.False)
-	}
+  w.Window.SetResizable(resizable)
 }
 
 // Function created for a loop. Returns true when being closed, and returns false when being active.
 func (w *Window) Close() bool {
-	for !w.Window.ShouldClose() {
+	for !w.Window.Close() {
 		glfw.PollEvents()
 		return false
 	}
@@ -80,13 +76,13 @@ func (w *Window) Close() bool {
 
 // Refreshes te window. Run this at the end of your loop (except if you're having multiple windows)
 func (w *Window) Refresh() {
-	w.Window.SwapBuffers()
+	w.Window.UpdateBuffers()
 	gl.Clear(gl.COLOR_BUFFER_BIT)
 }
 
 // Sets the context of the window to the current context. (Only use when having multiple windows)
 func (w *Window) SetContextCurrent() {
-	w.Window.MakeContextCurrent()
+	w.Window.ContextCurrent()
 }
 
 // Destroys the window and cleans up the memory.
