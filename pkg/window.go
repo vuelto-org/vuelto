@@ -129,7 +129,7 @@ func (w *Window) SetCurrent() {
 	w.Window.ContextCurrent()
 }
 
-// Unsets the context of the window. (Only use when having multiple windows)
+// Unset the context of the window. (Only use when having multiple windows)
 func (w *Window) UnsetCurrent() {
 	w.Window.UnsetContext()
 }

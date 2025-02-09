@@ -17,7 +17,7 @@ func framebuffersizecallback(window *windowing.Window, newWidth, newHeight int) 
 func main() {
 	win, err := windowing.InitWindow()
 	if err != nil {
-		log.Fatalf("Failed to initialise: %s", err)
+		log.Fatalf("Failed to initialize: %s", err)
 	}
 	defer win.Close()
 
@@ -40,7 +40,7 @@ func main() {
 
 	err = gl.Init()
 	if err != nil {
-		log.Fatalf("Failed to initialise: %s", err)
+		log.Fatalf("Failed to initialize: %s", err)
 	}
 
 	gl.Enable(gl.TEXTURE_2D)

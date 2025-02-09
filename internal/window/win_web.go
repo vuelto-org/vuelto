@@ -48,7 +48,7 @@ var initialized bool
 
 func InitWindow() (*Window, error) {
 	if initialized && os.Getenv("VUELTO_DISABLE_BUILD_ERRORS") == "" {
-		panic("Web doesnt support having multiple windows!")
+		panic("Web doesn't support having multiple windows!")
 	} else if !initialized {
 		initialized = true
 	}
@@ -95,7 +95,7 @@ func (w *Window) Create() error {
 	}
 
 	if w.Transparency && os.Getenv("VUELTO_DISABLE_BUILD_ERRORS") == "" {
-		panic("Web doesnt support having multiple windows!")
+		panic("Web doesn't support having multiple windows!")
 	}
 
 	return nil

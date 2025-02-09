@@ -94,7 +94,7 @@ func Init(window *windowing.Window) *Event {
 }
 
 func (e *Event) SetSetting(setting Setting, value bool) {
-	web.Console.Warn("WARNING: SETSETTING IS NOT WORKING IN WEB BUILDS!")
+	web.Console.Warn("WARNING: SetSetting IS NOT WORKING IN WEB BUILDS!")
 }
 
 func (e *Event) Key(key Key) State {
