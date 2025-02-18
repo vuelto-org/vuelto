@@ -103,15 +103,15 @@ func loadImage(imgData []byte, imageUrl string) *Image {
 	}
 }
 
-func LoadPixelmap(pixels map[int]map[int][4]float32, width, height int) *Image {
+func LoadPixelmap(pixels map[int]map[int][4]int, width, height int) *Image {
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 
 	for x, col := range pixels {
 		for y, c := range col {
-			r := uint8(c[0] * 255)
-			g := uint8(c[1] * 255)
-			b := uint8(c[2] * 255)
-			a := uint8(c[3] * 255)
+			r := uint8(c[0])
+			g := uint8(c[1])
+			b := uint8(c[2])
+			a := uint8(c[3])
 			img.Set(x, y, color.RGBA{r, g, b, a})
 		}
 	}

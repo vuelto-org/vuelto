@@ -19,7 +19,7 @@ import (
 )
 
 type Pixelmap struct {
-	Texture  map[int]map[int][4]float32
+	Texture  map[int]map[int][4]int
 	Renderer *Renderer2D
 
 	Width  int
@@ -36,14 +36,20 @@ func (r *Renderer2D) NewPixelmap() *Pixelmap {
 }
 
 // SetPixel assigns an RGBA color to the (x, y) coordinate.
-func (p *Pixelmap) SetPixel(x, y int, color []float32) {
-	if x < 0 || x >= p.Width || y < 0 || y >= p.Height || len(color) < 4 {
+func (p *Pixelmap) SetPixel(x, y int, color [4]int) {
+	if x < 0 || x >= p.Width || y < 0 || y >= p.Height {
 		return
 	}
-	if p.Texture[x] == nil {
-		p.Texture[x] = make(map[int][4]float32)
+
+	if p.Texture == nil {
+		p.Texture = make(map[int]map[int][4]int)
 	}
-	p.Texture[x][y] = [4]float32{color[0], color[1], color[2], color[3]}
+
+	if p.Texture[x] == nil {
+		p.Texture[x] = make(map[int][4]int)
+	}
+
+	p.Texture[x][y] = [4]int{color[0], color[1], color[2], color[3]}
 }
 
 // Draw renders the pixelmap on the screen.
