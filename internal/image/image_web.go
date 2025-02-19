@@ -33,6 +33,7 @@ import (
 
 type Image struct {
 	Path    string
+	RGBA    *image.RGBA
 	Texture js.Value
 	Width   int
 	Height  int
@@ -52,7 +53,7 @@ func LoadAsEmbed(fs embed.FS, imagePath string) *Image {
 		log.Fatalf("failed to read embedded image '%s': %v", imagePath, err)
 	}
 
-	return loadImage(imgFile, imagePath)
+	return LoadImage(imgFile, imagePath)
 }
 
 func LoadAsHTTP(imageUrl string) *Image {
@@ -75,10 +76,10 @@ func LoadAsHTTP(imageUrl string) *Image {
 		log.Fatalf("failed to read image data from '%s': %v", imageUrl, err)
 	}
 
-	return loadImage(imgData, imageUrl)
+	return LoadImage(imgData, imageUrl)
 }
 
-func loadImage(imgData []byte, imageUrl string) *Image {
+func LoadImage(imgData []byte, imageUrl string) *Image {
 	img, _, err := image.Decode(bytes.NewReader(imgData))
 	if err != nil {
 		log.Fatalf("failed to decode image '%s': %v", imageUrl, err)
@@ -97,6 +98,7 @@ func loadImage(imgData []byte, imageUrl string) *Image {
 
 	return &Image{
 		Path:    imageUrl,
+		RGBA:    rgbaImg,
 		Width:   rgbaImg.Bounds().Dx(),
 		Height:  rgbaImg.Bounds().Dy(),
 		Texture: webgl.NewUint8Array(rgbaImg.Pix),
@@ -116,6 +118,14 @@ func LoadPixelmap(pixels map[int]map[int][4]int, width, height int) *Image {
 		}
 	}
 
+	return &Image{
+		Texture: webgl.NewUint8Array(img.Pix),
+		Width:   img.Rect.Size().X,
+		Height:  img.Rect.Size().Y,
+	}
+}
+
+func LoadRGBA(img *image.RGBA) *Image {
 	return &Image{
 		Texture: webgl.NewUint8Array(img.Pix),
 		Width:   img.Rect.Size().X,

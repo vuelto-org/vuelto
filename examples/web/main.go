@@ -24,11 +24,11 @@ func main() {
 		Image:      "galaxy.png",
 	}
 
-	imageOne := ren.LoadImage(imageEmbedOne, 0.5, 0.5, -0.5, 0.5)
-	imageTwo := ren.LoadImage(imageEmbedTwo, 0, 0, 1, 1)
+	imageOne := ren.LoadImage(imageEmbedOne, 0.5, 0.5, -0.5, 0.5, nil)
+	imageTwo := ren.LoadImage(imageEmbedTwo, 0, 0, 1, 1, nil)
 	imageThree := ren.LoadImage(vuelto.ImageHTTP{
 		Url: "https://dev-tester.com/content/images/2021/12/blog_cover_further_api_testing_with_http_toolkit.png",
-	}, -0.1, 0.1, 0.4, 0.4)
+	}, -0.1, 0.1, 0.4, 0.4, nil)
 	rect := ren.NewRect(0, 0, -1, -1, [4]int{10, 145, 245, 255})
 	rect2 := ren.NewRect(0, 1, 1, 1, [4]int{245, 145, 10, 255})
 	line := ren.NewLine(0.5, 0.5, -0.5, -0.5, [4]int{10, 145, 245, 255})

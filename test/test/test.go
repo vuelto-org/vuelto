@@ -17,11 +17,11 @@ func main() {
 	line := ren1.NewLine(0.1, 0.1, 0.4, 0.4, [4]int{10, 145, 245, 255})
 	pixelmap := ren1.NewPixelmap()
 
-	image := ren2.LoadImage("test/test/tree.png", 0.1, -0.1, 0.4, -0.4)
-	image1 := ren2.LoadImage("test/test/galaxy.png", -0.1, -0.1, 0.4, 0.4)
+	image := ren2.LoadImage("test/test/tree.png", 0.1, -0.1, 0.4, -0.4, nil)
+	image1 := ren2.LoadImage("test/test/galaxy.png", -0.1, -0.1, 0.4, 0.4, nil)
 	image2 := ren2.LoadImage(vuelto.ImageHTTP{
 		Url: "https://dev-tester.com/content/images/2021/12/blog_cover_further_api_testing_with_http_toolkit.png",
-	}, -0.1, 0.1, 0.4, 0.4)
+	}, -0.1, 0.1, 0.4, 0.4, nil)
 
 	for !w1.Close() && !w2.Close() {
 

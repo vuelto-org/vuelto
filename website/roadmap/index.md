@@ -3,13 +3,22 @@
 
 ## V1.2
 
-- [ ] Renderer
-    - [ ] SetPixel
+- [x] Renderer
+    - [x] PixelMaps
+        - [x] SetPixel
     - [x] UI
         - [x] LoadText and .Draw()
 
-- [ ] Image
-    - [ ] Manipulate images
+- [x] Image
+    - [x] Image Options
+        - [x] Manipulate images
+    - [x] Manipulate images
+        - [x] Blur
+        - [x] Crop
+        - [x] Invert
+        - [x] Grayscale
+        - [x] Contrast
+    - [x] [Library](https://github.com/disintegration/imaging)
 
 - [ ] Spritesheets
     - [ ] Using images
@@ -32,6 +41,10 @@
     - [ ] Color struct
     - [ ] NewColor function
     - [ ] Predefined Color constants
+
+- [ ] Website
+    - [ ] Doc everything
+    - [ ] Write dev post about PixelMaps
 
 - [x] Window system
     - [x] Transparent windows

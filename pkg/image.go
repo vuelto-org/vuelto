@@ -18,6 +18,7 @@ import (
 	"vuelto.pp.ua/internal/gl"
 	"vuelto.pp.ua/internal/gl/ushaders"
 	"vuelto.pp.ua/internal/image"
+	"vuelto.pp.ua/internal/image/processing"
 	"vuelto.pp.ua/internal/trita"
 )
 
@@ -42,10 +43,17 @@ type ImageHTTP struct {
 	Url string
 }
 
+type ImageOptions struct {
+	Blur     float64
+	Contrast float64
+	Sharpen  float64
+	Invert   bool
+}
+
 var ImageArray []uint32
 
 // Loads a new image and returns a Image struct. Can be later drawn using the Draw() method
-func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32) *Image {
+func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, options *ImageOptions) *Image {
 	r.Window.SetCurrent()
 
 	vertexShader := gl.NewShader(gl.VertexShader{
@@ -96,7 +104,28 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32) *Imag
 
 	texture := gl.GenTexture()
 	texture.Bind()
-	texture.Configure(file, gl.NEAREST)
+
+	if options != nil {
+		img := file.RGBA
+
+		if options.Blur != 0 {
+			img = processing.Blur(img, options.Blur)
+		}
+		if options.Sharpen != 0 {
+			img = processing.Sharpen(img, options.Sharpen)
+		}
+		if options.Contrast != 0 {
+			img = processing.Contrast(img, options.Contrast)
+		}
+		if !options.Invert {
+			img = processing.Invert(img)
+		}
+
+		texture.Configure(image.LoadRGBA(img), gl.NEAREST)
+	} else {
+		texture.Configure(file, gl.NEAREST)
+	}
+
 	texture.UnBind()
 
 	buffer := gl.GenBuffers(vertices, indices)

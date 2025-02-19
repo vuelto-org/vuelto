@@ -12,8 +12,8 @@ func main() {
 	ren1 := w1.NewRenderer2D()
 	ren2 := w2.NewRenderer2D()
 
-	image := ren1.LoadImage("examples/two-windows/galaxy.png", 0, 0, 0.5, 0.5)
-	image1 := ren2.LoadImage("examples/two-windows/tree.png", -0.5, -0.5, 0.5, 0.5)
+	image := ren1.LoadImage("examples/two-windows/galaxy.png", 0, 0, 0.5, 0.5, nil)
+	image1 := ren2.LoadImage("examples/two-windows/tree.png", -0.5, -0.5, 0.5, 0.5, nil)
 
 	for !w1.Close() && !w2.Close() {
 		ren1.ClearColor([4]int{100, 100, 100, 255})

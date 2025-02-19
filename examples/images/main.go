@@ -24,8 +24,8 @@ func main() {
 		Image:      "galaxy.png",
 	}
 
-	imageOne := ren.LoadImage(imageEmbed, 0.7, 0.3, -0.5, 0.5)
-	imageTwo := ren.LoadImage(imageEmbedTwo, 0, 0, 1, 1)
+	imageOne := ren.LoadImage(imageEmbed, 0.7, 0.3, -0.5, 0.5, nil)
+	imageTwo := ren.LoadImage(imageEmbedTwo, 0, 0, 1, 1, nil)
 
 	for !w.Close() {
 		imageTwo.Draw()
