@@ -6,3 +6,4 @@ Hey and welcome to the developers part of the docs! This part is focused on peop
 
 - [Contributing guidelines](contribution.md)
 - [Vuelto's 3 ring Engine structure approach](rings.md)
+- [Vuelto's Box system, how it's designed and how it works](boxes.md)

@@ -20,10 +20,7 @@
         - [x] Contrast
     - [x] [Library](https://github.com/disintegration/imaging)
 
-- [ ] Spritesheets
-    - [ ] Using images
-    - [ ] returning images
-    - [ ] Usable with animations
+
 
 - [ ] Node system
     - [ ] Movable nodes
@@ -36,6 +33,13 @@
     - [ ] Animations
         - [ ] Using images
         - [ ] Using spritesheets
+    - [ ] Sprites
+        - [ ] Replace images
+        - [ ] Sprites are part of nodes
+    - [ ] Spritesheets
+        - [ ] Using images
+        - [ ] returning images
+        - [ ] Usable with animations
 
 - [ ] Custom color system
     - [ ] Color struct

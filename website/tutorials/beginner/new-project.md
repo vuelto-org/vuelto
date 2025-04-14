@@ -12,7 +12,7 @@ Hello and welcome to the first tutorial in the beginner series! In this tutorial
 Before we start, make sure you have the following installed:
 
 - 🖥️ A C compiler
-- 🔧 A Go compiler (Go 1.18 and above)
+- 🔧 A Go compiler (Go 1.23 and above)
 - 🪟 Xorg/Wayland development packages (For Linux only)
 
 Also make sure you're on a supported platform (Windows, macOS, or Linux), and you're targeting supported platforms too (Windows, macOS, Linux, and the web).

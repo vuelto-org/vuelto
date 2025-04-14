@@ -5,7 +5,7 @@
 There are some extra things you will need to use Vuelto.
 
 - 🖥️ A C compiler
-- 🔧 A Go compiler (Go 1.18 and above)
+- 🔧 A Go compiler (Go 1.23 and above)
 - 🪟 Xorg/Wayland development packages (For Linux only)
 - 🖱️ Supported platform
 For a installation guide, [go here](install.md).

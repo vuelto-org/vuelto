@@ -55,7 +55,7 @@ Vuelto is an open-source, fast, and lightweight game engine, based on Golang, CG
 You need to have the following installed on your system:
 
 - 🖥️ A C compiler
-- 🔧 A Go compiler (Go 1.18 and above)
+- 🔧 A Go compiler (Go 1.23 and above)
 - 🪟 Xorg/Wayland development packages (For Linux only)
 - 🖱️ Supported platform
 
