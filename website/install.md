@@ -12,7 +12,7 @@ go get vuelto.pp.ua@latest
 
 ## 🐧 Linux
 
-You need to have X11-dev-packages and C compiler installed.
+You need to have xorg-dev packages and C compiler installed.
 
 On Debian and derivate distributions like Ubuntu and Linux Mint the xorg-dev meta-package pulls in the development packages for all of X11.
 
@@ -25,6 +25,8 @@ On Fedora and derivatives like Red Hat the X11 extension packages libXcursor-dev
 ```bash
 sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel alsa-lib-devel gcc
 ```
+
+For Nix/NixOS machines we have a `shell.nix` file in the repo, containing all the dependencies you need to get started. 
 
 ## 🍎 Mac
 

@@ -14,7 +14,7 @@
 
 </div>
 
-Vuelto is an open-source, fast, and lightweight game engine, based on Golang, CGo, and OpenGL. It's easy to use yet very powerful, and it's also cross platform, meaning it can be deployed on almost all major platforms.
+Vuelto is an open-source, fast, simple and lightweight game engine, based on Golang and OpenGL. Designed with simplicity and speed in mind, while still staying relatively lightweight. It can be deployed on almost all major platforms, including Linux, MacOS, Windows and Web.
 
 ## ✨ Features
 
@@ -29,11 +29,11 @@ Vuelto is an open-source, fast, and lightweight game engine, based on Golang, CG
 
 You need to have the following installed on your system:
 
-- 🖥️ A C compiler
+- 🖥️ A C compiler (due to CGo)
 - 🔧 A Go compiler (Go 1.23 and above)
 - 🪟 On Linux, Xorg/Wayland development packages
 
-For an installation guide, [go here](https://vuelto.pp.ua/install/).
+For an installation guide, [head over here](https://vuelto.pp.ua/install/).
 
 ### 🐹 Go package
 
@@ -81,15 +81,15 @@ Vuelto has built-in deployment support for the following platforms:
 You can check out Vuelto's documentation at [Vuelto's website](https://vuelto.pp.ua/docs/).
 
 > [!TIP]
-> In case the documentation is missing something or there is something wrong, use the [GoDoc](https://pkg.go.dev/vuelto.pp.ua) page for API documentation. Use the [examples](https://github.com/vuelto-org/vuelto/tree/latest/examples) directory for usage examples.
+> In case a part documentation is missing something or there is something wrong, use the [GoDoc](https://pkg.go.dev/vuelto.pp.ua) page for API documentation. Use the [examples](https://github.com/vuelto-org/vuelto/tree/stable/examples) directory for usage examples.
 
 ### 🛣️ Roadmap
 
-Our roadmap is available on our [website](https://vuelto.pp.ua/roadmap/).
+Our roadmap is available on our [website](https://vuelto.pp.ua/roadmap/), under the Roadmap section.
 
 ### 🤝 Contributing
 
-We're really thankful for your contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We're really thankful for your contributions! Please see our [Contributing Guide](contributing.md) for details.
 
 1. 🍴 Fork the repository
 2. 🌟 Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -105,18 +105,18 @@ See the [Issues](https://github.com/vuelto-org/vuelto/issues) page for current b
 
 #### 🔒 Security Issues
 
-If you find a security vulnerability, please follow the instructions in [SECURITY.md](SECURITY.md) to safely report it.
+If you find a security vulnerability, please follow the instructions in [security.md](security.md) to safely report it.
 
 ### 🔐 License
 
-Vuelto is licensed under the [VL-Cv1.1 License](LICENSE.md). Any PRs that will change the license won't be accepted.
+Vuelto is licensed under the [VL-Cv1.1 License](license.md). Any PRs that will change the license won't be accepted.
 
 ### 📖 Guidelines
 
 We’re excited to have you here! To ensure a welcoming and productive environment, we kindly ask you to follow our **Guidelines**. Please take a moment to review the following:
 
-- **[Contributing](CONTRIBUTING.md)**: Learn how to make meaningful contributions to our project.
-- **[Code of Conduct](CODE_OF_CONDUCT.md)**: Understand the principles that foster a respectful and inclusive community.
+- **[Contributing](contributing.md)**: Learn how to make meaningful contributions to our project.
+- **[Code of Conduct](code_of_conduct.md)**: Understand the principles that foster a respectful and inclusive community.
 
 ### 🌐 Community and Contact
 

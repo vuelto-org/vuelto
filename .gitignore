@@ -1,8 +1,6 @@
-
 bin/
 build/
 .DS_Store
-CMakeFiles/
 .vscode/
 **.a
 **.dll
@@ -11,11 +9,8 @@ CMakeFiles/
 
 .idea
 .cmake
-Testing
 site
 
 .env
 .envrc
 .direnv/
-
-internal/gl/opengl/old
