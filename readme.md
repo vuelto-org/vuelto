@@ -1,8 +1,8 @@
 <!--  markdownlint-disable md033 -->
 
 <div align="center">
-  <img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/raw/latest/logo/banner-dark.png#gh-dark-mode-only">
-  <img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/raw/latest/logo/banner-light.png#gh-light-mode-only">
+  <img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/raw/latest/website/logo/banner-dark.png#gh-dark-mode-only">
+  <img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/raw/latest/website/logo/banner-light.png#gh-light-mode-only">
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/vuelto-org/vuelto?style=for-the-badge)](https://github.com/vuelto-org/vuelto)
 [![License](https://img.shields.io/badge/license-VL--Cv1.1-blue?style=for-the-badge)](https://github.com/vuelto-org/license)
