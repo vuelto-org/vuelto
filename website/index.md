@@ -11,7 +11,7 @@ hide:
   }
 </style>
 
-<img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/raw/latest/logo/banner-nobg.png" />
+<img width="1400" alt="banner" src="https://github.com/vuelto-org/vuelto/raw/latest/website/logo/banner-nobg.png" />
 
 <a href="https://github.com/vuelto-org/vuelto">
   <img src="https://img.shields.io/github/last-commit/vuelto-org/vuelto?style=for-the-badge" alt="GitHub last commit">
