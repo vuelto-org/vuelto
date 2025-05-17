@@ -26,7 +26,7 @@ On Fedora and derivatives like Red Hat the X11 extension packages libXcursor-dev
 sudo dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel alsa-lib-devel gcc
 ```
 
-For Nix/NixOS machines we have a `shell.nix` file in the repo, containing all the dependencies you need to get started. 
+For Nix/NixOS machines we have a `shell.nix` file in the repo, containing all the dependencies you need to get started.
 
 ## 🍎 Mac
 
@@ -38,7 +38,7 @@ xcode-select --install
 
 ## 🪟 Windows
 
-You need to have a C compiler installed. You can also use WSL, if so follow [the Linux instructions](#-linux). We recommend MSYS2 (with MingW-w64), which you can get from [msys2.org](https://www.msys2.org/#installation), and we'll use this compiler for this manual. [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) and [Cygwin](https://cygwin.com/) are also tested against Golang and Fyne, and should work properly with Vuelto.
+You need to have a C compiler installed. You can also use WSL, if so follow [the Linux instructions](#linux). We recommend MSYS2 (with MingW-w64), which you can get from [msys2.org](https://www.msys2.org/#installation), and we'll use this compiler for this manual. [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) and [Cygwin](https://cygwin.com/) are also tested against Golang and Vuelto, and should work properly with Vuelto.
 
 In Windows, your graphics driver should be already installed, however we still recommend to ensure it's up to date.
 

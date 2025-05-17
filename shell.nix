@@ -16,28 +16,34 @@ let
   '';
 in
 pkgs.mkShell {
-  buildInputs = [
-    pkgs.xorg.libX11
-    pkgs.xorg.libXext
-    pkgs.xorg.libXrandr
-    pkgs.xorg.libXinerama
-    pkgs.xorg.libXcursor
-    pkgs.xorg.libXi
-    pkgs.xorg.libXxf86vm
+  buildInputs = with pkgs; [
+    # X11 libs, needed for glfw
+    xorg.libXi
+    xorg.libX11
+    xorg.libXext
+    xorg.libXrandr
+    xorg.libXcursor
+    xorg.libXxf86vm
+    xorg.libXinerama
 
-    pkgs.pkg-config
-    pkgs.gnumake
+    # Build tools
+    go
+    gcc
+    gnumake
+    pkg-config
 
-    pkgs.mesa
-    pkgs.libglvnd
-    pkgs.alsa-lib
+    # Graphics api's
+    mesa
+    libglvnd
+    alsa-lib
 
-    pkgs.go
-    pkgs.gcc
-
+    # Utilities for development
+    wasmtest
     pkgs.gopls
     pkgs.wasmserve
-    wasmtest
+
+    # Used for Vuelto's website
+    python312Packages.mkdocs-material
+    python312Packages.mkdocs-redirects
   ];
 }
-

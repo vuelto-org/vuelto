@@ -13,11 +13,29 @@
 package vuelto
 
 type Box2D struct {
-	Window *Window
+	Window      *Window
+	Renderer    *Renderer2D
+	Children    []*Box2D
+	IsChild     bool
+	HasChildren bool
 }
 
+// Creates a new box, with only a window
 func (w *Window) NewBox() *Box2D {
 	return &Box2D{
-		Window: w,
+		Window:      w,
+		Renderer:    w.NewRenderer2D(),
+		IsChild:     false,
+		HasChildren: false,
+	}
+}
+
+// Create a new box with an existing renderer
+func (w *Window) NewBoxER(ren *Renderer2D) *Box2D {
+	return &Box2D{
+		Window:      w,
+		Renderer:    ren,
+		IsChild:     false,
+		HasChildren: false,
 	}
 }
