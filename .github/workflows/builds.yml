@@ -1,4 +1,4 @@
-name: Builds Tests/Examples
+name: Builds of Tests/Examples
 
 on:
   push:
