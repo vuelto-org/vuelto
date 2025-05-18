@@ -11,6 +11,9 @@ on:
       - latest
       - stable
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
