@@ -5,7 +5,7 @@
 
 ### Fixes
 
-- Fixed builds fon older GPUs
+- Fixed builds for older GPUs
 - Changed to OpenGL Compatibility profile (from OpenGL Core profile)
 
 ## Vuelto 1.1.1 (05/01/2025)
