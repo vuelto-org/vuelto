@@ -14,6 +14,7 @@ package vuelto
 
 import (
 	"log"
+	"time"
 
 	"vuelto.pp.ua/internal/event"
 	"vuelto.pp.ua/internal/gl"
@@ -24,6 +25,9 @@ type Window struct {
 	Window        *windowing.Window
 	Title         string
 	Width, Height int
+	FPS           int
+	startTime     time.Time
+	delta         float64
 
 	Event *event.Event
 }
@@ -76,6 +80,7 @@ func NewWindow(title string, width, height int, resizable bool, transparent bool
 		Width:  width,
 		Height: height,
 		Event:  events,
+		FPS:    60,
 	}
 }
 
@@ -122,6 +127,19 @@ func (w *Window) Refresh() {
 	w.Window.UpdateBuffers()
 	gl.Clear()
 	w.UnsetCurrent()
+
+	endTime := time.Since(w.startTime)
+	w.delta = endTime.Seconds()
+
+	expectedTime := time.Second.Nanoseconds() / int64(w.FPS)
+	sleepTime := expectedTime - endTime.Nanoseconds()
+
+	if sleepTime > 0 {
+		time.Sleep(time.Duration(sleepTime))
+	}
+
+	now := time.Now()
+	w.startTime = now
 }
 
 // Sets the context of the window to the current context. (Only use when having multiple windows)
@@ -140,13 +158,13 @@ func (w *Window) Destroy() {
 }
 
 func (w *Window) GetDeltaTime() float32 {
-	return float32(w.Window.GetDeltaTime())
+	return float32(w.delta)
 }
 
 func (w *Window) SetFPS(fps int) {
-	w.Window.SetFPS(fps)
+	w.FPS = fps
 }
 
 func (w *Window) GetFPS() int {
-	return w.Window.GetFPS()
+	return w.FPS
 }

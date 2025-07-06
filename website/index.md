@@ -20,7 +20,7 @@ hide:
   <img src="https://img.shields.io/badge/license-VL--Cv1.1-blue?style=for-the-badge" alt="License">
 </a>
 <a href="https://github.com/vuelto-org/vuelto/actions/workflows/ci_check.yml">
-  <img src="https://img.shields.io/github/actions/workflow/status/vuelto-org/vuelto/ci_check.yml?style=for-the-badge" alt="CI Check">
+  <img src="https://img.shields.io/github/actions/workflow/status/vuelto-org/vuelto/builds.yml?style=for-the-badge" alt="CI Check">
 </a>
 <a href="https://github.com/vuelto-org/vuelto">
   <img src="https://www.aschey.tech/tokei/github/vuelto-org/vuelto?style=for-the-badge" alt="Lines of code">

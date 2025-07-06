@@ -91,6 +91,10 @@ theme:
         icon: material/toggle-switch-off
         name: Switch to system preference
 
+extra:
+  version:
+    provider: mike
+
 plugins:
   - blog
   - redirects:

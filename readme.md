@@ -135,7 +135,7 @@ A special thanks to:
 - **Dimkauzh** for the initial idea and development.
 - **ZakaMakesStuff** for the great improvements on top of vuelto.
 
-Also a big shout-out to our homies and partners at [**Sokora**](https://sokora.org), [**Atom**](https://atomlabs.ie) and [**Epic-Bot**](https://bamb.cl/epic-bot/)
+Also a big shout-out to our homies and partners at [**Sokora**](https://sokora.org), [**Lumen**](https://atomlabs.ie) and [**Epic-Bot**](https://bamb.cl/epic-bot/)
 
 Without the help of these people, Vuelto wouldn't be where it is today. Your support has helped make Vuelto even better! 🤝 🙌
 
