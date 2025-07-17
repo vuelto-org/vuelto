@@ -13,6 +13,8 @@
 package vuelto
 
 import (
+	"fmt"
+
 	"vuelto.pp.ua/internal/gl"
 	"vuelto.pp.ua/internal/gl/ushaders"
 	"vuelto.pp.ua/internal/image"
@@ -24,15 +26,78 @@ type Pixelmap struct {
 
 	Width  int
 	Height int
+
+	vertices []float32
+	indices  []uint16
+	program  *gl.Program
 }
 
 // Loads a new pixelmap and returns a Pixelmap struct. Can be later drawn using Draw() method
-func (r *Renderer2D) NewPixelmap() *Pixelmap {
+func (r *Renderer2D) NewPixelmap() (*Pixelmap, error) {
+	r.Window.SetCurrent()
+
+	vertexShader, err := gl.NewShader(gl.VertexShader{
+		WebShader:     ushaders.WebVShader,
+		DesktopShader: ushaders.DesktopVShader,
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new VertexShader for PixelMap\n %s", err)
+	}
+
+	fragmentShader, err := gl.NewShader(gl.FragmentShader{
+		WebShader:     ushaders.WebFShader,
+		DesktopShader: ushaders.DesktopFShader,
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new FragmentShader for PixelMap\n %s", err)
+	}
+
+	vertexShader.Compile()
+	defer vertexShader.Delete()
+
+	fragmentShader.Compile()
+	defer fragmentShader.Delete()
+
+	program := gl.NewProgram(*vertexShader, *fragmentShader)
+	program.Link()
+	program.Use()
+
+	vertices := []float32{
+		-1, -1, 0.0, 0.0, 0.0,
+		-1, -1 - 1, 0.0, 0.0, 1.0,
+		-1 + 1, -1 - 1, 0.0, 1.0, 1.0,
+		-1 + 1, -1, 0.0, 1.0, 0.0,
+	}
+
+	location, err := program.UniformLocation("uniformColor")
+	location.Set(0, 0, 0, 1.0)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find uniformColor location for PixelMap\n %s", err)
+	}
+
+	location, err = program.UniformLocation("useTexture")
+	location.Set(1)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find useTexture location for PixelMap\n %s", err)
+	}
+
+	indices := []uint16{
+		0, 1, 3,
+		1, 2, 3,
+	}
+	r.Window.UnsetCurrent()
+
 	return &Pixelmap{
 		Renderer: r,
 		Width:    r.Window.Width,
 		Height:   r.Window.Height,
-	}
+
+		vertices: vertices,
+		indices:  indices,
+		program:  program,
+	}, nil
 }
 
 // SetPixel assigns an RGBA color to the (x, y) coordinate.
@@ -56,62 +121,29 @@ func (p *Pixelmap) SetPixel(x, y int, color [4]int) {
 func (p *Pixelmap) Draw() {
 	p.Renderer.Window.SetCurrent()
 
-	vertexShader := gl.NewShader(gl.VertexShader{
-		WebShader:     ushaders.WebVShader,
-		DesktopShader: ushaders.DesktopVShader,
-	})
-	fragmentShader := gl.NewShader(gl.FragmentShader{
-		WebShader:     ushaders.WebFShader,
-		DesktopShader: ushaders.DesktopFShader,
-	})
-
-	vertexShader.Compile()
-	defer vertexShader.Delete()
-
-	fragmentShader.Compile()
-	defer fragmentShader.Delete()
-
-	program := gl.NewProgram(*vertexShader, *fragmentShader)
-	program.Link()
-
-	program.Use()
-
-	vertices := []float32{
-		-1, -1, 0.0, 0.0, 0.0,
-		-1, -1 - 1, 0.0, 0.0, 1.0,
-		-1 + 1, -1 - 1, 0.0, 1.0, 1.0,
-		-1 + 1, -1, 0.0, 1.0, 0.0,
-	}
-
-	program.UniformLocation("uniformColor").Set(0, 0, 0, 1.0)
-	program.UniformLocation("useTexture").Set(1)
-
-	indices := []uint16{
-		0, 1, 3,
-		1, 2, 3,
-	}
+	p.program.Use()
 
 	texture := gl.GenTexture()
 	texture.Bind()
 	texture.Configure(image.LoadPixelmap(p.Texture, p.Renderer.Window.Width, p.Renderer.Window.Height), gl.NEAREST)
 	texture.UnBind()
 
-	buffer := gl.GenBuffers(vertices, indices)
+	buffer := gl.GenBuffers(p.vertices, p.indices)
 	buffer.Bind(gl.VA, gl.VBO, gl.EBO)
 
 	buffer.Data()
-	gl.SetupVertexAttrib(program)
+	gl.SetupVertexAttrib(p.program)
 
-	program.Use()
+	p.program.Use()
 	buffer.Bind(gl.VA, gl.VBO, gl.EBO)
-	buffer.Update(vertices)
+	buffer.Update(p.vertices)
 
 	texture.Bind()
-	gl.DrawElements(indices)
+	gl.DrawElements(p.indices)
 	texture.UnBind()
 
 	buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
-	program.UnUse()
+	p.program.UnUse()
 
 	p.Renderer.Window.UnsetCurrent()
 }

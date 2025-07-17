@@ -16,6 +16,7 @@
 package windowing
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"syscall/js"
@@ -47,8 +48,8 @@ type Window struct {
 var initialized bool
 
 func InitWindow() (*Window, error) {
-	if initialized && os.Getenv("VUELTO_DISABLE_BUILD_ERRORS") == "" {
-		panic("Web doesn't support having multiple windows!")
+	if _, enabled := os.LookupEnv("VUELTO_DISABLE_WEB_BUILD_ERRORS"); enabled == false && initialized {
+		return nil, errors.New("Vuelto does NOT support having multiple windows for WASM deployment.")
 	} else if !initialized {
 		initialized = true
 	}
@@ -67,7 +68,7 @@ func InitWindow() (*Window, error) {
 	}
 
 	if w.JSCanvas.IsNull() {
-		return nil, fmt.Errorf("failed to create or fetch canvas")
+		return nil, errors.New("Failed to create or fetch canvas")
 	}
 
 	return w, nil
@@ -94,8 +95,8 @@ func (w *Window) Create() error {
 		w.JSCanvas.Set("height", w.Height)
 	}
 
-	if w.Transparency && os.Getenv("VUELTO_DISABLE_BUILD_ERRORS") == "" {
-		panic("Web doesn't support having multiple windows!")
+	if _, enabled := os.LookupEnv("VUELTO_DISABLE_WEB_BUILD_ERRORS"); enabled == false && w.Transparency {
+		return errors.New("Web doesn't support transparent windows!")
 	}
 
 	return nil
@@ -136,7 +137,7 @@ func (w *Window) SetResizable(resizable bool) {
 }
 
 func (w *Window) SetTransparency(alpha float32) {
-	if os.Getenv("VUELTO_DISABLE_BUILD_ERRORS") == "" {
+	if _, enabled := os.LookupEnv("VUELTO_DISABLE_WEB_BUILD_ERRORS"); enabled == false {
 		panic("SetTransparency() is not supported on web!")
 	}
 }

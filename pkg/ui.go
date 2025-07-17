@@ -14,6 +14,8 @@ package vuelto
 
 import (
 	"embed"
+	"errors"
+	"fmt"
 
 	"vuelto.pp.ua/internal/font"
 	"vuelto.pp.ua/internal/gl"
@@ -25,10 +27,10 @@ type Font struct {
 	X, Y          float32
 	Width, Height float32
 
-	Buffer  *gl.Buffer
-	Texture *gl.Texture
-	Indices []uint16
-	Program *gl.Program
+	buffer  *gl.Buffer
+	texture *gl.Texture
+	indices []uint16
+	program *gl.Program
 
 	Renderer *UIRenderer
 }
@@ -43,17 +45,26 @@ type FontHTTP struct {
 }
 
 // Loads a new image and returns a Image struct. Can be later drawn using the Draw() method
-func (r *UIRenderer) LoadFont(fontFile any, text string, x, y float32, size int) *Font {
+func (r *UIRenderer) LoadFont(fontFile any, text string, x, y float32, size int) (*Font, error) {
 	r.Window.SetCurrent()
 
-	vertexShader := gl.NewShader(gl.VertexShader{
+	vertexShader, err := gl.NewShader(gl.VertexShader{
 		WebShader:     ushaders.WebVShader,
 		DesktopShader: ushaders.DesktopVShader,
 	})
-	fragmentShader := gl.NewShader(gl.FragmentShader{
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new VertexShader used for font\n %s", err)
+	}
+
+	fragmentShader, err := gl.NewShader(gl.FragmentShader{
 		WebShader:     ushaders.WebFShader,
 		DesktopShader: ushaders.DesktopFShader,
 	})
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new FragmentShader used for font\n %s", err)
+	}
 
 	vertexShader.Compile()
 	defer vertexShader.Delete()
@@ -66,8 +77,17 @@ func (r *UIRenderer) LoadFont(fontFile any, text string, x, y float32, size int)
 
 	program.Use()
 
-	program.UniformLocation("uniformColor").Set(1, 1, 1, 1)
-	program.UniformLocation("useTexture").Set(1)
+	location, err := program.UniformLocation("uniformColor")
+	location.Set(1, 1, 1, 1)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find uniformColor location used for font\n %s", err)
+	}
+
+	location, err = program.UniformLocation("useTexture")
+	location.Set(1)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find useTexture location used for font\n %s", err)
+	}
 
 	indices := []uint16{
 		0, 1, 3,
@@ -84,6 +104,8 @@ func (r *UIRenderer) LoadFont(fontFile any, text string, x, y float32, size int)
 	case trita.YourType(FontHTTP{}):
 		http := fontFile.(FontHTTP)
 		file = font.LoadAsHTTP(r.Window.Width, r.Window.Height, http.Url, text, size, x, y)
+	default:
+		return nil, errors.New("Failed to detect font type")
 	}
 
 	texture := gl.GenTexture()
@@ -113,13 +135,13 @@ func (r *UIRenderer) LoadFont(fontFile any, text string, x, y float32, size int)
 		Width:  file.Width,
 		Height: file.Height,
 
-		Buffer:  buffer,
-		Texture: texture,
-		Indices: indices,
-		Program: program,
+		buffer:  buffer,
+		texture: texture,
+		indices: indices,
+		program: program,
 
 		Renderer: r,
-	}
+	}, nil
 }
 
 // Draws the image that's loaded before.
@@ -133,16 +155,16 @@ func (f *Font) Draw() {
 		f.X + f.Width, f.Y, 0.0, 1.0, 1.0,
 	}
 
-	f.Program.Use()
-	f.Buffer.Bind(gl.VA, gl.VBO, gl.EBO)
-	f.Buffer.Update(vertices)
+	f.program.Use()
+	f.buffer.Bind(gl.VA, gl.VBO, gl.EBO)
+	f.buffer.Update(vertices)
 
-	f.Texture.Bind()
-	gl.DrawElements(f.Indices)
-	f.Texture.UnBind()
+	f.texture.Bind()
+	gl.DrawElements(f.indices)
+	f.texture.UnBind()
 
-	f.Buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
-	f.Program.UnUse()
+	f.buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
+	f.program.UnUse()
 
 	f.Renderer.Window.UnsetCurrent()
 }

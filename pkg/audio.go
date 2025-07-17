@@ -13,7 +13,7 @@
 package vuelto
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -35,29 +35,28 @@ type AudioPlayer struct {
 // Opens a audio file. It supports two file formats: WAV and MP3.
 // Plays the audio file using Start function. Stop the audio file using Stop function.
 // Close the audio file using Close function.
-func OpenAudioFile(filePath string) *AudioPlayer {
+func OpenAudioFile(filePath string) (*AudioPlayer, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
-		log.Fatal("Error opening audio file: ", filePath)
+		return nil, fmt.Errorf("Error opening audio file: %s", filePath)
 	}
 
 	var streamer beep.StreamSeekCloser
 	var format beep.Format
 
 	switch strings.ToLower(filepath.Ext(filePath)) {
-
 	case ".wav":
 		streamer, format, err = wav.Decode(f)
 	case ".mp3":
 		streamer, format, err = mp3.Decode(f)
 	default:
-		log.Fatal("Unsupported audio format: ", filepath.Ext(filePath))
 		f.Close()
+		return nil, fmt.Errorf("Unsupported audio format: %s", filepath.Ext(filePath))
 	}
 
 	if err != nil {
-		log.Fatal("Error decoding audio file: ", filePath)
 		f.Close()
+		return nil, fmt.Errorf("Error decoding audio file: %s", filePath)
 	}
 
 	return &AudioPlayer{
@@ -65,7 +64,7 @@ func OpenAudioFile(filePath string) *AudioPlayer {
 		Format:   format,
 		File:     f,
 		Done:     make(chan bool),
-	}
+	}, nil
 }
 
 // Starts playing the audio file.

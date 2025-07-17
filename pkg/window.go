@@ -13,7 +13,10 @@
 package vuelto
 
 import (
+	"errors"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"vuelto.pp.ua/internal/event"
@@ -28,6 +31,7 @@ type Window struct {
 	FPS           int
 	startTime     time.Time
 	delta         float64
+	NotFirstLoop  bool
 
 	Event *event.Event
 }
@@ -37,11 +41,10 @@ func frameBufferSizeCallback(window *windowing.Window, newWidth, newHeight int) 
 }
 
 // Creates a new window and returns a Window struct.
-func NewWindow(title string, width, height int, resizable bool, transparent bool) *Window {
+func NewWindow(title string, width, height int, resizable bool, transparent bool) (*Window, error) {
 	window, err := windowing.InitWindow()
 	if err != nil {
-		log.Fatalln("Could not initialize a new window: ", err)
-		return nil
+		return nil, fmt.Errorf("Failed to init the window module\n %s", err)
 	}
 	defer window.Close()
 
@@ -57,7 +60,7 @@ func NewWindow(title string, width, height int, resizable bool, transparent bool
 
 	err = window.Create()
 	if err != nil {
-		log.Fatalln("Error create window:", err)
+		return nil, fmt.Errorf("Failed to create a new window\n %s", err)
 	}
 
 	window.ResizingCallback(frameBufferSizeCallback)
@@ -68,7 +71,7 @@ func NewWindow(title string, width, height int, resizable bool, transparent bool
 
 	err = gl.Init()
 	if err != nil {
-		log.Fatalf("Failed to initialize: %s", err)
+		return nil, fmt.Errorf("Failed to init the GL module\n %s", err)
 	}
 
 	gl.Enable(gl.TEXTURE_2D, gl.BLEND)
@@ -81,7 +84,7 @@ func NewWindow(title string, width, height int, resizable bool, transparent bool
 		Height: height,
 		Event:  events,
 		FPS:    60,
-	}
+	}, nil
 }
 
 // Set callback to the resize of the window
@@ -123,10 +126,10 @@ func (w *Window) Close() bool {
 // Refreshes te window. Run this at the end of your loop (except if you're having multiple windows)
 func (w *Window) Refresh() {
 	w.SetCurrent()
+
 	w.Window.HandleEvents()
 	w.Window.UpdateBuffers()
 	gl.Clear()
-	w.UnsetCurrent()
 
 	endTime := time.Since(w.startTime)
 	w.delta = endTime.Seconds()
@@ -136,10 +139,20 @@ func (w *Window) Refresh() {
 
 	if sleepTime > 0 {
 		time.Sleep(time.Duration(sleepTime))
+	} else if w.NotFirstLoop {
+		if _, enabled := os.LookupEnv("VUELTO_DISABLE_FRAMERATE_WARNINGS"); enabled == false {
+			log.Println("\033[33m WARNING: Application is running at a lower framerate then originally set. \033[0m")
+			log.Println("\033[33m To disable these warnings, please refer to the docs. \033[0m")
+		}
+	}
+
+	if !w.NotFirstLoop {
+		w.NotFirstLoop = true
 	}
 
 	now := time.Now()
 	w.startTime = now
+	w.UnsetCurrent()
 }
 
 // Sets the context of the window to the current context. (Only use when having multiple windows)

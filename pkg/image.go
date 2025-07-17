@@ -14,6 +14,8 @@ package vuelto
 
 import (
 	"embed"
+	"errors"
+	"fmt"
 
 	"vuelto.pp.ua/internal/gl"
 	"vuelto.pp.ua/internal/gl/ushaders"
@@ -26,10 +28,10 @@ type Image struct {
 	Pos           *Vector2D
 	Width, Height float32
 
-	Buffer  *gl.Buffer
-	Texture *gl.Texture
-	Indices []uint16
-	Program *gl.Program
+	buffer  *gl.Buffer
+	texture *gl.Texture
+	indices []uint16
+	program *gl.Program
 
 	Renderer *Renderer2D
 }
@@ -53,17 +55,26 @@ type ImageOptions struct {
 var ImageArray []uint32
 
 // Loads a new image and returns a Image struct. Can be later drawn using the Draw() method
-func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, options *ImageOptions) *Image {
+func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, options *ImageOptions) (*Image, error) {
 	r.Window.SetCurrent()
 
-	vertexShader := gl.NewShader(gl.VertexShader{
+	vertexShader, err := gl.NewShader(gl.VertexShader{
 		WebShader:     ushaders.WebVShader,
 		DesktopShader: ushaders.DesktopVShader,
 	})
-	fragmentShader := gl.NewShader(gl.FragmentShader{
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new VertexShader used for image\n %s", err)
+	}
+
+	fragmentShader, err := gl.NewShader(gl.FragmentShader{
 		WebShader:     ushaders.WebFShader,
 		DesktopShader: ushaders.DesktopFShader,
 	})
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new FragmentShader used for image\n %s", err)
+	}
 
 	vertexShader.Compile()
 	defer vertexShader.Delete()
@@ -83,8 +94,17 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, optio
 		x + width, y, 0.0, 1.0, 0.0,
 	}
 
-	program.UniformLocation("uniformColor").Set(0, 0, 0, 1.0)
-	program.UniformLocation("useTexture").Set(1)
+	location, err := program.UniformLocation("uniformColor")
+	location.Set(0, 0, 0, 1.0)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find uniformColor location used for image\n %s", err)
+	}
+
+	location, err = program.UniformLocation("useTexture")
+	location.Set(1)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find useTexture location used for image\n %s", err)
+	}
 
 	indices := []uint16{
 		0, 1, 3,
@@ -100,6 +120,8 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, optio
 		file = image.LoadAsEmbed(embed.Filesystem, embed.Image)
 	case trita.YourType(ImageHTTP{}):
 		file = image.LoadAsHTTP(imageFile.(ImageHTTP).Url)
+	default:
+		return nil, errors.New("Failed to detect image type")
 	}
 
 	texture := gl.GenTexture()
@@ -141,13 +163,13 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, optio
 		Width:  width,
 		Height: height,
 
-		Buffer:  buffer,
-		Texture: texture,
-		Indices: indices,
-		Program: program,
+		buffer:  buffer,
+		texture: texture,
+		indices: indices,
+		program: program,
 
 		Renderer: r,
-	}
+	}, nil
 }
 
 // Draws the image that's loaded before.
@@ -161,16 +183,16 @@ func (img *Image) Draw() {
 		img.Pos.X + img.Width, img.Pos.Y, 0.0, 1.0, 0.0,
 	}
 
-	img.Program.Use()
-	img.Buffer.Bind(gl.VA, gl.VBO, gl.EBO)
-	img.Buffer.Update(vertices)
+	img.program.Use()
+	img.buffer.Bind(gl.VA, gl.VBO, gl.EBO)
+	img.buffer.Update(vertices)
 
-	img.Texture.Bind()
-	gl.DrawElements(img.Indices)
-	img.Texture.UnBind()
+	img.texture.Bind()
+	gl.DrawElements(img.indices)
+	img.texture.UnBind()
 
-	img.Buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
-	img.Program.UnUse()
+	img.buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
+	img.program.UnUse()
 
 	img.Renderer.Window.UnsetCurrent()
 }
