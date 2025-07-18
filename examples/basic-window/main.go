@@ -1,14 +1,19 @@
+// This works in the web too! Only it wouldn't be so fun :(
 package main
 
 import (
+	"log"
+
 	vuelto "vuelto.pp.ua/pkg"
 )
 
 func main() {
-	// This works in the web too! Only it wouldn't be so fun :(
-	win := vuelto.NewWindow("hi", 800, 600, false, false)
+	w, err := vuelto.NewWindow("hi", 800, 600, false, false)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-	for !win.Close() {
-		win.Refresh()
+	for !w.Close() {
+		w.Refresh()
 	}
 }

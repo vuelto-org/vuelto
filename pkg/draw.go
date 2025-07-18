@@ -17,9 +17,13 @@ import (
 )
 
 // Draws a new rect by the given x, y, width, height and color.
-func (r *Renderer2D) DrawRect(x, y, width, height float32, color [4]int) {
-	rect := r.NewRect(x, y, width, height, color)
+func (r *Renderer2D) DrawRect(x, y, width, height float32, color [4]int) error {
+	rect, err := r.NewRect(x, y, width, height, color)
+	if err != nil {
+		return err
+	}
 	rect.Draw()
+	return nil
 }
 
 // Clears the screen with the specific color that is provided
@@ -35,7 +39,11 @@ func (r *Renderer2D) ClearColor(color [4]int) {
 }
 
 // Draws a new line by the given x1, y1, x2, y2 and color
-func (r *Renderer2D) DrawLine(x1, y1, x2, y2 float32, color [4]int) {
-	line := r.NewLine(x1, y1, x2, y2, color)
+func (r *Renderer2D) DrawLine(x1, y1, x2, y2 float32, color [4]int) error {
+	line, err := r.NewLine(x1, y1, x2, y2, color)
+	if err != nil {
+		return err
+	}
 	line.Draw()
+	return nil
 }

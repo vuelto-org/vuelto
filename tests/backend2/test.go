@@ -46,14 +46,21 @@ func main() {
 
 	win.ContextCurrent()
 
-	vertexShader := gl.NewShader(gl.VertexShader{
+	vertexShader, err := gl.NewShader(gl.VertexShader{
 		WebShader:     ushaders.WebVShader,
 		DesktopShader: ushaders.DesktopVShader,
 	})
-	fragmentShader := gl.NewShader(gl.FragmentShader{
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fragmentShader, err := gl.NewShader(gl.FragmentShader{
 		WebShader:     ushaders.WebFShader,
 		DesktopShader: ushaders.DesktopFShader,
 	})
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	vertexShader.Compile()
 	defer vertexShader.Delete()
@@ -72,8 +79,17 @@ func main() {
 		0.9, -0.9, 0.0,
 	}
 
-	program.UniformLocation("uniformColor").Set(0.2, 0.6, 0.3, 1.0)
-	program.UniformLocation("useTexture").Set(0)
+	location, err := program.UniformLocation("uniformColor")
+	location.Set(0.2, 0.6, 0.3, 1.0)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	location, err = program.UniformLocation("useTexture")
+	location.Set(0)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	indices := []uint16{
 		0, 1,

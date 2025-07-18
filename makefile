@@ -4,13 +4,17 @@ MESSAGE = Release version $(VERSION)
 TARGET_TESTS = \
 	./tests/rundown \
 	./tests/backend \
-	./tests/backend2
+	./tests/backend2 \
+	./tests/fps
 
 TARGET_EXAMPLES = \
 	./examples/basic-window \
-	./examples/shapes \
+	./examples/fonts \
 	./examples/images \
-	./examples/two-windows
+	./examples/shapes \
+	./examples/transparency \
+	./examples/two-windows \
+	./examples/web
 
 .PHONY: release upload tests examples
 
@@ -26,7 +30,7 @@ upload:
 
 tests:
 	@for dir in $(TARGET_TESTS); do \
-		echo "building $$dir..."; \
+		echo "Building $$dir..."; \
 		go build -o bin/$$dir $$dir || exit 1; \
 	done
 

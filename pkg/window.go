@@ -13,7 +13,6 @@
 package vuelto
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
