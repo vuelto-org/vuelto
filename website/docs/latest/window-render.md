@@ -18,7 +18,7 @@ To create a window, initialize a new instance and store it in a variable. Pass t
 ### Example 1
 
 ```go
-window := vuelto.NewWindow("My Game", 800, 600, true)
+window, err := vuelto.NewWindow("My Game", 800, 600, true)
 ```
 
 The renderer depends on this window to function.

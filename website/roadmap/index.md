@@ -20,35 +20,9 @@
         - [x] Contrast
     - [x] [Library](https://github.com/disintegration/imaging)
 
-
-
-- [ ] Node system
-    - [ ] Movable nodes
-        - [ ] Custom physics option
-    - [ ] Static nodes
-        - [ ] Unmovable
-        - [ ] Just a basic image/shape
-    - [ ] Collisions
-        - [ ] Custom collision option
-    - [ ] Animations
-        - [ ] Using images
-        - [ ] Using spritesheets
-    - [ ] Sprites
-        - [ ] Replace images
-        - [ ] Sprites are part of nodes
-    - [ ] Spritesheets
-        - [ ] Using images
-        - [ ] returning images
-        - [ ] Usable with animations
-
-- [ ] Custom color system
-    - [ ] Color struct
-    - [ ] NewColor function
-    - [ ] Predefined Color constants
-
-- [ ] Website
-    - [ ] Doc everything
-    - [ ] Write dev post about PixelMaps
+- [x] Website
+    - [x] Doc everything
+    - [x] Write dev post about Framerate
 
 - [x] Window system
     - [x] Transparent windows
@@ -65,4 +39,5 @@
     - [x] HTTPS
 
 - [x] Dangerous stuff
-    - [x] VUELTO_DISABLE_BUILD_ERRORS env var
+    - [x] VUELTO_DISABLE_WEB_BUILD_ERRORS env var
+    - [x] VUELTO_DISABLE_FRAMERATE_WARNINGS env var 

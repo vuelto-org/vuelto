@@ -56,10 +56,10 @@ import (
 )
 
 func main() {
- w := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
+ w, _ := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
  ren := w.NewRenderer2D()
 
- image := ren.LoadImage("test/image.png", 0, 0, 0.5, 0.5)
+ image, _ := ren.LoadImage("test/image.png", 0, 0, 0.5, 0.5)
 
  for !w.Close() {
   image.Draw()

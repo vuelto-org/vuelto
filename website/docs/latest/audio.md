@@ -7,7 +7,7 @@ Features for playing audio files, supporting `mp3` and `wav`.
 First, open a file with `OpenAudioFile()`. This func takes one arg, the file path to your audio file. Returns an `AudioPlayer` struct.
 
 ```go
-myAudioFile := OpenAudioFile("path/to/audio.mp3")
+myAudioFile, err := OpenAudioFile("path/to/audio.mp3")
 ```
 
 You can now call the `Start()` and `Stop()` methods passing your audio player.
