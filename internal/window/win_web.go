@@ -1,8 +1,8 @@
-//go:build js && wasm
-// +build js,wasm
+//go:build js || wasm
+// +build js wasm
 
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -16,7 +16,9 @@
 package windowing
 
 import (
+	"errors"
 	"fmt"
+	"os"
 	"syscall/js"
 	"time"
 
@@ -32,9 +34,10 @@ type Window struct {
 	GlfwGLMajor int
 	GlfwGLMinor int
 
-	Title  string
-	Width  int
-	Height int
+	Title        string
+	Width        int
+	Height       int
+	Transparency bool
 
 	lastTime      time.Time
 	deltaTime     float32
@@ -45,9 +48,9 @@ type Window struct {
 var initialized bool
 
 func InitWindow() (*Window, error) {
-	if initialized {
-		panic("Web doesnt support having multiple windows!")
-	} else {
+	if _, enabled := os.LookupEnv("VUELTO_DISABLE_WEB_BUILD_ERRORS"); enabled == false && initialized {
+		return nil, errors.New("Vuelto does NOT support having multiple windows for WASM deployment.")
+	} else if !initialized {
 		initialized = true
 	}
 
@@ -65,7 +68,7 @@ func InitWindow() (*Window, error) {
 	}
 
 	if w.JSCanvas.IsNull() {
-		return nil, fmt.Errorf("failed to create or fetch canvas")
+		return nil, errors.New("Failed to create or fetch canvas")
 	}
 
 	return w, nil
@@ -90,6 +93,10 @@ func (w *Window) Create() error {
 	} else {
 		w.JSCanvas.Set("width", w.Width)
 		w.JSCanvas.Set("height", w.Height)
+	}
+
+	if _, enabled := os.LookupEnv("VUELTO_DISABLE_WEB_BUILD_ERRORS"); enabled == false && w.Transparency {
+		return errors.New("Web doesn't support transparent windows!")
 	}
 
 	return nil
@@ -129,11 +136,32 @@ func (w *Window) SetResizable(resizable bool) {
 	}
 }
 
+func (w *Window) SetTransparency(alpha float32) {
+	if _, enabled := os.LookupEnv("VUELTO_DISABLE_WEB_BUILD_ERRORS"); enabled == false {
+		panic("SetTransparency() is not supported on web!")
+	}
+}
+
+func (w *Window) SetTitle(title string) {
+	web.Document.Set("title", title)
+}
+
+func (w *Window) SetSize(width, height int) {
+	w.JSCanvas.Set("width", width)
+	w.JSCanvas.Set("height", height)
+}
+
+func (w *Window) GetSize() (int, int) {
+	return w.JSCanvas.Get("width").Int(), w.JSCanvas.Get("height").Int()
+}
+
 func (w *Window) Close() bool {
 	return false
 }
 
 func (w *Window) ContextCurrent() {}
+
+func (w *Window) UnsetContext() {}
 
 func (w *Window) Destroy() {}
 

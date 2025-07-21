@@ -1,7 +1,9 @@
+// This works in the web too! This is because of the images being embedded!
 package main
 
 import (
 	"embed"
+	"log"
 
 	vuelto "vuelto.pp.ua/pkg"
 )
@@ -10,26 +12,35 @@ import (
 var embeddedFiles embed.FS
 
 func main() {
-	// This works in the web too! This is because of the images being embedded!
-	w := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
+	w, err := vuelto.NewWindow("Image Example - Vuelto", 800, 600, true, false)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	ren := w.NewRenderer2D()
 
-	iembed := vuelto.ImageEmbed{
+	imageEmbedOne := vuelto.ImageEmbed{
 		Filesystem: embeddedFiles,
 		Image:      "tree.png",
 	}
 
-	i2embed := vuelto.ImageEmbed{
+	imageEmbedTwo := vuelto.ImageEmbed{
 		Filesystem: embeddedFiles,
 		Image:      "galaxy.png",
 	}
 
-	image1 := ren.LoadImage(iembed, 0.5, 0.5, -0.5, 0.5)
-	image := ren.LoadImage(i2embed, 0, 0, 1, 1)
+	imageOne, err := ren.LoadImage(imageEmbedOne, 0.7, 0.3, -0.5, 0.5, nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	imageTwo, err := ren.LoadImage(imageEmbedTwo, 0, 0, 1, 1, nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	for !w.Close() {
-		image1.Draw()
-		image.Draw()
+		imageTwo.Draw()
+		imageOne.Draw()
 		w.Refresh()
 	}
 }

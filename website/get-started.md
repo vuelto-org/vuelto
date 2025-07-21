@@ -5,7 +5,7 @@
 There are some extra things you will need to use Vuelto.
 
 - 🖥️ A C compiler
-- 🔧 A Go compiler (Go 1.18 and above)
+- 🔧 A Go compiler (Go 1.23 and above)
 - 🪟 Xorg/Wayland development packages (For Linux only)
 - 🖱️ Supported platform
 For a installation guide, [go here](install.md).
@@ -30,10 +30,10 @@ import (
 )
 
 func main() {
- w := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
+ w, _ := vuelto.NewWindow("Image Example - Vuelto", 800, 600, false)
  ren := w.NewRenderer2D()
 
- image := ren.LoadImage("test/image.png", 0, 0, 0.5, 0.5)
+ image, _ := ren.LoadImage("test/image.png", 0, 0, 0.5, 0.5)
 
  for !w.Close() {
   image.Draw()

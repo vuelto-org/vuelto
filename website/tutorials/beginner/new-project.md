@@ -5,14 +5,14 @@ Hello and welcome to the first tutorial in the beginner series! In this tutorial
 
 !!! note
     This tutorial assumes you have a basic understanding of Go. If you are new to Go, you can learn more about it.
-    If you want to follow along, the example we are building is available in the [Github repo](https://github.com/vuelto-org/vuelto/blob/latest/examples/basic-window/main.go).
+    If you want to follow along, the example we are building is available in the [Github repo](https://github.com/vuelto-org/vuelto/blob/stable/examples/basic-window/main.go).
 
 ## 📦 Prerequisites
 
 Before we start, make sure you have the following installed:
 
 - 🖥️ A C compiler
-- 🔧 A Go compiler (Go 1.18 and above)
+- 🔧 A Go compiler (Go 1.23 and above)
 - 🪟 Xorg/Wayland development packages (For Linux only)
 
 Also make sure you're on a supported platform (Windows, macOS, or Linux), and you're targeting supported platforms too (Windows, macOS, Linux, and the web).

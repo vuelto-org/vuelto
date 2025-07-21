@@ -16,7 +16,7 @@ nav:
       - 🛠️ In-depth Installation: "install.md"
 
   - Docs:
-      - 🏠 Home: "docs/index.md"
+      - 🏠 Docs: "docs/index.md"
       - 👤 User Docs:
           - 🖥️ Windowing and Renderer: "docs/latest/window-render.md"
           - 🔊 Audio: "docs/latest/audio.md"
@@ -33,10 +33,16 @@ nav:
       - blog/index.md
 
   - Tutorials:
-      - 🎓 Home: "tutorials/index.md"
+      - 🎓 Tutorials: "tutorials/index.md"
       - 🌱 Beginner:
           - 🚀 Getting Started: "tutorials/beginner/new-project.md"
           - 🎨 Rendering: "tutorials/beginner/rendering.md"
+  - Demo:
+      - 🏠 Demo: "demo/index.md"
+      - 📚 Shapes: "demo/1/index.html"
+      - 📚 Images: "demo/2/index.html"
+      - 📚 Rendering: "demo/3/index.html"
+
   - Roadmap:
       - 📅 Upcoming: "roadmap/index.md"
       - 🛣️ V1: "roadmap/v1.md"
@@ -85,12 +91,17 @@ theme:
         icon: material/toggle-switch-off
         name: Switch to system preference
 
+extra:
+  version:
+    provider: mike
+
 plugins:
   - blog
   - redirects:
       redirect_maps:
         "discord.md": "https://discord.gg/gZqdRXbbqg"
         "repo.md": "https://github.com/vuelto-org/vuelto"
+        "examples.md": "demo/index.md"
 
 markdown_extensions:
   - abbr
@@ -122,13 +133,7 @@ markdown_extensions:
   - pymdownx.smartsymbols
   - pymdownx.snippets
   - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde

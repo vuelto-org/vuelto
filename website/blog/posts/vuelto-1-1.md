@@ -20,7 +20,7 @@ Hi there! Happy new year to everyone. We’re *a bit* late, but still hyped to g
 <!-- more -->
 ## The new Vuelto renderer
 
-Vuelto 1.0’s legacy renderer uses a pipelined system for rendering graphics. It looks kinda like this:  
+Vuelto 1.0’s legacy renderer uses a pipelined approach for rendering graphics. It looks kinda like this:
 
 ```go
 // ...
@@ -33,8 +33,8 @@ gl.Vertex2f(x, y+height)
 
 Vuelto 1.1 refactored the rendering system, using OpenGL 3.3 Core and taking a shader based approach like this:
 
-```go  
-vertexShader := NewShader(VERTEX_SHADER, "vertex_shader_web.glsl", "vertex_shader_desktop.glsl")  
+```go
+vertexShader := NewShader(VERTEX_SHADER, "vertex_shader_web.glsl", "vertex_shader_desktop.glsl")
 fragmentShader := NewShader(FRAGMENT_SHADER, "fragment_shader_web.glsl", "fragment_shader_desktop.glsl")
 
 vertexShader.Compile()
@@ -96,7 +96,7 @@ Once loaded like this, you can just do image.Draw(), and you now got a web-proof
 
 As promised in our birthday blog post, we’re bringing events to Vuelto. They are still basic, but the groundwork made so far is sufficient for making v1.1 a great release, and also sets a base we’ll build on top of in the following releases. For now you can get **key press** and **key release** events reactively, and the **mouse position** imperatively.
 
-Key press & release events are used like this:  
+Key press & release events are used like this:
 
 ```go
 if KeyPressed(“E”) == true {
@@ -114,10 +114,10 @@ Keep in mind code inside `if KeyPressed(“E”)` will fire multiple times - one
 
 If you need to fire code only once, you can use `KeyPressedOnce(“E”)`.
 
-Besides these, we also have `MousePos()` (not *Get*MousePos())  
+Besides these, we also have `MousePos()` (not *Get*MousePos())
 
 ```go
-position := window.MousePos() // imagine X is 20 and Y is 30  
+position := window.MousePos() // imagine X is 20 and Y is 30
 ```
 
 From here, we can access `position.X`, which will return 20, `position.Y`, which will return 30, and `position.Pos()` to get both together as `20, 30`.
@@ -126,7 +126,7 @@ Keep in mind the `position` variable won’t change as the window refreshes. Tha
 
 ## Better documentation
 
-Vuelto 1.0 was, to be honest, almost documentation less. We’ve fixed that! Here, at vuelto.pp.ua, Vuelto 1.1 is now fully documented and includes code examples, easy to follow explanations on core concepts such as the game loop, and more. All of that with that nicely refreshed branding we told you about on our last (and first too!) blog post. It’s something to be proud of, isn’t it?  
+Vuelto 1.0 was, to be honest, almost documentation less. We’ve fixed that! Here, at vuelto.pp.ua, Vuelto 1.1 is now fully documented and includes code examples, easy to follow explanations on core concepts such as the game loop, and more. All of that with that nicely refreshed branding we told you about on our last (and first too!) blog post. It’s something to be proud of, isn’t it?
 —
 And that’s all, my fellows! We hope you’re as excited to try out Vuelto 1.1 as we are to release it right now. See the full release notes at our [CHANGELOG.md file](https://github.com/vuelto-org/vuelto/blob/main/CHANGELOG.md), and have fun with it!
 

@@ -1,73 +1,43 @@
+<!-- markdownlint-disable md007 -->
 # 📅 Upcoming release
-## V1.1
 
-- [x] Framerates
-    - [x] Set framerate
-    - [x] Get framerate
-    - [x] Deltatime
-
-- [x] Events
-    - [x] Keyboard
-    - [x] Mouse
+## V1.2
 
 - [x] Renderer
-    - [x] Move the main API to the Rendering driver
-    - [x] Web
-        - [x] Web-windowing
-        - [x] Support for web using wasm
-        - [x] Web-rendering
-        - [x] Support for building graphics driver
-        - [x] WebGL
-    - [x] Desktop
-      - [x] Move to OpenGL v3.3
+    - [x] PixelMaps
+        - [x] SetPixel
+    - [x] UI
+        - [x] LoadText and .Draw()
 
-- [x] Windowing
-    - [x] Platforms
-        - [x] Windowing for web
-        - [x] Windowing for desktop
-  - [x] Framerates
-      - [x] Set framerate
-      - [x] Get framerate
-      - [x] Deltatime
+- [x] Image
+    - [x] Image Options
+        - [x] Manipulate images
+    - [x] Manipulate images
+        - [x] Blur
+        - [x] Crop
+        - [x] Invert
+        - [x] Grayscale
+        - [x] Contrast
+    - [x] [Library](https://github.com/disintegration/imaging)
 
-- [x] Imaging
-    - [x] Load images
-    - [x] Process images (to string)
+- [x] Website
+    - [x] Doc everything
+    - [x] Write dev post about Framerate
 
-- [x] 2 Ring Rendering Driver
-    - [x] Ring 1
-        - [x] Wrapper around OpenGL C api
-        - [x] Wrapper around WebGL JS api
-    - [x] Ring 2
-        - [x] API around OpenGL and WebGL
+- [x] Window system
+    - [x] Transparent windows
+    - [x] Window manipulations
+        - [x] SetTitle
+        - [x] SetSize
+        - [x] GetSize
+    - [x] Multiple Windows
+        - [x] Remove context management
+        - [x] Automate context management
 
-- [x] 2 Ring Window Driver
-    - [x] Ring 1
-        - [x] Wrapper around GLFW
-        - [x] Wrapper around JS runtime
-    - [x] Ring 2
-        - [x] API around GLFW and JS windowing
+- [x] Web image loading
+    - [x] HTTP
+    - [x] HTTPS
 
-- [x] 2 Ring Input Driver
-    - [x] Ring 1 (No ring 1 needed)
-    - [x] Ring 2
-        - [x] API around GLFW and JS events
-
-- [x] 2 Ring Image Driver
-    - [x] Ring 1 (No ring 1 needed)
-    - [x] Ring 2
-        - [x] API around Go image library
-
-- [ ] Website
-    - [ ] Docs
-        - [ ] Vuelto Docs
-            - [ ] Vuelto API
-            - [ ] How to use vuelto
-            - [ ] Vuelto's functionality
-        - [x] Developer Docs
-            - [x] Vuelto's 3 ring structure
-            - [x] CONTRIBUTING.md
-            - [x] Code of Conduct
-    - [ ] Tutorials
-        - [ ] Examples
-        - [ ] Tutorials to build small games
+- [x] Dangerous stuff
+    - [x] VUELTO_DISABLE_WEB_BUILD_ERRORS env var
+    - [x] VUELTO_DISABLE_FRAMERATE_WARNINGS env var 

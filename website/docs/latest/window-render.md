@@ -9,15 +9,16 @@ This module allows you to manage the main window and rendering operations, essen
 ## 🏠 Window
 
 To create a window, initialize a new instance and store it in a variable. Pass the following arguments:
+
 - **Title**: The title of your window.
 - **Width**: The width of the window in pixels.
 - **Height**: The height of the window in pixels.
 - **Resizable**: A boolean indicating whether the window can be resized.
 
-### Example
+### Example 1
 
 ```go
-window := vuelto.NewWindow("My Game", 800, 600, true)
+window, err := vuelto.NewWindow("My Game", 800, 600, true)
 ```
 
 The renderer depends on this window to function.
@@ -26,7 +27,7 @@ The renderer depends on this window to function.
 
 The renderer is responsible for drawing content onto the screen. To use it, initialize it using the window instance and store it in a variable.
 
-### Example
+### Example 2
 
 ```go
 renderer := window.NewRenderer2D()
@@ -52,11 +53,11 @@ for !window.Close() {
 
 ```go
 for !window.Close() {
-	image.Draw()
+ image.Draw()
 
   // ...
 
-	window.Refresh()
+ window.Refresh()
 }
 ```
 

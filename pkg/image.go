@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -14,10 +14,13 @@ package vuelto
 
 import (
 	"embed"
+	"errors"
+	"fmt"
 
 	"vuelto.pp.ua/internal/gl"
 	"vuelto.pp.ua/internal/gl/ushaders"
 	"vuelto.pp.ua/internal/image"
+	"vuelto.pp.ua/internal/image/processing"
 	"vuelto.pp.ua/internal/trita"
 )
 
@@ -25,10 +28,12 @@ type Image struct {
 	Pos           *Vector2D
 	Width, Height float32
 
-	Buffer  *gl.Buffer
-	Texture *gl.Texture
-	Indices []uint16
-	Program *gl.Program
+	buffer  *gl.Buffer
+	texture *gl.Texture
+	indices []uint16
+	program *gl.Program
+
+	Renderer *Renderer2D
 }
 
 type ImageEmbed struct {
@@ -36,18 +41,40 @@ type ImageEmbed struct {
 	Image      string
 }
 
+type ImageHTTP struct {
+	Url string
+}
+
+type ImageOptions struct {
+	Blur     float64
+	Contrast float64
+	Sharpen  float64
+	Invert   bool
+}
+
 var ImageArray []uint32
 
 // Loads a new image and returns a Image struct. Can be later drawn using the Draw() method
-func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32) *Image {
-	vertexShader := gl.NewShader(gl.VertexShader{
+func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32, options *ImageOptions) (*Image, error) {
+	r.Window.SetCurrent()
+
+	vertexShader, err := gl.NewShader(gl.VertexShader{
 		WebShader:     ushaders.WebVShader,
 		DesktopShader: ushaders.DesktopVShader,
 	})
-	fragmentShader := gl.NewShader(gl.FragmentShader{
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new VertexShader used for image\n %s", err)
+	}
+
+	fragmentShader, err := gl.NewShader(gl.FragmentShader{
 		WebShader:     ushaders.WebFShader,
 		DesktopShader: ushaders.DesktopFShader,
 	})
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create a new FragmentShader used for image\n %s", err)
+	}
 
 	vertexShader.Compile()
 	defer vertexShader.Delete()
@@ -67,8 +94,17 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32) *Imag
 		x + width, y, 0.0, 1.0, 0.0,
 	}
 
-	program.UniformLocation("uniformColor").Set(0, 0, 0, 1.0)
-	program.UniformLocation("useTexture").Set(1)
+	location, err := program.UniformLocation("uniformColor")
+	location.Set(0, 0, 0, 1.0)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find uniformColor location used for image\n %s", err)
+	}
+
+	location, err = program.UniformLocation("useTexture")
+	location.Set(1)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find useTexture location used for image\n %s", err)
+	}
 
 	indices := []uint16{
 		0, 1, 3,
@@ -82,11 +118,36 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32) *Imag
 	case trita.YourType(ImageEmbed{}):
 		embed := imageFile.(ImageEmbed)
 		file = image.LoadAsEmbed(embed.Filesystem, embed.Image)
+	case trita.YourType(ImageHTTP{}):
+		file = image.LoadAsHTTP(imageFile.(ImageHTTP).Url)
+	default:
+		return nil, errors.New("Failed to detect image type")
 	}
 
 	texture := gl.GenTexture()
 	texture.Bind()
-	texture.Configure(file, gl.NEAREST)
+
+	if options != nil {
+		img := file.RGBA
+
+		if options.Blur != 0 {
+			img = processing.Blur(img, options.Blur)
+		}
+		if options.Sharpen != 0 {
+			img = processing.Sharpen(img, options.Sharpen)
+		}
+		if options.Contrast != 0 {
+			img = processing.Contrast(img, options.Contrast)
+		}
+		if !options.Invert {
+			img = processing.Invert(img)
+		}
+
+		texture.Configure(image.LoadRGBA(img), gl.NEAREST)
+	} else {
+		texture.Configure(file, gl.NEAREST)
+	}
+
 	texture.UnBind()
 
 	buffer := gl.GenBuffers(vertices, indices)
@@ -95,20 +156,26 @@ func (r *Renderer2D) LoadImage(imageFile any, x, y, width, height float32) *Imag
 	buffer.Data()
 	gl.SetupVertexAttrib(program)
 
+	r.Window.UnsetCurrent()
+
 	return &Image{
 		Pos:    NewVector2D(x, y),
 		Width:  width,
 		Height: height,
 
-		Buffer:  buffer,
-		Texture: texture,
-		Indices: indices,
-		Program: program,
-	}
+		buffer:  buffer,
+		texture: texture,
+		indices: indices,
+		program: program,
+
+		Renderer: r,
+	}, nil
 }
 
 // Draws the image that's loaded before.
 func (img *Image) Draw() {
+	img.Renderer.Window.SetCurrent()
+
 	vertices := []float32{
 		img.Pos.X, img.Pos.Y, 0.0, 0.0, 0.0,
 		img.Pos.X, img.Pos.Y - img.Height, 0.0, 0.0, 1.0,
@@ -116,14 +183,16 @@ func (img *Image) Draw() {
 		img.Pos.X + img.Width, img.Pos.Y, 0.0, 1.0, 0.0,
 	}
 
-	img.Program.Use()
+	img.program.Use()
+	img.buffer.Bind(gl.VA, gl.VBO, gl.EBO)
+	img.buffer.Update(vertices)
 
-	img.Buffer.Bind(gl.VA, gl.VBO, gl.EBO)
-	img.Buffer.Update(vertices)
+	img.texture.Bind()
+	gl.DrawElements(img.indices)
+	img.texture.UnBind()
 
-	img.Texture.Bind()
-	gl.DrawElements(img.Indices)
-	img.Texture.UnBind()
+	img.buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
+	img.program.UnUse()
 
-	img.Buffer.UnBind(gl.VA, gl.VBO, gl.EBO)
+	img.Renderer.Window.UnsetCurrent()
 }

@@ -1,8 +1,8 @@
-//go:build js && wasm
-// +build js,wasm
+//go:build js || wasm
+// +build js wasm
 
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -94,7 +94,7 @@ func Init(window *windowing.Window) *Event {
 }
 
 func (e *Event) SetSetting(setting Setting, value bool) {
-	web.Console.Warn("WARNING: SETSETTING IS NOT WORKING IN WEB BUILDS!")
+	web.Console.Warn("WARNING: SetSetting IS NOT WORKING IN WEB BUILDS!")
 }
 
 func (e *Event) Key(key Key) State {

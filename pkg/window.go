@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -13,7 +13,10 @@
 package vuelto
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"time"
 
 	"vuelto.pp.ua/internal/event"
 	"vuelto.pp.ua/internal/gl"
@@ -24,6 +27,10 @@ type Window struct {
 	Window        *windowing.Window
 	Title         string
 	Width, Height int
+	FPS           int
+	startTime     time.Time
+	delta         float64
+	NotFirstLoop  bool
 
 	Event *event.Event
 }
@@ -33,11 +40,10 @@ func frameBufferSizeCallback(window *windowing.Window, newWidth, newHeight int) 
 }
 
 // Creates a new window and returns a Window struct.
-func NewWindow(title string, width, height int, resizable bool) *Window {
+func NewWindow(title string, width, height int, resizable bool, transparent bool) (*Window, error) {
 	window, err := windowing.InitWindow()
 	if err != nil {
-		log.Fatalln("Could not initialize a new window: ", err)
-		return nil
+		return nil, fmt.Errorf("Failed to init the window module\n %s", err)
 	}
 	defer window.Close()
 
@@ -49,25 +55,26 @@ func NewWindow(title string, width, height int, resizable bool) *Window {
 	window.Height = height
 
 	window.Resizable = resizable
+	window.Transparency = transparent
 
 	err = window.Create()
 	if err != nil {
-		log.Fatalln("Error create window:", err)
+		return nil, fmt.Errorf("Failed to create a new window\n %s", err)
 	}
 
 	window.ResizingCallback(frameBufferSizeCallback)
+
+	window.ContextCurrent()
 
 	events := event.Init(window)
 
 	err = gl.Init()
 	if err != nil {
-		log.Fatalf("Failed to initialize: %s", err)
+		return nil, fmt.Errorf("Failed to init the GL module\n %s", err)
 	}
 
 	gl.Enable(gl.TEXTURE_2D, gl.BLEND)
 	gl.EnableBlend()
-
-	window.ContextCurrent()
 
 	return &Window{
 		Window: window,
@@ -75,12 +82,36 @@ func NewWindow(title string, width, height int, resizable bool) *Window {
 		Width:  width,
 		Height: height,
 		Event:  events,
-	}
+		FPS:    60,
+	}, nil
+}
+
+// Set callback to the resize of the window
+func (w *Window) SetResizeCallback(callback func(window *Window, newWidth, newHeight int)) {
+	w.Window.ResizingCallback(func(window *windowing.Window, newWidth, newHeight int) {
+		gl.Viewport(0, 0, newWidth, newHeight)
+		callback(w, newWidth, newHeight)
+	})
 }
 
 // Sets the resizable attribute of the window.
 func (w *Window) SetResizable(resizable bool) {
 	w.Window.SetResizable(resizable)
+}
+
+// Sets the title of the window.
+func (w *Window) SetTitle(title string) {
+	w.Window.SetTitle(title)
+}
+
+// Sets the size of the window.
+func (w *Window) SetSize(width, height int) {
+	w.Window.SetSize(width, height)
+}
+
+// Returns the size of the window.
+func (w *Window) GetSize() (int, int) {
+	return w.Window.GetSize()
 }
 
 // Function created for a loop. Returns true when being closed, and returns false when being active.
@@ -93,14 +124,44 @@ func (w *Window) Close() bool {
 
 // Refreshes te window. Run this at the end of your loop (except if you're having multiple windows)
 func (w *Window) Refresh() {
+	w.SetCurrent()
+
 	w.Window.HandleEvents()
 	w.Window.UpdateBuffers()
 	gl.Clear()
+
+	endTime := time.Since(w.startTime)
+	w.delta = endTime.Seconds()
+
+	expectedTime := time.Second.Nanoseconds() / int64(w.FPS)
+	sleepTime := expectedTime - endTime.Nanoseconds()
+
+	if sleepTime > 0 {
+		time.Sleep(time.Duration(sleepTime))
+	} else if w.NotFirstLoop {
+		if _, enabled := os.LookupEnv("VUELTO_DISABLE_FRAMERATE_WARNINGS"); enabled == false {
+			log.Println("\033[33m WARNING: Application is running at a lower framerate then originally set. \033[0m")
+			log.Println("\033[33m To disable these warnings, please refer to the docs. \033[0m")
+		}
+	}
+
+	if !w.NotFirstLoop {
+		w.NotFirstLoop = true
+	}
+
+	now := time.Now()
+	w.startTime = now
+	w.UnsetCurrent()
 }
 
 // Sets the context of the window to the current context. (Only use when having multiple windows)
 func (w *Window) SetCurrent() {
 	w.Window.ContextCurrent()
+}
+
+// Unset the context of the window. (Only use when having multiple windows)
+func (w *Window) UnsetCurrent() {
+	w.Window.UnsetContext()
 }
 
 // Destroys the window and cleans up the memory.
@@ -109,13 +170,13 @@ func (w *Window) Destroy() {
 }
 
 func (w *Window) GetDeltaTime() float32 {
-	return float32(w.Window.GetDeltaTime())
+	return float32(w.delta)
 }
 
 func (w *Window) SetFPS(fps int) {
-	w.Window.SetFPS(fps)
+	w.FPS = fps
 }
 
 func (w *Window) GetFPS() int {
-	return w.Window.GetFPS()
+	return w.FPS
 }

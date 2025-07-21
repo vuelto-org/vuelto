@@ -1,8 +1,8 @@
-//go:build js && wasm
-// +build js,wasm
+//go:build js || wasm
+// +build js wasm
 
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -19,21 +19,32 @@ import (
 	"bytes"
 	"embed"
 	"image"
+	"image/color"
 	_ "image/jpeg"
 	_ "image/png"
+	"io"
 	"log"
+	"net/http"
+	"os"
 	"syscall/js"
+
+	"vuelto.pp.ua/internal/gl/webgl"
 )
 
 type Image struct {
 	Path    string
+	RGBA    *image.RGBA
 	Texture js.Value
 	Width   int
 	Height  int
 }
 
 func Load(imagePath string) *Image {
-	panic("Load() is not supported in web assembly")
+	if os.Getenv("VUELTO_DISABLE_BUILD_ERRORS") == "" {
+		panic("Load() is not supported in web assembly")
+	} else {
+		return &Image{}
+	}
 }
 
 func LoadAsEmbed(fs embed.FS, imagePath string) *Image {
@@ -42,9 +53,36 @@ func LoadAsEmbed(fs embed.FS, imagePath string) *Image {
 		log.Fatalf("failed to read embedded image '%s': %v", imagePath, err)
 	}
 
-	img, _, err := image.Decode(bytes.NewReader(imgFile))
+	return LoadImage(imgFile, imagePath)
+}
+
+func LoadAsHTTP(imageUrl string) *Image {
+	if !(len(imageUrl) > 4 && (imageUrl[:7] == "http://" || imageUrl[:8] == "https://")) {
+		panic("Load() only supports HTTP and HTTPS paths in web assembly")
+	}
+
+	resp, err := http.Get(imageUrl)
 	if err != nil {
-		log.Fatalf("failed to decode image '%s': %v", imagePath, err)
+		log.Fatalf("failed to fetch image '%s': %v", imageUrl, err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Fatalf("failed to fetch image '%s': status code %d", imageUrl, resp.StatusCode)
+	}
+
+	imgData, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("failed to read image data from '%s': %v", imageUrl, err)
+	}
+
+	return LoadImage(imgData, imageUrl)
+}
+
+func LoadImage(imgData []byte, imageUrl string) *Image {
+	img, _, err := image.Decode(bytes.NewReader(imgData))
+	if err != nil {
+		log.Fatalf("failed to decode image '%s': %v", imageUrl, err)
 	}
 
 	rgbaImg, ok := img.(*image.RGBA)
@@ -58,15 +96,39 @@ func LoadAsEmbed(fs embed.FS, imagePath string) *Image {
 		}
 	}
 
-	data := js.Global().Get("Uint8Array").New(len(rgbaImg.Pix))
-	for i, v := range rgbaImg.Pix {
-		data.SetIndex(i, v)
+	return &Image{
+		Path:    imageUrl,
+		RGBA:    rgbaImg,
+		Width:   rgbaImg.Bounds().Dx(),
+		Height:  rgbaImg.Bounds().Dy(),
+		Texture: webgl.NewUint8Array(rgbaImg.Pix),
+	}
+}
+
+func LoadPixelmap(pixels map[int]map[int][4]int, width, height int) *Image {
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
+
+	for x, col := range pixels {
+		for y, c := range col {
+			r := uint8(c[0])
+			g := uint8(c[1])
+			b := uint8(c[2])
+			a := uint8(c[3])
+			img.Set(x, y, color.RGBA{r, g, b, a})
+		}
 	}
 
 	return &Image{
-		Path:    imagePath,
-		Texture: data,
-		Width:   rgbaImg.Bounds().Dx(),
-		Height:  rgbaImg.Bounds().Dy(),
+		Texture: webgl.NewUint8Array(img.Pix),
+		Width:   img.Rect.Size().X,
+		Height:  img.Rect.Size().Y,
+	}
+}
+
+func LoadRGBA(img *image.RGBA) *Image {
+	return &Image{
+		Texture: webgl.NewUint8Array(img.Pix),
+		Width:   img.Rect.Size().X,
+		Height:  img.Rect.Size().Y,
 	}
 }

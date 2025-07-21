@@ -2,7 +2,7 @@
 // +build windows linux darwin
 
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -16,17 +16,18 @@
 package gl
 
 import (
+	"errors"
 	"fmt"
-	"log"
 	"strings"
 
+	"vuelto.pp.ua/internal/font"
 	gl "vuelto.pp.ua/internal/gl/opengl"
 	"vuelto.pp.ua/internal/image"
 	"vuelto.pp.ua/internal/trita"
 )
 
 type Arguments struct {
-	Arg any
+	Arg uint
 }
 
 type Shader struct {
@@ -69,26 +70,26 @@ var VBO = &Arguments{gl.ARRAY_BUFFER}
 var EBO = &Arguments{gl.ELEMENT_ARRAY_BUFFER}
 var VA = &Arguments{gl.VERTEX_ARRAY}
 
-func NewShader(shadertype any) *Shader {
+func NewShader(shadertype any) (*Shader, error) {
 	switch trita.YourType(shadertype) {
 	case trita.YourType(FragmentShader{}):
 		return &Shader{
 			Type:          shadertype,
 			WebShader:     shadertype.(FragmentShader).WebShader,
 			DesktopShader: shadertype.(FragmentShader).DesktopShader,
-		}
+		}, nil
 	case trita.YourType(VertexShader{}):
 		return &Shader{
 			Type:          shadertype,
 			WebShader:     shadertype.(VertexShader).WebShader,
 			DesktopShader: shadertype.(VertexShader).DesktopShader,
-		}
+		}, nil
 	default:
-		panic("Unknown shader type")
+		return nil, errors.New("Failed to detect the shader type")
 	}
 }
 
-func (s *Shader) Compile() {
+func (s *Shader) Compile() error {
 	var shaderType uint32
 
 	switch trita.YourType(s.Type) {
@@ -97,7 +98,7 @@ func (s *Shader) Compile() {
 	case trita.YourType(FragmentShader{}):
 		shaderType = gl.FRAGMENT_SHADER
 	default:
-		panic("Invalid shader type")
+		return errors.New("Failed to detect the type of shader")
 	}
 
 	shader := gl.CreateShader(shaderType)
@@ -115,10 +116,11 @@ func (s *Shader) Compile() {
 		log := strings.Repeat("\x00", int(logLength+1))
 		gl.GetShaderInfoLog(shader, logLength, nil, gl.Str(log))
 
-		panic(fmt.Sprintf("Failed to compile shader: %v", log))
+		return fmt.Errorf("Failed to compile shader: %s", log)
 	}
 
 	s.Type = shader
+	return nil
 }
 
 func (s *Shader) Delete() {
@@ -134,16 +136,16 @@ func NewProgram(vertexshader, fragmentshader Shader) *Program {
 	}
 }
 
-func (p *Program) Link() {
+func (p *Program) Link() error {
 	program := gl.CreateProgram()
 
 	vertexShader, ok := p.VertexShader.Type.(uint32)
 	if !ok {
-		panic("vertex shader is not compiled")
+		return errors.New("The provided shader of type VertexShader is not compiled")
 	}
 	fragmentShader, ok := p.FragmentShader.Type.(uint32)
 	if !ok {
-		panic("fragment shader is not compiled")
+		return errors.New("The provided shader of type FragmentShader is not compiled")
 	}
 
 	gl.AttachShader(program, vertexShader)
@@ -158,10 +160,11 @@ func (p *Program) Link() {
 
 		logg := make([]byte, logLength)
 		gl.GetProgramInfoLog(program, logLength, nil, &logg[0])
-		log.Fatalf("Program linking failed: %s", string(logg))
+		return fmt.Errorf("Program linking failed: %s", string(logg))
 	}
 
 	p.Program = program
+	return nil
 }
 
 func (p *Program) Use() {
@@ -176,16 +179,15 @@ func (p *Program) Delete() {
 	gl.DeleteProgram(p.Program)
 }
 
-func (p *Program) UniformLocation(location string) *Location {
+func (p *Program) UniformLocation(location string) (*Location, error) {
 	loc := gl.GetUniformLocation(p.Program, gl.Str(location+"\x00"))
 	if loc == -1 {
-		log.Fatalln("Uniform not found: ", location)
-		return nil
+		return nil, fmt.Errorf("Uniform not found: %s", location)
 	}
-	return &Location{UniformLocation: loc}
+	return &Location{UniformLocation: loc}, nil
 }
 
-func (l *Location) Set(arg ...float32) {
+func (l *Location) Set(arg ...float32) error {
 	switch len(arg) {
 	case 1:
 		gl.Uniform1f(l.UniformLocation, arg[0])
@@ -196,8 +198,9 @@ func (l *Location) Set(arg ...float32) {
 	case 4:
 		gl.Uniform4f(l.UniformLocation, arg[0], arg[1], arg[2], arg[3])
 	default:
-		panic("unsupported uniform length")
+		return errors.New("Unsupported uniform length")
 	}
+	return nil
 }
 
 func GenBuffers(vertices []float32, indices []uint16) *Buffer {
@@ -215,7 +218,7 @@ func GenBuffers(vertices []float32, indices []uint16) *Buffer {
 	}
 }
 
-func (b *Buffer) Bind(args ...*Arguments) {
+func (b *Buffer) Bind(args ...*Arguments) error {
 	for _, arg := range args {
 		switch arg {
 		case VA:
@@ -225,12 +228,13 @@ func (b *Buffer) Bind(args ...*Arguments) {
 		case EBO:
 			gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, b.Ebo)
 		default:
-			fmt.Printf("Unknown argument: %v\n", arg)
+			return fmt.Errorf("Unknown argument: %v", arg)
 		}
 	}
+	return nil
 }
 
-func (b *Buffer) UnBind(args ...*Arguments) {
+func (b *Buffer) UnBind(args ...*Arguments) error {
 	for _, arg := range args {
 		switch arg {
 		case VA:
@@ -240,9 +244,10 @@ func (b *Buffer) UnBind(args ...*Arguments) {
 		case EBO:
 			gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, 0)
 		default:
-			fmt.Printf("Unknown argument: %v\n", arg)
+			return fmt.Errorf("Unknown argument: %v", arg)
 		}
 	}
+	return nil
 }
 
 func (b *Buffer) Data() {
@@ -252,9 +257,10 @@ func (b *Buffer) Data() {
 
 func (b *Buffer) Update(data []float32) {
 	gl.BufferData(gl.ARRAY_BUFFER, len(data)*4, gl.Ptr(data), gl.DYNAMIC_DRAW)
+	gl.BufferData(gl.ELEMENT_ARRAY_BUFFER, len(b.Indices)*4, gl.Ptr(b.Indices), gl.DYNAMIC_DRAW)
 }
 
-func (b *Buffer) Delete(args ...*Arguments) {
+func (b *Buffer) Delete(args ...*Arguments) error {
 	for _, arg := range args {
 		switch arg {
 		case VA:
@@ -264,9 +270,10 @@ func (b *Buffer) Delete(args ...*Arguments) {
 		case EBO:
 			gl.DeleteBuffers(1, &b.Ebo)
 		default:
-			fmt.Printf("Unknown argument: %v\n", arg)
+			return fmt.Errorf("Unknown argument: %v", arg)
 		}
 	}
+	return nil
 }
 
 func GenTexture() *Texture {
@@ -283,13 +290,24 @@ func (t *Texture) UnBind() {
 	gl.BindTexture(gl.TEXTURE_2D, 0)
 }
 
-func (t *Texture) Configure(image *image.Image, filter *Arguments) {
-	gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, int32(image.Width), int32(image.Height), 0, gl.RGBA, gl.UNSIGNED_BYTE, gl.Ptr(image.Texture))
+func (t *Texture) Configure(inputImage any, filter *Arguments) error {
+	switch trita.YourType(inputImage) {
+	case trita.YourType(&image.Image{}):
+		outputImage := inputImage.(*image.Image)
+		gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, int32(outputImage.Width), int32(outputImage.Height), 0, gl.RGBA, gl.UNSIGNED_BYTE, gl.Ptr(outputImage.Texture))
+	case trita.YourType(&font.Font{}):
+		outputImage := inputImage.(*font.Font)
+		gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, int32(outputImage.Widthbound), int32(outputImage.Heightbound), 0, gl.RGBA, gl.UNSIGNED_BYTE, gl.Ptr(outputImage.Texture))
+	default:
+		return errors.New("Unknown texture type")
+	}
 
-	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, int32(filter.Arg.(int)))
-	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, int32(filter.Arg.(int)))
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, int32(filter.Arg))
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, int32(filter.Arg))
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+
+	return nil
 }
 
 func (t *Texture) Delete() {
@@ -333,7 +351,7 @@ func ClearColor(r, g, b, a float32) {
 
 func Enable(args ...*Arguments) {
 	for _, arg := range args {
-		gl.Enable(uint32(arg.Arg.(int)))
+		gl.Enable(uint32(arg.Arg))
 	}
 }
 
@@ -347,7 +365,7 @@ func Viewport(x, y, width, height int) {
 
 func Init() error {
 	if err := gl.Init(); err != nil {
-		return fmt.Errorf("failed to initialize OpenGL: %w", err)
+		return fmt.Errorf("Failed to initialize OpenGL: %s", err)
 	}
 	return nil
 }

@@ -2,7 +2,7 @@
 // +build windows linux darwin
 
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -19,15 +19,19 @@ import (
 	"bytes"
 	"embed"
 	"image"
+	"image/color"
 	"image/draw"
 	_ "image/jpeg"
 	_ "image/png"
+	"io"
 	"log"
+	"net/http"
 	"os"
 )
 
 type Image struct {
 	Path    string
+	RGBA    *image.RGBA
 	Texture []uint8
 
 	Width  int
@@ -51,6 +55,7 @@ func Load(imagePath string) *Image {
 
 	return &Image{
 		Texture: rgba.Pix,
+		RGBA:    rgba,
 		Width:   rgba.Rect.Size().X,
 		Height:  rgba.Rect.Size().Y,
 	}
@@ -62,9 +67,36 @@ func LoadAsEmbed(fs embed.FS, imagePath string) *Image {
 		log.Fatalf("failed to read embedded image '%s': %v", imagePath, err)
 	}
 
-	img, _, err := image.Decode(bytes.NewReader(imgFile))
+	return LoadImage(imgFile, imagePath)
+}
+
+func LoadAsHTTP(imageUrl string) *Image {
+	if !(len(imageUrl) > 4 && (imageUrl[:7] == "http://" || imageUrl[:8] == "https://")) {
+		panic("Load() only supports HTTP and HTTPS paths in web assembly")
+	}
+
+	resp, err := http.Get(imageUrl)
 	if err != nil {
-		log.Fatalf("failed to decode image '%s': %v", imagePath, err)
+		log.Fatalf("failed to fetch image '%s': %v", imageUrl, err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Fatalf("failed to fetch image '%s': status code %d", imageUrl, resp.StatusCode)
+	}
+
+	imgData, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("failed to read image data from '%s': %v", imageUrl, err)
+	}
+
+	return LoadImage(imgData, imageUrl)
+}
+
+func LoadImage(imgData []byte, imageUrl string) *Image {
+	img, _, err := image.Decode(bytes.NewReader(imgData))
+	if err != nil {
+		log.Fatalf("failed to decode image '%s': %v", imageUrl, err)
 	}
 
 	rgbaImg, ok := img.(*image.RGBA)
@@ -79,9 +111,38 @@ func LoadAsEmbed(fs embed.FS, imagePath string) *Image {
 	}
 
 	return &Image{
-		Path:    imagePath,
+		Path:    imageUrl,
+		RGBA:    rgbaImg,
 		Texture: rgbaImg.Pix,
 		Width:   rgbaImg.Bounds().Dx(),
 		Height:  rgbaImg.Bounds().Dy(),
+	}
+}
+
+func LoadPixelmap(pixels map[int]map[int][4]int, width, height int) *Image {
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
+
+	for x, col := range pixels {
+		for y, c := range col {
+			r := uint8(c[0])
+			g := uint8(c[1])
+			b := uint8(c[2])
+			a := uint8(c[3])
+			img.Set(x, y, color.RGBA{r, g, b, a})
+		}
+	}
+
+	return &Image{
+		Texture: img.Pix,
+		Width:   img.Rect.Size().X,
+		Height:  img.Rect.Size().Y,
+	}
+}
+
+func LoadRGBA(img *image.RGBA) *Image {
+	return &Image{
+		Texture: img.Pix,
+		Width:   img.Rect.Size().X,
+		Height:  img.Rect.Size().Y,
 	}
 }

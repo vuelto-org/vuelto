@@ -20,7 +20,7 @@ type ImageEmbed struct {
 First, load an image using `LoadImage()` and specify file path, pos X and Y, width, and height.
 
 ```go
-image := renderer.LoadImage("path/to/image.png", 10, 10, 50, 50) // returns an Image (internal type)
+image, err := renderer.LoadImage("path/to/image.png", 10, 10, 50, 50) // returns an Image (internal type)
 ```
 
 Then, whenever you feel like it, draw it. Just make sure to do it inside the game loop.
@@ -41,7 +41,7 @@ imageEmbed := vuelto.ImageEmbed{
     Image:      "image.png",
 }
 
-image := renderer.LoadImage(imageEmbed, 0, 0, 1, 1)
+image, err := renderer.LoadImage(imageEmbed, 0, 0, 1, 1)
 ```
 
 And then you can draw it as usual.

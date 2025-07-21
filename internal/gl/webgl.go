@@ -1,8 +1,8 @@
-//go:build js && wasm
-// +build js,wasm
+//go:build js || wasm
+// +build js wasm
 
 /*
- * Copyright (C) 2024 vuelto-org
+ * Copyright (C) 2025 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -16,9 +16,11 @@
 package gl
 
 import (
-	"log"
+	"errors"
+	"fmt"
 	"syscall/js"
 
+	"vuelto.pp.ua/internal/font"
 	"vuelto.pp.ua/internal/gl/webgl"
 	"vuelto.pp.ua/internal/image"
 	"vuelto.pp.ua/internal/trita"
@@ -68,7 +70,7 @@ var VBO = &Arguments{&webgl.ARRAY_BUFFER}
 var EBO = &Arguments{&webgl.ELEMENT_ARRAY_BUFFER}
 var VA = &Arguments{&webgl.VERTEX_ARRAY}
 
-func NewShader(shadertype any) *Shader {
+func NewShader(shadertype any) (*Shader, error) {
 	shader := &Shader{}
 
 	switch trita.YourType(shadertype) {
@@ -81,35 +83,37 @@ func NewShader(shadertype any) *Shader {
 		shader.DesktopShader = shadertype.(VertexShader).DesktopShader
 		shader.WebShader = shadertype.(VertexShader).WebShader
 	default:
-		panic("Unknown shader type")
+		return nil, errors.New("Failed to detect the shader type")
 	}
 
 	shader.Shader = webgl.CreateShader(shader.Type)
 	webgl.ShaderSource(shader.Shader, shader.WebShader)
 
-	return shader
+	return shader, nil
 }
 
-func (s *Shader) Compile() {
+func (s *Shader) Compile() error {
 	webgl.CompileShader(s.Shader)
+	return nil
 }
 
 func (s *Shader) Delete() {
 	webgl.DeleteShader(s.Shader)
 }
 
-func NewProgram(vertexshader, fragmentshader Shader) *Program {
+func NewProgram(vertexShader, fragmentShader Shader) *Program {
 	return &Program{
-		VertexShader:   vertexshader.Shader,
-		FragmentShader: fragmentshader.Shader,
+		VertexShader:   vertexShader.Shader,
+		FragmentShader: fragmentShader.Shader,
 		Program:        webgl.CreateProgram(),
 	}
 }
 
-func (p *Program) Link() {
+func (p *Program) Link() error {
 	webgl.AttachShader(p.Program, p.VertexShader)
 	webgl.AttachShader(p.Program, p.FragmentShader)
 	webgl.LinkProgram(p.Program)
+	return nil
 }
 
 func (p *Program) Use() {
@@ -124,13 +128,13 @@ func (p *Program) Delete() {
 	webgl.DeleteProgram(p.Program)
 }
 
-func (p *Program) UniformLocation(location string) *Location {
+func (p *Program) UniformLocation(location string) (*Location, error) {
 	return &Location{
 		UniformLocation: webgl.GetUniformLocation(p.Program, location),
-	}
+	}, nil
 }
 
-func (l *Location) Set(arg ...float32) {
+func (l *Location) Set(arg ...float32) error {
 	switch len(arg) {
 	case 1:
 		webgl.Uniform1f(l.UniformLocation, arg[0])
@@ -141,8 +145,9 @@ func (l *Location) Set(arg ...float32) {
 	case 4:
 		webgl.Uniform4f(l.UniformLocation, arg[0], arg[1], arg[2], arg[3])
 	default:
-		panic("Unsupported uniform length")
+		return errors.New("Unsupported uniform length")
 	}
+	return nil
 }
 
 func GenBuffers(vertices []float32, indices []uint16) *Buffer {
@@ -165,7 +170,7 @@ func GenBuffers(vertices []float32, indices []uint16) *Buffer {
 	}
 }
 
-func (b *Buffer) Bind(args ...*Arguments) {
+func (b *Buffer) Bind(args ...*Arguments) error {
 	for _, arg := range args {
 		switch arg {
 		case VA:
@@ -175,12 +180,13 @@ func (b *Buffer) Bind(args ...*Arguments) {
 		case EBO:
 			webgl.BindBuffer(webgl.ELEMENT_ARRAY_BUFFER, b.Ebo)
 		default:
-			log.Fatalln("Unknown argument: ", arg)
+			return fmt.Errorf("Unknown argument: %v", arg)
 		}
 	}
+	return nil
 }
 
-func (b *Buffer) UnBind(args ...*Arguments) {
+func (b *Buffer) UnBind(args ...*Arguments) error {
 	for _, arg := range args {
 		switch arg {
 		case VA:
@@ -190,9 +196,10 @@ func (b *Buffer) UnBind(args ...*Arguments) {
 		case EBO:
 			webgl.BindBuffer(webgl.ELEMENT_ARRAY_BUFFER, js.Null())
 		default:
-			log.Fatalln("Unknown argument: ", arg)
+			return fmt.Errorf("Unknown argument: %v", arg)
 		}
 	}
+	return nil
 }
 
 func (b *Buffer) Data() {
@@ -204,7 +211,7 @@ func (b *Buffer) Update(data []float32) {
 	webgl.BufferData(webgl.ARRAY_BUFFER, webgl.NewFloat32Array(data), webgl.DYNAMIC_DRAW)
 }
 
-func (b *Buffer) Delete(args ...*Arguments) {
+func (b *Buffer) Delete(args ...*Arguments) error {
 	for _, arg := range args {
 		switch arg {
 		case VA:
@@ -214,9 +221,10 @@ func (b *Buffer) Delete(args ...*Arguments) {
 		case EBO:
 			webgl.DeleteBuffer(b.Ebo)
 		default:
-			log.Fatalln("Unknown argument: ", arg)
+			return fmt.Errorf("Unknown argument: %v", arg)
 		}
 	}
+	return nil
 }
 
 func GenTexture() *Texture {
@@ -232,13 +240,24 @@ func (t *Texture) UnBind() {
 	webgl.BindTexture(webgl.TEXTURE_2D, js.Null())
 }
 
-func (t *Texture) Configure(image *image.Image, filter *Arguments) {
-	webgl.TexImage2D(webgl.TEXTURE_2D, 0, webgl.RGBA, image.Width, image.Height, 0, webgl.RGBA, webgl.UNSIGNED_BYTE, image.Texture)
+func (t *Texture) Configure(inputImage any, filter *Arguments) error {
+	switch trita.YourType(inputImage) {
+	case trita.YourType(&image.Image{}):
+		outputImage := inputImage.(*image.Image)
+		webgl.TexImage2D(webgl.TEXTURE_2D, 0, webgl.RGBA, outputImage.Width, outputImage.Height, 0, webgl.RGBA, webgl.UNSIGNED_BYTE, outputImage.Texture)
+	case trita.YourType(&font.Font{}):
+		outputImage := inputImage.(*font.Font)
+		webgl.TexImage2D(webgl.TEXTURE_2D, 0, webgl.RGBA, outputImage.Widthbound, outputImage.Heightbound, 0, webgl.RGBA, webgl.UNSIGNED_BYTE, outputImage.Texture)
+	default:
+		return errors.New("Unknown texture type")
+	}
 
 	webgl.TexParameteri(webgl.TEXTURE_2D, webgl.TEXTURE_MIN_FILTER, *filter.Arg)
 	webgl.TexParameteri(webgl.TEXTURE_2D, webgl.TEXTURE_MAG_FILTER, *filter.Arg)
 	webgl.TexParameteri(webgl.TEXTURE_2D, webgl.TEXTURE_WRAP_S, webgl.CLAMP_TO_EDGE)
 	webgl.TexParameteri(webgl.TEXTURE_2D, webgl.TEXTURE_WRAP_T, webgl.CLAMP_TO_EDGE)
+
+	return nil
 }
 
 func (t *Texture) Delete() {
