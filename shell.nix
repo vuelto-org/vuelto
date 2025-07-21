@@ -17,7 +17,7 @@ pkgs.mkShell {
     gnumake
     pkg-config
 
-    # Graphics api's
+    # Graphics apis
     mesa
     libglvnd
     alsa-lib

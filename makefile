@@ -23,7 +23,7 @@ release:
 	git commit -m "$(MESSAGE)"
 	git tag $(VERSION)
 	git push origin $(VERSION)
-	make proxy-release
+	make upload VERSION=$(VERSION)
 
 upload:
 	GOPROXY=proxy.golang.org go list -m vuelto.pp.ua@$(VERSION)
