@@ -16,6 +16,10 @@
 
 Vuelto is an open-source, fast, simple and lightweight game engine, based on Golang and OpenGL. Designed with simplicity and speed in mind, while still staying relatively lightweight. It can be deployed on almost all major platforms, including Linux, MacOS, Windows and Web.
 
+> [!WARN]
+> This project has been discontinued by me. For this reason, the license becomes MIT. Feel free to do whatever you want with this project.
+
+
 > [!NOTE]
 > While Vuelto has a stable version, it's pretty much experimental software. Want something rock solid? Try [Ebitengine](https://github.com/hajimehoshi/ebiten)!
 
