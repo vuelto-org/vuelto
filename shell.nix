@@ -3,13 +3,13 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     # X11 libs, needed for glfw
-    xorg.libXi
-    xorg.libX11
-    xorg.libXext
-    xorg.libXrandr
-    xorg.libXcursor
-    xorg.libXxf86vm
-    xorg.libXinerama
+    libxi
+    libX11
+    libXext
+    libXrandr
+    libXcursor
+    libXxf86vm
+    libXinerama
 
     # Build tools
     go
@@ -27,9 +27,9 @@ pkgs.mkShell {
     pkgs.wasmserve
 
     # Used for Vuelto's website
-    python312Packages.mkdocs-material
-    python312Packages.mkdocs-redirects
-    python312Packages.mike
+    python3Packages.mkdocs-material
+    python3Packages.mkdocs-redirects
+    python3Packages.mike
 
     (pkgs.writeShellScriptBin "wasmtest" ''
       env -i \

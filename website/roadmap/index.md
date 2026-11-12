@@ -1,43 +1,58 @@
 <!-- markdownlint-disable md007 -->
 # 📅 Upcoming release
 
-## V1.2
+# V2.0
+- [ ] Rewrite to [PureGo](https://github.com/ebitengine/purego). That's it. This change by itself is large enough to take up a whole release 
+    - [ ] Shader
+        - [ ] CreateShader
+        - [ ] ShaderSource
+        - [ ] Strs
+        - [ ] CompileShader
+        - [ ] GetShaderiv
+        - [ ] GetShaderInfoLog
+        - [ ] Str
+        - [ ] DeleteShader
+    - [ ] Program
+        - [ ] CreateProgram
+        - [ ] AttachShader
+        - [ ] LinkProgram
+        - [ ] GetProgramiv
+        - [ ] GetProgramInfoLog
+        - [ ] UseProgram
+        - [ ] DeleteProgram
+        - [ ] GetUniformLocation
+    - [ ] Location
+        - [ ] Uniform1f
+        - [ ] Uniform2f
+        - [ ] Uniform3f
+        - [ ] Uniform4f
+    - [ ] Buffer
+        - [ ] GenVertexArrays
+        - [ ] GenBuffers
+        - [ ] Uint16ToInt32
+        - [ ] BindVertexArray
+        - [ ] BindBuffer
+        - [ ] BufferData
+        - [ ] Ptr
+        - [ ] DeleteVertexArrays
+        - [ ] DeleteBuffers
+    - [ ] Texture
+        - [ ] GenTextures
+        - [ ] BindTexture
+        - [ ] TexImage2D
+        - [ ] TexParameteri
+        - [ ] DeleteTextures
+    - [ ] Vertex Attributes & Drawing
+        - [ ] GetUniformiv
+        - [ ] VertexAttribPointerWithOffset
+        - [ ] EnableVertexAttribArray
+        - [ ] DrawElements
+        - [ ] DrawArrays
+    - [ ] State & General
+        - [ ] Clear
+        - [ ] ClearColor
+        - [ ] Enable
+        - [ ] BlendFunc
+        - [ ] Viewport
+        - [ ] Init
 
-- [x] Renderer
-    - [x] PixelMaps
-        - [x] SetPixel
-    - [x] UI
-        - [x] LoadText and .Draw()
-
-- [x] Image
-    - [x] Image Options
-        - [x] Manipulate images
-    - [x] Manipulate images
-        - [x] Blur
-        - [x] Crop
-        - [x] Invert
-        - [x] Grayscale
-        - [x] Contrast
-    - [x] [Library](https://github.com/disintegration/imaging)
-
-- [x] Website
-    - [x] Doc everything
-    - [x] Write dev post about Framerate
-
-- [x] Window system
-    - [x] Transparent windows
-    - [x] Window manipulations
-        - [x] SetTitle
-        - [x] SetSize
-        - [x] GetSize
-    - [x] Multiple Windows
-        - [x] Remove context management
-        - [x] Automate context management
-
-- [x] Web image loading
-    - [x] HTTP
-    - [x] HTTPS
-
-- [x] Dangerous stuff
-    - [x] VUELTO_DISABLE_WEB_BUILD_ERRORS env var
-    - [x] VUELTO_DISABLE_FRAMERATE_WARNINGS env var 
