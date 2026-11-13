@@ -57,26 +57,26 @@
             - [x] Viewport
             - [x] Init
 
-    - [ ] GLFW
-        - [ ] Initialization & Lifecycle
-            - [ ] Init
-            - [ ] Terminate
-        - [ ] Window Creation & Hints
-            - [ ] WindowHint
-            - [ ] CreateWindow
-            - [ ] DestroyWindow
-        - [ ] Window Properties & Attributes
-            - [ ] SetWindowAttrib
-            - [ ] SetWindowOpacity
-            - [ ] SetWindowTitle
-            - [ ] SetWindowSize
-            - [ ] GetWindowSize
-        - [ ] Events & Callbacks
-            - [ ] PollEvents
-            - [ ] WindowShouldClose
-            - [ ] SetFramebufferSizeCallback
-        - [ ] Context & Buffers
-            - [ ] MakeContextCurrent
-            - [ ] DetachCurrentContext
-            - [ ] SwapBuffers
+    - [x] GLFW
+        - [x] Initialization & Lifecycle
+            - [x] Init
+            - [x] Terminate
+        - [x] Window Creation & Hints
+            - [x] WindowHint
+            - [x] CreateWindow
+            - [x] DestroyWindow
+        - [x] Window Properties & Attributes
+            - [x] SetWindowAttrib
+            - [x] SetWindowOpacity
+            - [x] SetWindowTitle
+            - [x] SetWindowSize
+            - [x] GetWindowSize
+        - [x] Events & Callbacks
+            - [x] PollEvents
+            - [x] WindowShouldClose
+            - [x] SetFramebufferSizeCallback
+        - [x] Context & Buffers
+            - [x] MakeContextCurrent
+            - [x] DetachCurrentContext
+            - [x] SwapBuffers
 
