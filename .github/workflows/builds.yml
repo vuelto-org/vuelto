@@ -73,7 +73,7 @@ jobs:
         uses: vmactions/freebsd-vm@v1
         with:
           prepare: |
-            pkg install -y git go cmake gmake glfw pkgconf
+            pkg install -y git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
@@ -84,7 +84,7 @@ jobs:
         uses: vmactions/openbsd-vm@v1
         with:
           prepare: |
-            pkg_add git go cmake gmake glfw pkgconf
+            pkg_add git go cmake gmake glfw pkgconf openal
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
@@ -153,7 +153,7 @@ jobs:
         uses: vmactions/freebsd-vm@v1
         with:
           prepare: |
-            pkg install -y git go cmake gmake glfw pkgconf
+            pkg install -y git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
@@ -164,7 +164,7 @@ jobs:
         uses: vmactions/openbsd-vm@v1
         with:
           prepare: |
-            pkg_add git go cmake gmake glfw pkgconf
+            pkg_add git go cmake gmake glfw pkgconf openal
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
