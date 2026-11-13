@@ -84,7 +84,7 @@ jobs:
         uses: vmactions/netbsd-vm@v1
         with:
           prepare: |
-            pkgin -y install git go cmake gmake glfw pkgconf openal-soft
+            pkg_add -I install git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
@@ -164,7 +164,7 @@ jobs:
         uses: vmactions/netbsd-vm@v1
         with:
           prepare: |
-            pkgin -y install git go cmake gmake glfw pkgconf openal-soft
+            pkg_add -I install git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
