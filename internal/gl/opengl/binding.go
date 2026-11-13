@@ -140,7 +140,7 @@ func getOpenGLLibrary() string {
 }
 
 func Register() error {
-	libGL, err := purego.Dlopen(getOpenGLLibrary(), purego.RTLD_NOW|purego.RTLD_GLOBAL)
+	libGL, err := openLibrary(getOpenGLLibrary())
 	if err != nil {
 		return fmt.Errorf("failed to load OpenGL library: %w", err)
 	}

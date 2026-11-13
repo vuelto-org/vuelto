@@ -2,7 +2,7 @@
 // +build windows linux darwin
 
 /*
- * Copyright (C) 2025 vuelto-org
+ * Copyright (C) 2026 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -16,8 +16,8 @@
 package event
 
 import (
-	"github.com/go-gl/glfw/v3.3/glfw"
 	windowing "vuelto.pp.ua/internal/window"
+	"vuelto.pp.ua/internal/window/glfw"
 )
 
 type Event struct {

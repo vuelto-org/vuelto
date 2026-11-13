@@ -1,8 +1,7 @@
 //go:build windows || linux || darwin
-// +build windows linux darwin
 
 /*
- * Copyright (C) 2025 vuelto-org
+ * Copyright (C) 2026 vuelto-org
  *
  * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
  * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
@@ -16,8 +15,9 @@
 package windowing
 
 import (
-	"github.com/go-gl/glfw/v3.3/glfw"
 	"runtime"
+
+	"vuelto.pp.ua/internal/window/glfw"
 )
 
 type Window struct {
@@ -77,7 +77,7 @@ func (w *Window) Create() error {
 	}
 
 	var err error
-	w.GlfwWindow, err = glfw.CreateWindow(w.Width, w.Height, w.Title, nil, nil)
+	w.GlfwWindow, err = glfw.CreateWindow(w.Width, w.Height, w.Title, 0, 0)
 	if err != nil {
 		return err
 	}

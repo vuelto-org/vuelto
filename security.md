@@ -7,4 +7,4 @@ If you find a security issue with Vuelto, we please ask you that you contact us 
 Thank you for helping! We want to keep Vuelto secure and contributors play a key role in that objective.
 
 ## Status
-As of 14/05/2025, there no known security issues with vuelto.
+As of 13/11/2026, there no known security issues with vuelto.

@@ -2,57 +2,81 @@
 # 📅 Upcoming release
 
 # V2.0
-- [ ] Rewrite to [PureGo](https://github.com/ebitengine/purego). That's it. This change by itself is large enough to take up a whole release 
-    - [ ] Shader
-        - [ ] CreateShader
-        - [ ] ShaderSource
-        - [ ] Strs
-        - [ ] CompileShader
-        - [ ] GetShaderiv
-        - [ ] GetShaderInfoLog
-        - [ ] Str
-        - [ ] DeleteShader
-    - [ ] Program
-        - [ ] CreateProgram
-        - [ ] AttachShader
-        - [ ] LinkProgram
-        - [ ] GetProgramiv
-        - [ ] GetProgramInfoLog
-        - [ ] UseProgram
-        - [ ] DeleteProgram
-        - [ ] GetUniformLocation
-    - [ ] Location
-        - [ ] Uniform1f
-        - [ ] Uniform2f
-        - [ ] Uniform3f
-        - [ ] Uniform4f
-    - [ ] Buffer
-        - [ ] GenVertexArrays
-        - [ ] GenBuffers
-        - [ ] Uint16ToInt32
-        - [ ] BindVertexArray
-        - [ ] BindBuffer
-        - [ ] BufferData
-        - [ ] Ptr
-        - [ ] DeleteVertexArrays
-        - [ ] DeleteBuffers
-    - [ ] Texture
-        - [ ] GenTextures
-        - [ ] BindTexture
-        - [ ] TexImage2D
-        - [ ] TexParameteri
-        - [ ] DeleteTextures
-    - [ ] Vertex Attributes & Drawing
-        - [ ] GetUniformiv
-        - [ ] VertexAttribPointerWithOffset
-        - [ ] EnableVertexAttribArray
-        - [ ] DrawElements
-        - [ ] DrawArrays
-    - [ ] State & General
-        - [ ] Clear
-        - [ ] ClearColor
-        - [ ] Enable
-        - [ ] BlendFunc
-        - [ ] Viewport
-        - [ ] Init
+- [] Rewrite to [PureGo](https://github.com/ebitengine/purego). That's it. This change by itself is large enough to take up a whole release 
+    - [x] OpenGL
+        - [x] Shader
+            - [x] CreateShader 
+            - [x] ShaderSource
+            - [x] Strs
+            - [x] CompileShader
+            - [x] GetShaderiv
+            - [x] GetShaderInfoLog
+            - [x] Str
+            - [x] DeleteShader
+        - [x] Program
+            - [x] CreateProgram
+            - [x] AttachShader
+            - [x] LinkProgram
+            - [x] GetProgramiv
+            - [x] GetProgramInfoLog
+            - [x] UseProgram
+            - [x] DeleteProgram
+            - [x] GetUniformLocation
+        - [x] Location
+            - [x] Uniform1f
+            - [x] Uniform2f
+            - [x] Uniform3f
+            - [x] Uniform4f
+        - [x] Buffer
+            - [x] GenVertexArrays
+            - [x] GenBuffers
+            - [x] Uint16ToInt32
+            - [x] BindVertexArray
+            - [x] BindBuffer
+            - [x] BufferData
+            - [x] Ptr
+            - [x] DeleteVertexArrays
+            - [x] DeleteBuffers
+        - [x] Texture
+            - [x] GenTextures
+            - [x] BindTexture
+            - [x] TexImage2D
+            - [x] TexParameteri
+            - [x] DeleteTextures
+        - [x] Vertex Attributes & Drawing
+            - [x] GetUniformiv
+            - [x] VertexAttribPointerWithOffset
+            - [x] EnableVertexAttribArray
+            - [x] DrawElements
+            - [x] DrawArrays
+        - [x] State & General
+            - [x] Clear
+            - [x] ClearColor
+            - [x] Enable
+            - [x] BlendFunc
+            - [x] Viewport
+            - [x] Init
+
+    - [ ] GLFW
+        - [ ] Initialization & Lifecycle
+            - [ ] Init
+            - [ ] Terminate
+        - [ ] Window Creation & Hints
+            - [ ] WindowHint
+            - [ ] CreateWindow
+            - [ ] DestroyWindow
+        - [ ] Window Properties & Attributes
+            - [ ] SetWindowAttrib
+            - [ ] SetWindowOpacity
+            - [ ] SetWindowTitle
+            - [ ] SetWindowSize
+            - [ ] GetWindowSize
+        - [ ] Events & Callbacks
+            - [ ] PollEvents
+            - [ ] WindowShouldClose
+            - [ ] SetFramebufferSizeCallback
+        - [ ] Context & Buffers
+            - [ ] MakeContextCurrent
+            - [ ] DetachCurrentContext
+            - [ ] SwapBuffers
 

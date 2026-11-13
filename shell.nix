@@ -2,7 +2,8 @@
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    # X11 libs, needed for glfw
+    # Glfw stuff
+    glfw
     libxi
     libX11
     libXext
@@ -45,4 +46,7 @@ pkgs.mkShell {
         "$(command -v wasmserve)" "$@"
   '')
   ];
+  shellHook = ''
+    export LD_LIBRARY_PATH="${pkgs.glfw}/lib:/run/opengl-driver/lib:$LD_LIBRARY_PATH"
+  '';
 }

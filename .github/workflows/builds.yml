@@ -41,6 +41,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install xorg-dev libasound2-dev
 
+      - name: Install GLFW (Windows)
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: |
+          $glfwVersion = "3.4"
+          Invoke-WebRequest -Uri "https://github.com/glfw/glfw/releases/download/$glfwVersion/glfw-$glfwVersion.bin.WIN64.zip" -OutFile "glfw.zip"
+          Expand-Archive -Path "glfw.zip" -DestinationPath "C:\glfw"
+
+          $libDir = if ("${{ matrix.c_compiler }}" -eq "cl") { "lib-vc2022" } else { "lib-mingw-w64" }
+
+          echo "CGO_CFLAGS=-IC:\glfw\include" >> $env:GITHUB_ENV
+          echo "CGO_LDFLAGS=-LC:\glfw\$libDir" >> $env:GITHUB_ENV
+
       - name: Go tidy
         run: go mod tidy
 
@@ -71,6 +84,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install xorg-dev libasound2-dev
+
+      - name: Install GLFW (Windows)
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: |
+          $glfwVersion = "3.4"
+          Invoke-WebRequest -Uri "https://github.com/glfw/glfw/releases/download/$glfwVersion/glfw-$glfwVersion.bin.WIN64.zip" -OutFile "glfw.zip"
+          Expand-Archive -Path "glfw.zip" -DestinationPath "C:\glfw"
+
+          $libDir = if ("${{ matrix.c_compiler }}" -eq "cl") { "lib-vc2022" } else { "lib-mingw-w64" }
+
+          echo "CGO_CFLAGS=-IC:\glfw\include" >> $env:GITHUB_ENV
+          echo "CGO_LDFLAGS=-LC:\glfw\$libDir" >> $env:GITHUB_ENV
 
       - name: Go tidy
         run: go mod tidy
