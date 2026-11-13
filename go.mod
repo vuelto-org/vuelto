@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/ebitengine/purego v0.11.3 // indirect
 	github.com/hajimehoshi/go-mp3 v0.3.4 // indirect
 	github.com/hajimehoshi/oto v1.0.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

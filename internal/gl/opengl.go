@@ -364,7 +364,7 @@ func Viewport(x, y, width, height int) {
 }
 
 func Init() error {
-	if err := gl.Init(); err != nil {
+	if err := gl.Register(); err != nil {
 		return fmt.Errorf("Failed to initialize OpenGL: %s", err)
 	}
 	return nil
