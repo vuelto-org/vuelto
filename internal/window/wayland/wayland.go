@@ -1,4 +1,4 @@
-//go:build linux || freebsd || netbsd || openbsd
+//go:build linux || freebsd || netbsd
 
 /*
  * Copyright (C) 2026 vuelto-org
