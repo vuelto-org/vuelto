@@ -1,5 +1,4 @@
 //go:build js || wasm
-// +build js wasm
 
 /*
  * Copyright (C) 2026 vuelto-org
@@ -61,7 +60,7 @@ var (
 )
 
 func Init(window *windowing.Window) *Event {
-	web.Document.AddEventListener("keydown", func(this js.Value, p []js.Value) interface{} {
+	web.Document.AddEventListener("keydown", func(this js.Value, p []js.Value) any {
 		event := p[0]
 		key := event.Get("key").String()
 
@@ -70,7 +69,7 @@ func Init(window *windowing.Window) *Event {
 		return nil
 	})
 
-	web.Document.AddEventListener("keyup", func(this js.Value, p []js.Value) interface{} {
+	web.Document.AddEventListener("keyup", func(this js.Value, p []js.Value) any {
 		event := p[0]
 		key := event.Get("key").String()
 
@@ -79,7 +78,7 @@ func Init(window *windowing.Window) *Event {
 		return nil
 	})
 
-	web.Document.AddEventListener("mousemove", func(this js.Value, p []js.Value) interface{} {
+	web.Document.AddEventListener("mousemove", func(this js.Value, p []js.Value) any {
 		event := p[0]
 
 		mouseCords[0] = float32(event.Get("clientX").Float())

@@ -1,3 +1,17 @@
+//go:build windows || linux || darwin || freebsd || netbsd
+
+/*
+ * Copyright (C) 2026 vuelto-org
+ *
+ * This file is part of the Vuelto project, licensed under the VL-Cv1.1 License.
+ * Primary License: GNU GPLv3 or later (see <https://www.gnu.org/licenses/>).
+ * If unmaintained, this software defaults to the MIT License as per Vuelto License V1.1,
+ * at which point the copyright no longer applies.
+ *
+ * Distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 package opengl
 
 import (
@@ -118,7 +132,7 @@ func Uint16ToInt32(in []uint16) []int32 {
 	return out
 }
 
-func Ptr(v interface{}) unsafe.Pointer {
+func Ptr(v any) unsafe.Pointer {
 	rv := reflect.ValueOf(v)
 	if rv.Kind() == reflect.Slice && rv.Len() > 0 {
 		return unsafe.Pointer(rv.Index(0).UnsafeAddr())
@@ -130,7 +144,7 @@ func getOpenGLLibrary() string {
 	switch runtime.GOOS {
 	case "darwin":
 		return "/System/Library/Frameworks/OpenGL.framework/OpenGL"
-	case "linux":
+	case "linux", "freebsd", "openbsd":
 		return "libGL.so.1"
 	case "windows":
 		return "opengl32.dll"

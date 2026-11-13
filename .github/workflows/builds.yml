@@ -26,7 +26,6 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         build_type: [Debug]
         c_compiler: [gcc, clang, cl]
-
     steps:
       - uses: actions/checkout@v3
 
@@ -39,7 +38,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get install xorg-dev libasound2-dev
+          sudo apt-get install -y xorg-dev libasound2-dev
 
       - name: Install GLFW (Windows)
         if: startsWith(matrix.os, 'windows')
@@ -60,6 +59,35 @@ jobs:
       - name: Build tests
         run: make tests
 
+  tests-bsd:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        bsd: [freebsd, openbsd]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Tests on FreeBSD
+        if: matrix.bsd == 'freebsd'
+        uses: vmactions/freebsd-vm@v1
+        with:
+          prepare: |
+            pkg install -y git go cmake gmake glfw
+          run: |
+            go mod tidy
+            gmake tests
+
+      - name: Run Tests on OpenBSD
+        if: matrix.bsd == 'openbsd'
+        uses: vmactions/openbsd-vm@v1
+        with:
+          prepare: |
+            pkg_add git go cmake gmake glfw
+          run: |
+            go mod tidy
+            gmake tests
+
   examples:
     runs-on: ${{ matrix.os }}
 
@@ -70,6 +98,11 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         build_type: [Debug]
         c_compiler: [gcc, clang, cl]
+        exclude:
+          - os: windows-latest
+            c_compiler: gcc
+          - os: windows-latest
+            c_compiler: clang
 
     steps:
       - uses: actions/checkout@v3
@@ -83,7 +116,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get install xorg-dev libasound2-dev
+          sudo apt-get install -y xorg-dev libasound2-dev
 
       - name: Install GLFW (Windows)
         if: startsWith(matrix.os, 'windows')
@@ -103,3 +136,32 @@ jobs:
 
       - name: Build examples
         run: make examples
+
+  examples-bsd:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        bsd: [freebsd, openbsd]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Examples on FreeBSD
+        if: matrix.bsd == 'freebsd'
+        uses: vmactions/freebsd-vm@v1
+        with:
+          prepare: |
+            pkg install -y git go cmake gmake glfw
+          run: |
+            go mod tidy
+            gmake examples
+
+      - name: Build Examples on OpenBSD
+        if: matrix.bsd == 'openbsd'
+        uses: vmactions/openbsd-vm@v1
+        with:
+          prepare: |
+            pkg_add git go cmake gmake glfw
+          run: |
+            go mod tidy
+            gmake examples

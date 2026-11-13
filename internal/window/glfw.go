@@ -1,4 +1,4 @@
-//go:build windows || linux || darwin
+//go:build windows || linux || darwin || freebsd || netbsd
 
 /*
  * Copyright (C) 2026 vuelto-org

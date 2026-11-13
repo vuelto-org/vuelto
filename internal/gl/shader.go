@@ -1,5 +1,4 @@
-//go:build windows || linux || darwin || js || wasm
-// +build windows linux darwin js wasm
+//go:build windows || linux || darwin || js || wasm || freebsd || netbsd
 
 /*
  * Copyright (C) 2026 vuelto-org

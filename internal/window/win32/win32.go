@@ -1,3 +1,5 @@
+//go:build windows
+
 /*
  * Copyright (C) 2026 vuelto-org
  *

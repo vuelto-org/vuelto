@@ -1,3 +1,5 @@
+//go:build linux || freebsd || netbsd
+
 /*
  * Copyright (C) 2026 vuelto-org
  *

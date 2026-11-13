@@ -1,5 +1,4 @@
 //go:build js || wasm
-// +build js wasm
 
 /*
  * Copyright (C) 2026 vuelto-org

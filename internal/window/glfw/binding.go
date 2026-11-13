@@ -1,4 +1,4 @@
-//go:build windows || linux || darwin
+//go:build windows || linux || darwin || freebsd || netbsd
 
 /*
  * Copyright (C) 2026 vuelto-org
@@ -90,7 +90,7 @@ func getGlfwLibrary() string {
 	switch runtime.GOOS {
 	case "darwin":
 		return "libglfw.3.dylib"
-	case "linux":
+	case "linux", "freebsd", "openbsd":
 		return "libglfw.so.3"
 	case "windows":
 		return "glfw3.dll"

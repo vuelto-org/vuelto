@@ -1,3 +1,5 @@
+//go:build darwin
+
 /*
  * Copyright (C) 2026 vuelto-org
  *
