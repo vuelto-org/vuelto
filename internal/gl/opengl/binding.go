@@ -1,4 +1,4 @@
-//go:build windows || linux || darwin || freebsd || netbsd
+//go:build windows || linux || darwin || freebsd || netbsd || openbsd
 
 /*
  * Copyright (C) 2026 vuelto-org
@@ -144,7 +144,7 @@ func getOpenGLLibrary() string {
 	switch runtime.GOOS {
 	case "darwin":
 		return "/System/Library/Frameworks/OpenGL.framework/OpenGL"
-	case "linux", "freebsd", "openbsd":
+	case "linux", "freebsd", "netbsd", "openbsd":
 		return "libGL.so.1"
 	case "windows":
 		return "opengl32.dll"

@@ -90,6 +90,17 @@ jobs:
             go mod tidy
             gmake tests
 
+      - name: Run Tests on NetBSD
+        if: matrix.bsd == 'netbsd'
+        uses: vmactions/netbsd-vm@v1
+        with:
+          prepare: |
+            pkgin -y install git go cmake gmake glfw pkgconf openal-soft
+          run: |
+            export GOFLAGS="-buildvcs=false"
+            go mod tidy
+            gmake tests
+
   examples:
     runs-on: ${{ matrix.os }}
 
@@ -165,6 +176,17 @@ jobs:
         with:
           prepare: |
             pkg_add git go cmake gmake glfw pkgconf openal
+          run: |
+            export GOFLAGS="-buildvcs=false"
+            go mod tidy
+            gmake examples
+
+      - name: Build Examples on NetBSD
+        if: matrix.bsd == 'netbsd'
+        uses: vmactions/netbsd-vm@v1
+        with:
+          prepare: |
+            pkgin -y install git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
