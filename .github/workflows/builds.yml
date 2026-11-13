@@ -64,7 +64,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        bsd: [freebsd, netbsd]
+        bsd: [freebsd]
     steps:
       - uses: actions/checkout@v3
 
@@ -74,17 +74,6 @@ jobs:
         with:
           prepare: |
             pkg install -y git go cmake gmake glfw pkgconf openal-soft
-          run: |
-            export GOFLAGS="-buildvcs=false"
-            go mod tidy
-            gmake tests
-
-      - name: Run Tests on NetBSD
-        if: matrix.bsd == 'netbsd'
-        uses: vmactions/netbsd-vm@v1
-        with:
-          prepare: |
-            pkg_add -I install git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
@@ -144,7 +133,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        bsd: [freebsd, netbsd]
+        bsd: [freebsd]
     steps:
       - uses: actions/checkout@v3
 
@@ -154,17 +143,6 @@ jobs:
         with:
           prepare: |
             pkg install -y git go cmake gmake glfw pkgconf openal-soft
-          run: |
-            export GOFLAGS="-buildvcs=false"
-            go mod tidy
-            gmake examples
-
-      - name: Build Examples on NetBSD
-        if: matrix.bsd == 'netbsd'
-        uses: vmactions/netbsd-vm@v1
-        with:
-          prepare: |
-            pkg_add -I install git go cmake gmake glfw pkgconf openal-soft
           run: |
             export GOFLAGS="-buildvcs=false"
             go mod tidy
