@@ -16,6 +16,7 @@ package opengl
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"runtime"
 	"unsafe"
@@ -140,21 +141,34 @@ func Ptr(v any) unsafe.Pointer {
 	return nil
 }
 
-func getOpenGLLibrary() string {
+func getOpenGLLibrary() (string, error) {
+	if envPath := os.Getenv("VUELTO_OPENGL_PATH"); envPath != "" {
+		if _, err := os.Stat(envPath); err == nil {
+			return envPath, nil
+		} else {
+			return "", fmt.Errorf("VUELTO_OPENGL_PATH set to %s, but file does not exist: %w", envPath, err)
+		}
+	}
+
 	switch runtime.GOOS {
 	case "darwin":
-		return "/System/Library/Frameworks/OpenGL.framework/OpenGL"
+		return "/System/Library/Frameworks/OpenGL.framework/OpenGL", nil
 	case "linux", "freebsd", "netbsd", "openbsd":
-		return "libGL.so.1"
+		return "libGL.so.1", nil
 	case "windows":
-		return "opengl32.dll"
+		return "opengl32.dll", nil
 	default:
 		panic(fmt.Errorf("GOOS=%s is not supported", runtime.GOOS))
 	}
 }
 
 func Register() error {
-	libGL, err := openLibrary(getOpenGLLibrary())
+	library, err := getOpenGLLibrary()
+	if err != nil {
+		panic(err)
+	}
+
+	libGL, err := openLibrary(library)
 	if err != nil {
 		return fmt.Errorf("failed to load OpenGL library: %w", err)
 	}

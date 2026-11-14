@@ -1,8 +1,11 @@
 <!-- markdownlint-disable md007 -->
 # 📅 Upcoming release
 
-# V2.0
-- [] Rewrite to [PureGo](https://github.com/ebitengine/purego). That's it. This change by itself is large enough to take up a whole release 
+# V1.3
+- [x] Libraries
+    - [x] `VUELTO_GFLW_PATH` and `VUELTO_OPENGL_PATH` define the path to the libraries, overwrite the default
+
+- [x] Rewrite to [PureGo](https://github.com/ebitengine/purego). That's it. This change by itself is large enough to take up a whole release 
     - [x] OpenGL
         - [x] Shader
             - [x] CreateShader 

@@ -16,6 +16,7 @@ package glfw
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"unsafe"
 
@@ -86,14 +87,22 @@ func Str(str string) *uint8 {
 	return &b[0]
 }
 
-func getGlfwLibrary() string {
+func getGlfwLibrary() (string, error) {
+	if envPath := os.Getenv("VUELTO_GFLW_PATH"); envPath != "" {
+		if _, err := os.Stat(envPath); err == nil {
+			return envPath, nil
+		} else {
+			return "", fmt.Errorf("VUELTO_GFLW_PATH set to %s, but file does not exist: %w", envPath, err)
+		}
+	}
+
 	switch runtime.GOOS {
 	case "darwin":
-		return "libglfw.3.dylib"
+		return "libglfw.3.dylib", nil
 	case "linux", "freebsd", "netbsd", "openbsd":
-		return "libglfw.so.3"
+		return "libglfw.so.3", nil
 	case "windows":
-		return "glfw3.dll"
+		return "glfw3.dll", nil
 	default:
 		panic(fmt.Errorf("GOOS=%s is not supported", runtime.GOOS))
 	}
@@ -106,7 +115,12 @@ func Init() error {
 		return nil
 	}
 
-	libGLFW, err := openLibrary(getGlfwLibrary())
+	library, err := getGlfwLibrary()
+	if err != nil {
+		panic(err)
+	}
+
+	libGLFW, err := openLibrary(library)
 	if err != nil {
 		return fmt.Errorf("Failed to load GLFW library: %w", err)
 	}
