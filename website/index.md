@@ -25,9 +25,6 @@ hide:
 <a href="https://github.com/vuelto-org/vuelto">
   <img src="https://www.aschey.tech/tokei/github/vuelto-org/vuelto?style=for-the-badge" alt="Lines of code">
 </a>
-<a href="https://goreportcard.com/report/vuelto.pp.ua">
-  <img src="https://goreportcard.com/badge/vuelto.pp.ua?style=for-the-badge" alt="Report card">
-</a>
 <a href="https://www.opengl.org/Documentation/Specs.html">
   <img src="https://img.shields.io/badge/powered_by-GL_3.3-blue?style=for-the-badge" alt="Powered By">
 </a>
@@ -42,7 +39,7 @@ Welcome to the Vuelto website! Here you will find things like documentation, blo
 Vuelto is an open-source, fast, and lightweight game engine, based on Golang and OpenGL. Designed with simplicity and speed in mind, while still staying relatively lightweight. It can be deployed on almost all major platforms, including Linux, MacOS, Windows and Web.
 
 !!! note
-    While Vuelto has a stable version, it's pretty much experimental software. Want something rock solid? Try [Ebitengine](https://github.com/hajimehoshi/ebiten)!
+    While Vuelto has a stable version, it's pretty much experimental and educational software. Want something rock solid? Try [Ebitengine](https://github.com/hajimehoshi/ebiten)!
 
 ## ✨ Features
 
@@ -96,19 +93,13 @@ Our roadmap is available on the website (URL here) or in the ROADMAP.md file in 
 
 ### 🤝 Contributing
 
-We're really thankful for your contributions! Please see our [Contributing Guide](https://github.com/vuelto-org/vuelto/blob/latest/contributing.md) for details.
-
-1. 🍴 Fork the repository
-2. 🌟 Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. 📝 Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. 🚀 Push to the branch (`git push origin feature/amazing-feature`)
-5. 🔄 Open a Pull Request
+Are you looking to contribute? Please see our [Contributing Guide](https://github.com/vuelto-org/vuelto/blob/latest/contributing.md) for details.
 
 ## 🛡️ Support & Security
 
 ### 🐛 Issues
 
-See the [Issues](https://github.com/vuelto-org/vuelto/issues) page for current bugs and feature requests. In case you find any issues, please open an issue or search for any other form of contact to submit a bug report.
+See [Issues](https://github.com/vuelto-org/vuelto/issues) page for current bugs and feature requests. In case you find any bug or have a suggestion, please open up an issue!
 
 #### 🔒 Security Issues
 
@@ -117,6 +108,9 @@ If you find a security vulnerability, please follow the instructions in [SECURIT
 ### 🔐 License
 
 Vuelto is licensed under the [VL-Cv1.1 License](https://vuelto.pp.ua/about/license). Any PRs that primarily focus on changing the license won't be accepted.
+
+!!! note
+    Vuelto was archived between Jul 26 2025 and Nov 12 2026. For this reason, everything pre November 12 2026 is now open MIT code, following VL-Cv1.1. Everything past November 12 2026 is back to the standard license guidelines.
 
 ### ℹ️ About
 

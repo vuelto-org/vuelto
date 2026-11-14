@@ -5,6 +5,11 @@
 - [x] Libraries
     - [x] `VUELTO_GFLW_PATH` and `VUELTO_OPENGL_PATH` define the path to the libraries, overwrite the default
 
+- [ ] Website
+    - [ ] Bring it up to date
+    - [ ] Move most files from root to Website
+        - [ ] Fix Readme links
+
 - [x] Rewrite to [PureGo](https://github.com/ebitengine/purego). That's it. This change by itself is large enough to take up a whole release 
     - [x] OpenGL
         - [x] Shader
