@@ -26,7 +26,7 @@ define BUILD_ALL
     \
     t=$$(perl -MTime::HiRes -e 'print Time::HiRes::time()'); \
     printf "\033[1m\033[36mBuilding w/o CGO:\033[0m $$dir...\n"; \
-    CGO_ENABLED=0 go build -o bin/$$dir $$dir || exit 1; \
+    CGO_ENABLED=0 go build -gcflags="github.com/ebitengine/purego/internal/fakecgo=-std" -o bin/$$dir $$dir || exit 1; \
     dur=$$(perl -MTime::HiRes -e 'printf "%.2f", Time::HiRes::time() - shift' $$t); \
     printf "\033[1m\033[32mBuilt w/o CGO\033[0m $$dir in $${dur}s\n"; \
 done
