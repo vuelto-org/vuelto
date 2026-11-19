@@ -53,6 +53,8 @@ nav:
       - 🛡️ License: "about/license.md"
       - 🤝 Code of Conduct: "about/coc.md"
       - 👥 Contributing: "about/contributing.md"
+      - 🔒 Security: "about/security.md"
+      - 📝 Changelog: "about/changelog.md"
 
 theme:
   name: material

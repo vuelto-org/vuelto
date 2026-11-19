@@ -89,11 +89,11 @@ You can check out Vuelto's documentation at [Vuelto's website](https://vuelto.pp
 
 ### 🛣️ Roadmap
 
-Our roadmap is available on the website (URL here) or in the ROADMAP.md file in the root of the GitHub repo.
+Our roadmap is available in the [Roadmap section](roadmap/index.md).
 
 ### 🤝 Contributing
 
-Are you looking to contribute? Please see our [Contributing Guide](https://github.com/vuelto-org/vuelto/blob/latest/contributing.md) for details.
+Are you looking to contribute? Please see our [Contributing Guide](about/contributing.md) for details.
 
 ## 🛡️ Support & Security
 
@@ -103,7 +103,7 @@ See [Issues](https://github.com/vuelto-org/vuelto/issues) page for current bugs 
 
 #### 🔒 Security Issues
 
-If you find a security vulnerability, please follow the instructions in [SECURITY.md](https://github.com/vuelto-org/vuelto/blob/latest/security.md) to safely report it.
+If you find a security vulnerability, please follow the instructions in the [Security Policy](about/security.md).
 
 ### 🔐 License
 

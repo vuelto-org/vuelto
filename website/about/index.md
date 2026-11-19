@@ -6,14 +6,16 @@ Vuelto is an open-source, fast, and light game engine, based on Golang and OpenG
 
 We’re excited to have you here! To ensure a welcoming and productive environment, we kindly ask you to follow our **Guidelines**. Please take a moment to review the following:
 
-- **[Contributing](https://vuelto.pp.ua/about/contributing/)**: Learn how to make meaningful contributions to our project.
-- **[Code of Conduct](https://vuelto.pp.ua/about/coc/)**: Understand the principles that foster a respectful and inclusive community.
+- **[Contributing](contributing.md)**: Learn how to make meaningful contributions to our project.
+- **[Code of Conduct](coc.md)**: Understand the principles that foster a respectful and inclusive community.
 
 By participating in this project, you agree to uphold these guidelines and help us maintain a collaborative space for everyone. Thank you for being part of the journey! 🚀
 
 ## 🔐 License
 
 Vuelto is licensed under the [VL-Cv1.1 License](https://vuelto.pp.ua/about/license). Any PRs that will change the license won't be accepted.
+
+Security issues should be reported according to our [Security Policy](security.md).
 
 ## 🌐 Socials
 

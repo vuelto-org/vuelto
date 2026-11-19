@@ -87,11 +87,11 @@ You can check out Vuelto's documentation at [Vuelto's website](https://vuelto.pp
 
 ### 🛣️ Roadmap
 
-Our roadmap is available on our [website](https://vuelto.pp.ua/roadmap/), under the Roadmap section.
+Our roadmap is available on our [website](https://vuelto.pp.ua/roadmap/).
 
 ### 🤝 Contributing
 
-Are you looking to contribute? Please see our [Contributing Guide](/contributing.md) for details.
+Are you looking to contribute? Please see our [Contributing Guide](https://vuelto.pp.ua/about/contributing/) for details.
 ## 🛡️ Support & Security
 
 ### 🐛 Issues
@@ -100,11 +100,11 @@ See [Issues](https://github.com/vuelto-org/vuelto/issues) page for current bugs 
 
 #### 🔒 Security Issues
 
-If you find a security vulnerability, please follow the instructions in [security.md](/security.md) to safely report it.
+If you find a security vulnerability, please follow the instructions in the [Security Policy](https://vuelto.pp.ua/about/security/) to safely report it.
 
 ### 🔐 License
 
-Vuelto is licensed under the [VL-Cv1.1 License](/license.md). Any PRs that will change the license won't be accepted.
+Vuelto is licensed under the [VL-Cv1.1 License](https://vuelto.pp.ua/about/license/). Any PRs that will change the license won't be accepted.
 
 > [!NOTE]
 > Vuelto was archived between Jul 26 2025 and Nov 12 2026. For this reason, everything pre November 12 2026 is now open MIT code, following VL-Cv1.1. Everything past November 12 2026 is back to the standard license guidelines.
@@ -113,8 +113,8 @@ Vuelto is licensed under the [VL-Cv1.1 License](/license.md). Any PRs that will 
 
 We’re excited to have you here! To ensure a welcoming and productive environment, we kindly ask you to follow our **Guidelines**. Please take a moment to review the following:
 
-- **[Contributing](contributing.md)**: Learn how to make meaningful contributions to our project.
-- **[Code of Conduct](code_of_conduct.md)**: Understand the principles that foster a respectful and inclusive community.
+- **[Contributing](https://vuelto.pp.ua/about/contributing/)**: Learn how to make meaningful contributions to our project.
+- **[Code of Conduct](https://vuelto.pp.ua/about/coc/)**: Understand the principles that foster a respectful and inclusive community.
 
 ### 🌐 Community
 We have a [discord server](https://vuelto.pp.ua/discord)!
